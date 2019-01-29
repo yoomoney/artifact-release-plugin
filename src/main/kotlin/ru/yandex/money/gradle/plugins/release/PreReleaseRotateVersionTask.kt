@@ -6,9 +6,8 @@ import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.changelog.ChangelogManager
 import ru.yandex.money.gradle.plugins.release.version.GradlePropertyVersionManager
-import ru.yandex.money.gradle.plugins.release.version.ReleaseVersionStorage
+import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
 import java.io.File
-import java.util.Objects
 
 /**
  * Обновляет changelog.md если он есть, убирает snapshot у version в gradle.property
@@ -20,11 +19,13 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
     }
 
     private fun preReleaseByChangelog(changelog: File,
-                                      gradlePropertyVersionManager: GradlePropertyVersionManager): String {
+                                      gradlePropertyVersionManager: GradlePropertyVersionManager,
+                                      releaseInfoStorage: ReleaseInfoStorage): String {
         val changelogManager = ChangelogManager(changelog)
-        val nextVersion = Objects.requireNonNull(changelogManager.updateToNextVersion(), "Changelog has't next version")!!
-        gradlePropertyVersionManager.updateVersion(nextVersion)
-        return nextVersion
+        val nextVersion = changelogManager.updateToNextVersion()
+        gradlePropertyVersionManager.updateVersion(nextVersion.releaseVersion)
+        releaseInfoStorage.storeChangelog(nextVersion.releaseDescriptionMd)
+        return nextVersion.releaseVersion
     }
 
     @TaskAction
@@ -32,14 +33,15 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
         log.lifecycle("Start pre release: currentVersion = {}", project.version)
         val projectVersionManager = GradlePropertyVersionManager(project.file(GradlePropertyVersionManager.DEFAULT_FILE_NAME))
         val changelogFile = project.file(ChangelogManager.DEFAULT_FILE_NAME)
+        val releaseInfoStorage = ReleaseInfoStorage(project.buildDir)
         val releaseVersion = if (changelogFile.exists()) {
-            preReleaseByChangelog(changelogFile, projectVersionManager)
+            preReleaseByChangelog(changelogFile, projectVersionManager, releaseInfoStorage)
         } else {
             log.lifecycle("Changelog rotate skip, ${changelogFile.name} not found")
             projectVersionManager.removeSnapshotFromVersion()
         }
         log.lifecycle("Update ${projectVersionManager.gradleProperty.name}: releaseVersion={}", releaseVersion)
-        ReleaseVersionStorage(project.buildDir).storeVersion(releaseVersion)
+        releaseInfoStorage.storeVersion(releaseVersion)
     }
 
 }

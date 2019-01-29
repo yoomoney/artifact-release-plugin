@@ -6,7 +6,7 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.git.GitReleaseManager
-import ru.yandex.money.gradle.plugins.release.version.ReleaseVersionStorage
+import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
 
 
 /**
@@ -20,7 +20,7 @@ open class PreReleaseCommitTask : DefaultTask() {
 
     @TaskAction
     fun commitChanges() {
-        val releaseVersion = ReleaseVersionStorage(project.buildDir).loadVersion() ?: throw GradleException("Next release version is absent")
+        val releaseVersion = ReleaseInfoStorage(project.buildDir).loadVersion() ?: throw GradleException("Next release version is absent")
         GitReleaseManager(project.rootDir).use {
             it.preTagCommit(releaseVersion)
         }

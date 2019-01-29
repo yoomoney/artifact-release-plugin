@@ -4,20 +4,31 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.greaterThan
+import org.junit.Assert
 import org.junit.Assert.assertThat
 import org.junit.Test
 
 class ReleasePluginTest : AbstractReleaseTest() {
 
     @Test
-    fun `should success checkChangelog on absent changelog`() {
+    fun `should fail checkChangelog on absent changelog if required`() {
+        val result = runTasksFail("checkChangelog")
+        assertThat(result.output, containsString("Создайте в корне проекта файл CHANGELOG.md\n"))
+    }
+
+    @Test
+    fun `should success checkChangelog on absent changelog if not required`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
         runTasksSuccessfully("checkChangelog")
     }
 
     @Test
     fun `should release with changeLog and correct sequence`() {
         buildFile.appendText("""
-
         task publishArtifacts1 {                    
             doLast {
                 println 'publishArtifacts1 executed'
@@ -39,6 +50,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
         releaseSettings {
             releaseTasks=['build','publishArtifacts1','publishArtifacts2']
             preReleaseTasks=['preReleaseTask1']
+            changelogRequired = false
         }
        
         """.trimIndent())
@@ -65,9 +77,20 @@ class ReleasePluginTest : AbstractReleaseTest() {
     }
 
 
+    @Test
+    fun `should preRelease changeLog on absent changelog if required`() {
+        val preReleaseResult = runTasksFail("preRelease")
+        assertThat(preReleaseResult.output, containsString("Создайте в корне проекта файл CHANGELOG.md\n"))
+    }
+
 
     @Test
     fun `should release without changeLog`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
 
         val preReleaseResult = runTasksSuccessfully("preRelease")
 
@@ -85,8 +108,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         assertThat(getCommitMessages(git)[1], Matchers.startsWith("[Gradle Release Plugin] - pre tag commit: '1.0.1'"))
         assertThat(getCommitMessages(gitOrigin)[1], Matchers.startsWith("[Gradle Release Plugin] - pre tag commit: '1.0.1'"))
 
-        checkTagExists(git,"1.0.1")
-        checkTagExists(gitOrigin,"1.0.1")
+        checkTagExists(git, "1.0.1")
+        checkTagExists(gitOrigin, "1.0.1")
     }
 
     @Test

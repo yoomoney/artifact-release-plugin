@@ -1,5 +1,6 @@
 package ru.yandex.money.gradle.plugins.release.changelog
 
+import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import ru.yandex.money.gradle.plugins.release.version.ReleaseType
@@ -39,7 +40,6 @@ class ChangelogManager(private val changeLog: File) {
         private val NEXT_VERSION_TYPE_REGEXP: Regex = Regex("^%% NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
     }
 
-
     /**
      * Есть ли в changelog описание следующей версии
      */
@@ -57,13 +57,11 @@ class ChangelogManager(private val changeLog: File) {
         return null
     }
 
-
     private fun getLastVersion(): String? {
         for (line in changeLog.readLines()) {
             val matchEntire = PREVIOUS_VERSION_REGEXP.matchEntire(line)
             if (matchEntire != null) {
                 return matchEntire.groupValues[1]
-
             }
         }
         return null
@@ -73,17 +71,16 @@ class ChangelogManager(private val changeLog: File) {
      * Убирает маркеры, добавляет описание версии и текущую дату
      * @return новая версия
      */
-    fun updateToNextVersion(): String? {
+    fun updateToNextVersion(): ChangelogReleaseInfo {
         val nextVersionDescription = getNexVersionDescription()
         val nextVersionType = getNextVersionType()
         if (nextVersionDescription.isEmpty()) {
-            log.lifecycle("Changelog doesn't have new version description, skip update to next version")
-            return null
+            throw GradleException("Changelog doesn't have new version description, skip update to next version")
         }
         if (nextVersionType == null) {
-            log.lifecycle("Changelog doesn't have new version type, skip update to next version")
-            return null
+            throw GradleException("Changelog doesn't have new version type, skip update to next version")
         }
+
         val lastVersion = getLastVersion()
         val nextVersion = SemanticVersionEditor(lastVersion).increment(nextVersionType)
         log.lifecycle("Changelog release version info :lastVersion={}, nextVersion={}, type={} description=\n{}",
@@ -106,7 +103,7 @@ class ChangelogManager(private val changeLog: File) {
         writer.println(nextVersionDescription)
         writer.print(footer)
         writer.close()
-        return nextVersion
+        return ChangelogReleaseInfo(nextVersion, nextVersionDescription)
     }
 
     private fun getCurrentDate(): String {
@@ -125,7 +122,6 @@ class ChangelogManager(private val changeLog: File) {
     }
 
     private fun readContent() = changeLog.readLines().joinToString("\n")
-
 
     private fun getNexVersionDescription(): String {
         val result = StringBuilder()
@@ -151,6 +147,13 @@ class ChangelogManager(private val changeLog: File) {
         }
         return result.toString().trim()
     }
+
+    /**
+     * Описание релиза
+     * @param releaseVersion версия текущего релиза
+     * @param releaseDescriptionMd описание релиза в формате Markdown
+     */
+    data class ChangelogReleaseInfo(val releaseVersion: String, val releaseDescriptionMd: String)
 }
 
 

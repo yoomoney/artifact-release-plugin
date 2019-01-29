@@ -11,12 +11,16 @@ open class ReleaseExtension {
 
     /**
      * Перечень задач которые нужно выполнить до релиза,
-     * версия будущего артефакта на момент выполнения задач будет лежать в
-     * File(project.buildDir,'release/release-version.txt').readText()
+     * версию и changelog будущего артефакта можно получить через `ReleaseInfoStorage(project.buildDir)`
      */
     var preReleaseTasks: MutableList<String> = mutableListOf()
     /**
      *  Путь до приватного ssh ключа для дотсупа в git, если задан будет использоваться
      */
     var pathToGitPrivateSshKey: String? = null
+
+    /**
+     *  Требовать наличия файла CHANGELOG.md в корне проекта
+     */
+    var changelogRequired: Boolean = true
 }

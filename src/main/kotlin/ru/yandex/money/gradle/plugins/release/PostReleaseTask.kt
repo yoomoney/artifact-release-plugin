@@ -1,6 +1,8 @@
 package ru.yandex.money.gradle.plugins.release
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.changelog.ChangelogManager
 import ru.yandex.money.gradle.plugins.release.git.Credentials
@@ -12,6 +14,8 @@ import ru.yandex.money.gradle.plugins.release.version.GradlePropertyVersionManag
  */
 open class PostReleaseTask : DefaultTask() {
 
+    @get:Input
+    @get:Optional
     var pathToGitPrivateSshKey: String? = null
 
     @TaskAction

@@ -30,7 +30,6 @@ gradlePlugin {
             id = 'yamoney-release-plugin'
             implementationClass = 'ru.yandex.money.gradle.plugins.release.ReleasePlugin'
         }
-
     }
 }
 

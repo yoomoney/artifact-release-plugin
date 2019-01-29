@@ -1,6 +1,7 @@
 package ru.yandex.money.gradle.plugins.release.changelog
 
 
+import org.gradle.api.GradleException
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -60,7 +61,15 @@ class ChangelogManagerTest {
         println(changelog.readText())
         val manager = ChangelogManager(changelog)
         Assert.assertFalse(manager.hasNextVersionInfo())
+    }
+
+    @Test(expected = GradleException::class)
+    fun `should updateToNextVersion fail on empty description`() {
+        changelog.writeText(readTextFromClassPath("/changelogs/emptyDescription_filledReleaseType.md"))
+        println(changelog.readText())
+        val manager = ChangelogManager(changelog)
         Assert.assertNull(manager.updateToNextVersion())
+
     }
 
     @Test
@@ -69,6 +78,13 @@ class ChangelogManagerTest {
         println(changelog.readText())
         val manager = ChangelogManager(changelog)
         Assert.assertFalse(manager.hasNextVersionInfo())
+    }
+
+    @Test(expected = GradleException::class)
+    fun `should updateToNextVersion fail on unknown type`() {
+        changelog.writeText(readTextFromClassPath("/changelogs/filledDescription_emptyReleaseType.md"))
+        println(changelog.readText())
+        val manager = ChangelogManager(changelog)
         Assert.assertNull(manager.updateToNextVersion())
     }
 
@@ -77,7 +93,9 @@ class ChangelogManagerTest {
         changelog.writeText(readTextFromClassPath("/changelogs/filledMarkerDescription_filledMarkerMinor.md"))
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        Assert.assertEquals("0.1.0", manager.updateToNextVersion())
+        val changelogReleaseInfo = manager.updateToNextVersion()
+        Assert.assertEquals("0.1.0", changelogReleaseInfo.releaseVersion)
+        Assert.assertEquals("some description", changelogReleaseInfo.releaseDescriptionMd)
 
         println("after edit:\n" + changelog.readText())
         val expected = readTextFromClassPath("/changelogs/1Version_template.md")
@@ -92,7 +110,9 @@ class ChangelogManagerTest {
         writeNextVersionDescription(changelog, "some patch description")
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        Assert.assertEquals("1.0.1", manager.updateToNextVersion())
+        val changelogReleaseInfo = manager.updateToNextVersion()
+        Assert.assertEquals("1.0.1", changelogReleaseInfo.releaseVersion)
+        Assert.assertEquals("some patch description", changelogReleaseInfo.releaseDescriptionMd)
 
         println("after edit:\n" + changelog.readText())
         val expected = readTextFromClassPath("/changelogs/2Version_patch_template.md")
@@ -107,7 +127,9 @@ class ChangelogManagerTest {
         writeNextVersionDescription(changelog, "some major description")
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        Assert.assertEquals("2.0.0", manager.updateToNextVersion())
+        val changelogReleaseInfo = manager.updateToNextVersion()
+        Assert.assertEquals("2.0.0", changelogReleaseInfo.releaseVersion)
+        Assert.assertEquals("some major description", changelogReleaseInfo.releaseDescriptionMd)
         println("after edit:\n" + changelog.readText())
         val expected = readTextFromClassPath("/changelogs/2Version_major_template.md")
                 .replace("DATE", SimpleDateFormat("dd-MM-YYYY").format(Date()))
@@ -123,22 +145,22 @@ class ChangelogManagerTest {
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description major")
         writeReleaseType(changelog, "MAJOR")
-        Assert.assertEquals("2.0.0", manager.updateToNextVersion())
+        Assert.assertEquals("2.0.0", manager.updateToNextVersion().releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description minor")
         writeReleaseType(changelog, "MINOR")
-        Assert.assertEquals("2.1.0", manager.updateToNextVersion())
+        Assert.assertEquals("2.1.0", manager.updateToNextVersion().releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description patch")
         writeReleaseType(changelog, "PATCH")
-        Assert.assertEquals("2.1.1", manager.updateToNextVersion())
+        Assert.assertEquals("2.1.1", manager.updateToNextVersion().releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeReleaseType(changelog, "MAJOR")
         writeNextVersionDescription(changelog, "some new description major 2")
-        Assert.assertEquals("3.0.0", manager.updateToNextVersion())
+        Assert.assertEquals("3.0.0", manager.updateToNextVersion().releaseVersion)
 
         println("after edit:\n" + changelog.readText())
         val expected = readTextFromClassPath("/changelogs/5NextVersion_template.md")
