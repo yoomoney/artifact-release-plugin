@@ -1,0 +1,56 @@
+buildscript {
+    apply from: 'project.gradle', to: buildscript
+    copy {
+        from zipTree(buildscript.configurations.classpath.files.find { it.name.contains('gradle-project-plugin') })
+        into 'tmp'
+        include 'gradle-scripts/**'
+        exclude {
+            def target = new File("tmp/${it.relativePath}")
+            if (!target.exists()) {
+                return false
+            }
+            return target.directory || it.file.text.hashCode() == target.text.hashCode()
+        }
+    }
+}
+apply from: 'tmp/gradle-scripts/_root.gradle'
+/////////////////////////////////////////////
+
+// на данный момент KtLink хочет форматирования кода отличное от того что делает intellij idea с настройками по умолчанию 
+checkWithKtLint.onlyIf { false }
+
+repositories {
+    maven { url 'https://nexus.yamoney.ru/repository/gradle-plugins/' }
+}
+
+pluginId = 'yamoney-artifact-release-plugin'
+gradlePlugin {
+    plugins {
+        releasePlugin {
+            id = 'yamoney-release-plugin'
+            implementationClass = 'ru.yandex.money.gradle.plugins.release.ReleasePlugin'
+        }
+    }
+}
+
+dependencies {
+    configurations.compile.exclude group: 'xerces', module: 'xercesImpl'
+}
+
+dependencies {
+    optional 'com.google.code.findbugs:annotations:3.0.1'
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + System.getProperty('kotlinVersion'),
+            'org.eclipse.jgit:org.eclipse.jgit:5.2.0.201812061821-r'
+
+    testImplementation gradleTestKit(),
+            'com.netflix.nebula:nebula-test:7.1.0',
+            'org.unitils:unitils-core:3.4.6',
+            'org.hamcrest:hamcrest-all:1.3',
+            'com.nhaarman:mockito-kotlin:1.6.0'
+
+
+    testImplementation('org.spockframework:spock-core:1.1-groovy-2.4') {
+        exclude module: 'groovy-all'
+    }
+}
