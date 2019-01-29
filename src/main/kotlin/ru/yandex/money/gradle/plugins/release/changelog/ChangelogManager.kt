@@ -2,6 +2,8 @@ package ru.yandex.money.gradle.plugins.release.changelog
 
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
+import ru.yandex.money.gradle.plugins.release.version.ReleaseType
+import ru.yandex.money.gradle.plugins.release.version.SemanticVersionEditor
 import java.io.File
 import java.io.PrintWriter
 import java.nio.file.Files
@@ -14,22 +16,6 @@ import java.util.stream.Collectors
  * Умеет работать с changelog.md
  */
 class ChangelogManager(private val changeLog: File) {
-
-    private enum class ReleaseType(private val index: Int) {
-        MAJOR(0),
-        MINOR(1),
-        PATCH(2);
-
-        fun upVersion(currentVersionArg: String?): String {
-            val currentVersion = currentVersionArg ?: "0.0.0"
-            val versionParts = currentVersion.split(".").toMutableList()
-            versionParts[index] = (versionParts[index].toInt() + 1).toString()
-            for (i in index + 1..2) {
-                versionParts[i] = "0"
-            }
-            return versionParts.joinToString(".")
-        }
-    }
 
     companion object {
         private val log: Logger = Logging.getLogger(ChangelogManager::class.java)
@@ -95,12 +81,12 @@ class ChangelogManager(private val changeLog: File) {
             return null
         }
         if (nextVersionType == null) {
-            log.lifecycle("Changelog doesn't have not new version type, skip update to next version")
+            log.lifecycle("Changelog doesn't have new version type, skip update to next version")
             return null
         }
         val lastVersion = getLastVersion()
-        val nextVersion = nextVersionType.upVersion(lastVersion)
-        log.lifecycle("Changelog next version info :lastVersion={}, nextVersion={}, type={} description=\n{}",
+        val nextVersion = SemanticVersionEditor(lastVersion).increment(nextVersionType)
+        log.lifecycle("Changelog release version info :lastVersion={}, nextVersion={}, type={} description=\n{}",
                 lastVersion, nextVersion, nextVersionType, nextVersionDescription)
 
         val fullChangeLog = changeLog.readLines().stream()

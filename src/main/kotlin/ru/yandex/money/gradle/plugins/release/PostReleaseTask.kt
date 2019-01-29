@@ -17,7 +17,7 @@ open class PostReleaseTask : DefaultTask() {
     @TaskAction
     fun doAction() {
         val gradlePropertyVersionManager = GradlePropertyVersionManager(project.file(GradlePropertyVersionManager.DEFAULT_FILE_NAME))
-        gradlePropertyVersionManager.upToNextPatchVersion()
+        gradlePropertyVersionManager.incrementPatchVersion()
         val nextVersion = gradlePropertyVersionManager.appendSnapshotToVersion()
         val changelogFile = project.file(ChangelogManager.DEFAULT_FILE_NAME)
         if (changelogFile.exists()) {

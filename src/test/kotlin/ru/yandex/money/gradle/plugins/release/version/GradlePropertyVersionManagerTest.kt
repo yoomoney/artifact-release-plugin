@@ -38,7 +38,7 @@ class GradlePropertyVersionManagerTest {
     fun `should update to next patch version with SNAPSHOT`() {
         gradleProperty.writeText("some.property=123\nversion=1.0.0-SNAPSHOT\nsome.other=321\n")
         val manager = GradlePropertyVersionManager(gradleProperty)
-        manager.upToNextPatchVersion()
+        manager.incrementPatchVersion()
         Assert.assertEquals("some.property=123\nversion=1.0.1-SNAPSHOT\nsome.other=321\n", gradleProperty.readText())
     }
 
@@ -55,7 +55,7 @@ class GradlePropertyVersionManagerTest {
     fun `should update to next patch version without SNAPSHOT`() {
         gradleProperty.writeText("some.property=123\nversion=1.0.0\nsome.other=321\n")
         val manager = GradlePropertyVersionManager(gradleProperty)
-        manager.upToNextPatchVersion()
+        manager.incrementPatchVersion()
         Assert.assertEquals("some.property=123\nversion=1.0.1\nsome.other=321\n", gradleProperty.readText())
     }
 }

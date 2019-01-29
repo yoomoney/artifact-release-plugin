@@ -75,19 +75,16 @@ class GradlePropertyVersionManager(val gradleProperty: File) {
      * Поднимает patch версию с сохранением постфикса -SNAPSHOT
      * @param newVersion новая версия
      */
-    fun upToNextPatchVersion(): String {
+    fun incrementPatchVersion(): String {
         val currentVersion = getCurrentVersion()
         val versionWithoutSnapshot = if (currentVersion.endsWith(SNAPSHOT)) {
             currentVersion.replace(SNAPSHOT, "")
         } else {
             currentVersion
         }
-        val versions = versionWithoutSnapshot.split(".")
-        val nextPatchVersion = (versions[2].toInt() + 1).toString()
-        val nextVersionList = versions.subList(0, versions.size - 1).toMutableList()
-        nextVersionList.add(nextPatchVersion)
+        val version = SemanticVersionEditor(versionWithoutSnapshot)
+        var nextVersion = version.increment(ReleaseType.PATCH)
 
-        var nextVersion = nextVersionList.joinToString(".")
         if (currentVersion.endsWith(SNAPSHOT)) {
             nextVersion += SNAPSHOT
         }
