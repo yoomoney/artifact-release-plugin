@@ -113,6 +113,19 @@ class ReleasePluginTest : AbstractReleaseTest() {
     }
 
     @Test
+    fun `should fail build on release without preRelease`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
+
+        val runTasksFail = runTasksFail("release")
+        assertThat(runTasksFail.output, containsString("Перед запуском release, должена быть запущена задача preRelease"))
+
+    }
+
+    @Test
     fun `should fail checkChangelog on unfilled changelog`() {
         addChangeLog(this::class.java.getResource("/changelogs/1Version_markers.md").readText())
         val result = runTasksFail("checkChangelog")
