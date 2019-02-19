@@ -17,16 +17,21 @@ class ReleasePlugin : Plugin<Project> {
             it.description = "Check that changelog has next version description"
         }
 
-
         project.tasks.create("preReleaseRotateVersion", PreReleaseRotateVersionTask::class.java) {
             it.group = "release"
             it.description = "Update version in gradle.property, rotate CHANGELOG.md"
+        }
+
+        project.tasks.create("preReleaseCheckExecuted", CheckPreReleaseExecutedTask::class.java) {
+            it.group = "release"
+            it.description = "Fail build if no preRelease was executed"
         }
 
         project.tasks.create("preRelease", PreReleaseCommitTask::class.java) {
             it.group = "release"
             it.description = "Commit all changes, add tag with version"
         }
+
 
         project.tasks.create("release", PostReleaseTask::class.java) {
             it.group = "release"
@@ -55,10 +60,13 @@ class ReleasePlugin : Plugin<Project> {
     private fun configReleaseTaskOrder(project: Project) {
         val releaseTasks = project.extensions.getByType(ReleaseExtension::class.java).releaseTasks
         if (releaseTasks.size > 0) {
+            project.tasks.getByName(releaseTasks[0]).dependsOn("preReleaseCheckExecuted")
             for (i in 1 until releaseTasks.size) {
                 project.tasks.getByName(releaseTasks[i]).dependsOn(releaseTasks[i - 1])
             }
             project.tasks.getByName("release").dependsOn(releaseTasks.last())
+        } else {
+            project.tasks.getByName("release").dependsOn("preReleaseCheckExecuted")
         }
     }
 
