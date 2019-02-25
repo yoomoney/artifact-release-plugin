@@ -55,19 +55,17 @@ class ReleasePlugin : Plugin<Project> {
 
     /**
      * Строим зависимость для порядка выполнения в фазе Release
-     * userTask1 -> userTask2 -> userTask..N -> postRelease
+     * build -> public -> userTask..N -> preReleaseCheckExecuted-> release
      */
     private fun configReleaseTaskOrder(project: Project) {
         val releaseTasks = project.extensions.getByType(ReleaseExtension::class.java).releaseTasks
         if (releaseTasks.size > 0) {
-            project.tasks.getByName(releaseTasks[0]).dependsOn("preReleaseCheckExecuted")
             for (i in 1 until releaseTasks.size) {
                 project.tasks.getByName(releaseTasks[i]).dependsOn(releaseTasks[i - 1])
             }
-            project.tasks.getByName("release").dependsOn(releaseTasks.last())
-        } else {
-            project.tasks.getByName("release").dependsOn("preReleaseCheckExecuted")
+            project.tasks.getByName("preReleaseCheckExecuted").dependsOn(releaseTasks.last())
         }
+        project.tasks.getByName("release").dependsOn("preReleaseCheckExecuted")
     }
 
 

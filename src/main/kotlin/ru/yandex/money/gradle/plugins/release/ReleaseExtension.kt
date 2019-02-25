@@ -7,7 +7,7 @@ open class ReleaseExtension {
     /**
      * Перечень задач которые нужно выполнить в момент релиза
      */
-    var releaseTasks: MutableList<String> = mutableListOf("build")
+    var releaseTasks: MutableList<String> = mutableListOf()
 
     /**
      * Перечень задач которые нужно выполнить до релиза,
