@@ -2,6 +2,9 @@
 
 ## NEXT_VERSION
 
+## [1.1.1]() (25-02-2019)
+* preReleaseCheckExecuted должен зависить от release, а не от первой задачи в releaseExtension.releaseTasks
+
 ## [1.1.0]() (18-02-2019)
 * задача release требует что бы перед ней был выполнен preRelease
 

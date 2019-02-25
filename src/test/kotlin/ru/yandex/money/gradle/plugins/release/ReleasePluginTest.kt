@@ -126,6 +126,25 @@ class ReleasePluginTest : AbstractReleaseTest() {
     }
 
     @Test
+    fun `should run releaseTasks task successful`() {
+        buildFile.appendText("""
+        task publishArtifacts1 {
+            doLast {
+                println 'publishArtifacts1 executed'
+            }
+        }
+        releaseSettings {
+            changelogRequired = false
+            releaseTasks=['publishArtifacts1']
+        }
+        """)
+
+        val runTasksFail = runTasksSuccessfully("publishArtifacts1")
+        assertThat(runTasksFail.output, containsString("publishArtifacts1 executed"))
+
+    }
+
+    @Test
     fun `should fail checkChangelog on unfilled changelog`() {
         addChangeLog(this::class.java.getResource("/changelogs/1Version_markers.md").readText())
         val result = runTasksFail("checkChangelog")
