@@ -1,7 +1,7 @@
-# idea-project-plugin
-
-## NEXT_VERSION
-
+%% NEXT_VERSION_TYPE=MINOR
+%% NEXT_VERSION_DESCRIPTION_BEGIN
+* Переход на platformGradleProjectVersion 4 версии
+%% NEXT_VERSION_DESCRIPTION_END
 ## [1.1.1]() (25-02-2019)
 * preReleaseCheckExecuted должен зависить от release, а не от первой задачи в releaseExtension.releaseTasks
 
