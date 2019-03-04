@@ -23,21 +23,21 @@ class ChangelogManager(private val changeLog: File) {
         /**
          * Тип следующего релиза
          */
-        const val NEXT_VERSION_TYPE_MARKER = "%% NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH"
+        const val NEXT_VERSION_TYPE_MARKER = "### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH"
         /**
          * Маркер начала описания следующего релиза
          */
-        const val DESCRIPTION_BEGIN_MARKER = "%% NEXT_VERSION_DESCRIPTION_BEGIN"
+        const val DESCRIPTION_BEGIN_MARKER = "### NEXT_VERSION_DESCRIPTION_BEGIN"
         /**
          * Маркер окончания описания следующего релиза
          */
-        const val DESCRIPTION_END_MARKER = "%% NEXT_VERSION_DESCRIPTION_END"
+        const val DESCRIPTION_END_MARKER = "### NEXT_VERSION_DESCRIPTION_END"
         /**
          * Имя файла с изменениями
          */
         const val DEFAULT_FILE_NAME: String = "CHANGELOG.md"
         private val PREVIOUS_VERSION_REGEXP: Regex = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
-        private val NEXT_VERSION_TYPE_REGEXP: Regex = Regex("^%% NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
+        private val NEXT_VERSION_TYPE_REGEXP: Regex = Regex("^### NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
     }
 
     /**
