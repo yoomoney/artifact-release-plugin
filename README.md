@@ -70,7 +70,7 @@ releaseSettings {
 
 Поддерживается 2 варианта работы:
 1. Если в проекте нет ```CHANGELOG.md```, то значение релизной версии берется из ```version``` в ```gradle.properties``` путем отбрасывания постфикса ```-SNAPSHOT```, после релиза поднимается patch версия и к ней добавляется ```-SNAPSHOT```   новое значение записывается в ```gradle.properties```
-1. Если в проекте есть ```CHANGELOG.md```, то значение релизной версии берется из маркера ```%% NEXT_VERSION_TYPE=???``` путем вычисления на основе предыдущей версии из ```CHANGELOG.md```  (если это первый релиз и в ```CHANGELOG.md``` нет информации о предыдущей версии, релизная версия будет ```0.0.1``` или ```0.1.0``` или ```1.0.0``` соответственно) , после релиза поднимается patch версия и к ней добавляется ```-SNAPSHOT```, новое значение записывается в ```gradle.properties```
+1. Если в проекте есть ```CHANGELOG.md```, то значение релизной версии берется из маркера ```### NEXT_VERSION_TYPE=???``` путем вычисления на основе предыдущей версии из ```CHANGELOG.md```  (если это первый релиз и в ```CHANGELOG.md``` нет информации о предыдущей версии, релизная версия будет ```0.0.1``` или ```0.1.0``` или ```1.0.0``` соответственно) , после релиза поднимается patch версия и к ней добавляется ```-SNAPSHOT```, новое значение записывается в ```gradle.properties```
 
 ### Содержание важных для релиза файлов на всех этапах разработки:
 1. От мастера отведена ```feature``` ветка, разработчик собирается внести изменения       
@@ -80,9 +80,9 @@ releaseSettings {
    ```
    ```
    CHANGELOG.md
-   %% NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
-   %% NEXT_VERSION_DESCRIPTION_BEGIN
-   %% NEXT_VERSION_DESCRIPTION_END
+   ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+   ### NEXT_VERSION_DESCRIPTION_BEGIN
+   ### NEXT_VERSION_DESCRIPTION_END
    ## [1.0.0]() (30-05-1992)
    
    some description
@@ -94,10 +94,10 @@ releaseSettings {
     ```
    ```
    CHANGELOG.md
-   %% NEXT_VERSION_TYPE=MINOR
-   %% NEXT_VERSION_DESCRIPTION_BEGIN
+   ### NEXT_VERSION_TYPE=MINOR
+   ### NEXT_VERSION_DESCRIPTION_BEGIN
    Добавлен функционал Х
-   %% NEXT_VERSION_DESCRIPTION_END
+   ### NEXT_VERSION_DESCRIPTION_END
    ## [1.0.0]() (30-05-1992)
    
    some description
@@ -126,9 +126,9 @@ releaseSettings {
    ```
    ```
    CHANGELOG.md
-   %% NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
-   %% NEXT_VERSION_DESCRIPTION_BEGIN
-   %% NEXT_VERSION_DESCRIPTION_END   
+   ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+   ### NEXT_VERSION_DESCRIPTION_BEGIN
+   ### NEXT_VERSION_DESCRIPTION_END   
    ## [1.1.0]() (30-12-2018)
    
    Добавлен функционал Х

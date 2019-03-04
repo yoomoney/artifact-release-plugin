@@ -171,7 +171,7 @@ class ChangelogManagerTest {
     private fun writeReleaseType(file: File, type: String) {
         val currentLines = file.readLines()
         val newLines = mutableListOf<String>()
-        newLines.add("%% NEXT_VERSION_TYPE=$type")
+        newLines.add("### NEXT_VERSION_TYPE=$type")
         newLines.addAll(currentLines.subList(1, currentLines.size))
         file.writeText(newLines.joinToString("\n"))
     }
