@@ -1,6 +1,7 @@
-%% NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
-%% NEXT_VERSION_DESCRIPTION_BEGIN
-%% NEXT_VERSION_DESCRIPTION_END
+### NEXT_VERSION_TYPE=PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+* Исправлена авторизация в гите по ssh
+### NEXT_VERSION_DESCRIPTION_END
 ## [1.2.1]() (04-03-2019)
 
 * Поменялся формат маркеров в chagnelog, сборка в фича ветках может упасть
