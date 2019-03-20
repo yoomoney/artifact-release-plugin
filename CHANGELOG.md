@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [1.2.3]() (20-03-2019)
+
 * Исправлена авторизация в гите по ssh
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [1.2.2]() (04-03-2019)
 
 * Исправлена авторизация в гите по ssh
