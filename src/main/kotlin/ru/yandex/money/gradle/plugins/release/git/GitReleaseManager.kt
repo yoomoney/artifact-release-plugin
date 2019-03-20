@@ -52,14 +52,15 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         if (credentials.pathToPrivateSshKey != null) {
             log.lifecycle("Set private ssh key: path={}", credentials.pathToPrivateSshKey)
             val sshSessionFactory = object : JschConfigSessionFactory() {
-                override fun createDefaultJSch(fs: FS?): JSch {
-                    val defaultJSch = super.createDefaultJSch(fs)
-                    defaultJSch.removeAllIdentity()
-                    defaultJSch.addIdentity(credentials.pathToPrivateSshKey)
-                    return defaultJSch
+                override fun getJSch(hc: OpenSshConfig.Host?, fs: FS?): JSch {
+                    val jsch = super.getJSch(hc, fs)
+                    jsch.removeAllIdentity()
+                    jsch.addIdentity(credentials.pathToPrivateSshKey)
+                    return jsch
                 }
 
                 override fun configure(hc: OpenSshConfig.Host?, session: Session?) {
+                    session!!.setConfig("StrictHostKeyChecking", "no")
                 }
             }
             command.setTransportConfigCallback {
