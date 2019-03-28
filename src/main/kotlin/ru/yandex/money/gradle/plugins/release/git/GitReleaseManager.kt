@@ -4,6 +4,7 @@ import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.PushCommand
+import org.eclipse.jgit.api.errors.GitAPIException
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.transport.JschConfigSessionFactory
 import org.eclipse.jgit.transport.OpenSshConfig
@@ -11,8 +12,10 @@ import org.eclipse.jgit.transport.SshTransport
 import org.eclipse.jgit.util.FS
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
+import java.io.ByteArrayOutputStream
 import java.io.Closeable
 import java.io.File
+import java.io.IOException
 
 /**
  * Умеет работать с гитом в рамках релизного цикла
@@ -46,6 +49,11 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         git.tag()
                 .setName(tag)
                 .call()
+    }
+
+    fun isExistTag(version: String) : Boolean{
+        val tag = git.repository.resolve(version)
+        return tag != null
     }
 
     private fun configureTransport(command: PushCommand, credentials: Credentials) {
@@ -84,6 +92,38 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         log.lifecycle("Push: refs=${pushCommand.refSpecs}")
         pushCommand.call()
 
+    }
+
+    fun isSuccessfulPush(credentials: Credentials): Boolean {
+        git.commit()
+                .setMessage("[Gradle Release Plugin] Check successful push")
+                .call()
+        try {
+            ByteArrayOutputStream().use { out ->
+                val pushCommand = git.push()
+                        .add(git.repository.fullBranch)
+                        .setRemote("origin")
+                configureTransport(pushCommand, credentials)
+                pushCommand
+                        .setOutputStream(out)
+                        .call()
+                if (out.toString().isBlank()) {
+                    return true
+                } else {
+                    log.error("git push failed: msg={}", out)
+                }
+            }
+        } catch (exc: GitAPIException) {
+            log.error("git push failed", exc)
+        } catch (exc: IOException) {
+            log.error("git push failed", exc)
+        }
+        return false
+    }
+
+    fun hasUncommitedChanges() : Boolean {
+        val status = git.status().call()
+        return status.hasUncommittedChanges()
     }
 
     /**
