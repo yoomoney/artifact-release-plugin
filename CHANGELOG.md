@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [1.3.0]() (29-03-2019)
+
 * preRelease комитит новые файлы если такие есть
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [1.2.3]() (20-03-2019)
 
 * Исправлена авторизация в гите по ssh
