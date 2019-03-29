@@ -22,6 +22,11 @@ class ReleasePlugin : Plugin<Project> {
             it.description = "Update version in gradle.property, rotate CHANGELOG.md"
         }
 
+        project.tasks.create("checkRelease", CheckReleaseTask::class.java) {
+            it.group = "release"
+            it.description = "Fail build if push unsuccessful or tag already exist"
+        }
+
         project.tasks.create("preReleaseCheckExecuted", CheckPreReleaseExecutedTask::class.java) {
             it.group = "release"
             it.description = "Fail build if no preRelease was executed"
@@ -44,6 +49,9 @@ class ReleasePlugin : Plugin<Project> {
             configPreReleaseTaskOrder(it)
 
             val releaseExtension = project.extensions.getByType(ReleaseExtension::class.java)
+
+            val checkReleaseTask = it.tasks.getByName("checkRelease") as CheckReleaseTask
+            checkReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
 
             val postReleaseTask = it.tasks.getByName("release") as PostReleaseTask
             postReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
@@ -82,9 +90,12 @@ class ReleasePlugin : Plugin<Project> {
             }
             project.tasks.getByName("preRelease").dependsOn(preReleaseTasks.last())
         } else {
-            project.tasks.getByName("preRelease").dependsOn("preReleaseRotateVersion")
+            project.tasks.getByName("preRelease").dependsOn("checkRelease")
         }
         project.tasks.getByName("preReleaseRotateVersion").dependsOn("checkChangelog")
+
+        project.tasks.getByName("checkRelease").dependsOn("preReleaseRotateVersion")
+
     }
 
 }

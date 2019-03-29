@@ -4,7 +4,6 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.greaterThan
-import org.junit.Assert
 import org.junit.Assert.assertThat
 import org.junit.Test
 
@@ -124,6 +123,9 @@ class ReleasePluginTest : AbstractReleaseTest() {
         }
         """)
 
+        git.add().addFilepattern("build.gradle").call()
+        git.commit().setMessage("build.gradle commit").call()
+
         val preReleaseResult = runTasksSuccessfully("preRelease")
 
         assertThat(preReleaseResult.output, containsString("releaseVersion=1.0.1"))
@@ -177,9 +179,50 @@ class ReleasePluginTest : AbstractReleaseTest() {
     }
 
     @Test
+    fun `should fail build when there are uncommited changes`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
+
+        val runTasksFail = runTasksFail("preRelease")
+        assertThat(runTasksFail.output, containsString("There are uncommitted changes"))
+    }
+
+    @Test
+    fun `should fail build when tag already exist`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
+        git.add().addFilepattern("build.gradle").call()
+        git.commit().setMessage("build.gradle commit").call()
+        git.tag()
+                .setName("1.0.1")
+                .call()
+        val runTasksFail = runTasksFail("preRelease")
+        assertThat(runTasksFail.output, containsString("Tag 1.0.1 already exist"))
+    }
+
+    @Test
     fun `should fail checkChangelog on unfilled changelog`() {
         addChangeLog(this::class.java.getResource("/changelogs/1Version_markers.md").readText())
         val result = runTasksFail("checkChangelog")
         assertThat(result.output, containsString("Execution failed for task ':checkChangelog'"))
+    }
+
+    @Test
+    fun `should successful run checkRelease`() {
+        buildFile.appendText("""
+        releaseSettings {
+            changelogRequired = false
+        }
+        """)
+        git.add().addFilepattern("build.gradle").call()
+        git.commit().setMessage("build.gradle commit").call()
+
+        runTasksSuccessfully("checkRelease")
     }
 }
