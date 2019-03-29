@@ -1,4 +1,4 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
 * Добавлены проверки на стадии PreRelease:
 1) проверка существования незакоммиченных изменений

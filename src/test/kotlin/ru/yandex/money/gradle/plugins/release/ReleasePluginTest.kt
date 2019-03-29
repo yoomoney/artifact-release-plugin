@@ -187,7 +187,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
         """)
 
         val runTasksFail = runTasksFail("preRelease")
-        assertThat(runTasksFail.output, containsString("There are uncommited changes"))
+        assertThat(runTasksFail.output, containsString("There are uncommitted changes"))
     }
 
     @Test
@@ -203,7 +203,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
                 .setName("1.0.1")
                 .call()
         val runTasksFail = runTasksFail("preRelease")
-        assertThat(runTasksFail.output, containsString("Tag for this version already exist"))
+        assertThat(runTasksFail.output, containsString("Tag 1.0.1 already exist"))
     }
 
     @Test

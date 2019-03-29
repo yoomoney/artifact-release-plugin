@@ -28,12 +28,12 @@ open class CheckReleaseTask : DefaultTask() {
                 ?: throw GradleException("Next release version is absent")
 
         GitReleaseManager(project.rootDir).use {
-            if(!it.isSuccessfulPush(Credentials(pathToGitPrivateSshKey))){
-                throw GradleException("Push unsuccessful")
+            if (it.isTagExists(releaseVersion)) {
+                throw GradleException("Tag $releaseVersion already exist")
             }
 
-            if(it.isExistTag(releaseVersion)){
-                throw GradleException("Tag for this version already exist")
+            if (!it.checkPush(Credentials(pathToGitPrivateSshKey))) {
+                throw GradleException("Push unsuccessful, check your repository permission settings")
             }
         }
     }

@@ -32,8 +32,9 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
 
     @TaskAction
     fun rotateVersion() {
-        if(GitReleaseManager(project.rootDir).hasUncommitedChanges()) {
-            throw GradleException("There are uncommited changes")
+        val uncommittedChanges = GitReleaseManager(project.rootDir).getUncommittedChanges()
+        if (!uncommittedChanges.isEmpty()) {
+            throw GradleException("There are uncommitted changes \n" + uncommittedChanges.joinToString("\n"))
         }
 
         log.lifecycle("Start pre release: currentVersion = {}", project.version)

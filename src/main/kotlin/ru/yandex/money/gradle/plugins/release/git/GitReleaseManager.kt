@@ -51,7 +51,10 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
                 .call()
     }
 
-    fun isExistTag(version: String) : Boolean{
+    /**
+     * Проверяет есть ли такой tag
+     */
+    fun isTagExists(version: String): Boolean {
         val tag = git.repository.resolve(version)
         return tag != null
     }
@@ -94,23 +97,28 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
 
     }
 
-    fun isSuccessfulPush(credentials: Credentials): Boolean {
+    /**
+     * Делает пуш пустого коммита для проверки доступности этой операции
+     */
+    fun checkPush(credentials: Credentials): Boolean {
         git.commit()
-                .setMessage("[Gradle Release Plugin] Check successful push")
+                .setMessage("[Gradle Release Plugin] Check push")
+                .setAllowEmpty(true)
                 .call()
         try {
-            ByteArrayOutputStream().use { out ->
+            ByteArrayOutputStream().use { outputStream ->
                 val pushCommand = git.push()
                         .add(git.repository.fullBranch)
                         .setRemote("origin")
                 configureTransport(pushCommand, credentials)
-                pushCommand
-                        .setOutputStream(out)
-                        .call()
-                if (out.toString().isBlank()) {
+                pushCommand.setOutputStream(outputStream)
+                pushCommand.call()
+                log.lifecycle("git pushed: refs={}", pushCommand.refSpecs)
+                val out = outputStream.toString("UTF-8")
+                if (out.isBlank() || out.contains("Create pull request")) {
                     return true
                 } else {
-                    log.error("git push failed: msg={}", out)
+                    log.error("git push failed: message={}", out)
                 }
             }
         } catch (exc: GitAPIException) {
@@ -121,9 +129,12 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         return false
     }
 
-    fun hasUncommitedChanges() : Boolean {
+    /**
+     * Все незакоммиченные изменения
+     */
+    fun getUncommittedChanges(): Set<String> {
         val status = git.status().call()
-        return status.hasUncommittedChanges()
+        return status.uncommittedChanges
     }
 
     /**
