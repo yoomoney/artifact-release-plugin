@@ -91,6 +91,14 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
      * @param version версия для тега и коммита
      */
     fun preTagCommit(version: String) {
+        val newFiles = git.status().call().untracked
+
+        if (!newFiles.isEmpty()) {
+            val add = git.add()
+            log.lifecycle("Add new files for preTagCommit: files={}", newFiles)
+            newFiles.forEach { add.addFilepattern(it) }
+            add.call()
+        }
         commit("$PRE_TAG_COMMIT_PREFIX: '$version'.")
         addTag(version)
     }

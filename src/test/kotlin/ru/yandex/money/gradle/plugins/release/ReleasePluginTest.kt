@@ -26,6 +26,38 @@ class ReleasePluginTest : AbstractReleaseTest() {
         runTasksSuccessfully("checkChangelog")
     }
 
+
+    @Test
+    fun `should commit new file on preRelease`() {
+        buildFile.appendText("""
+        task preReleaseTask1 {
+            doLast {
+                println 'preReleaseTask1 executed'
+                new File("${'$'}projectDir/new-file.txt").text = "new file text"
+            }
+        }
+        releaseSettings {
+            preReleaseTasks=['preReleaseTask1']
+            changelogRequired = false
+        }
+
+        """.trimIndent())
+        addChangeLog(this::class.java.getResource("/changelogs/1Version_filledMarkers.md").readText())
+
+
+        val preReleaseResult = runTasksSuccessfully("preRelease")
+
+        assertThat(preReleaseResult.output, containsString("nextVersion=1.1.0"))
+        assertThat(gradleProperties.readText(), containsString("version=1.1.0\n"))
+        assertThat(getChangelogContent(), allOf(containsString("## [1.1.0]()")))
+        assertThat(preReleaseResult.output, containsString("preReleaseTask1 executed"))
+        assertThat(preReleaseResult.output, containsString("Add new files for preTagCommit: files=[new-file.txt]"))
+        assertThat(preReleaseResult.output.indexOf("Task :preRelease\n"), greaterThan(preReleaseResult.output.indexOf("Task :preReleaseTask1\n")))
+        assertThat(preReleaseResult.output.indexOf("Task :preReleaseTask1\n"), greaterThan(preReleaseResult.output.indexOf("Task :preReleaseRotateVersion\n")))
+
+        assertThat(git.status().call().untracked, Matchers.empty())
+    }
+
     @Test
     fun `should release with changeLog and correct sequence`() {
         buildFile.appendText("""
