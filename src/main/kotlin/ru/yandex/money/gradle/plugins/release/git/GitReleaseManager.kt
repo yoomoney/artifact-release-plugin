@@ -5,6 +5,7 @@ import com.jcraft.jsch.Session
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.PushCommand
 import org.eclipse.jgit.api.errors.GitAPIException
+import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.transport.JschConfigSessionFactory
 import org.eclipse.jgit.transport.OpenSshConfig
@@ -55,8 +56,8 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
      * Проверяет есть ли такой tag
      */
     fun isTagExists(version: String): Boolean {
-        val tag = git.repository.resolve(version)
-        return tag != null
+        val tag = git.repository.getRefDatabase().getRefsByPrefix(Constants.R_TAGS).filter { it.name.contains(version) }
+        return !tag.isEmpty()
     }
 
     private fun configureTransport(command: PushCommand, credentials: Credentials) {
