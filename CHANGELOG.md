@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [1.4.1]() (05-04-2019)
+
 * Исправлен метод проверки существования тега в git.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [1.4.0]() (29-03-2019)
 
 * Добавлены проверки на стадии PreRelease:
