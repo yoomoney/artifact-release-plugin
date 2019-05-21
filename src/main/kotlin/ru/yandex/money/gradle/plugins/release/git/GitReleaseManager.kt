@@ -64,10 +64,10 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
             log.lifecycle("Set private ssh key: path={}", credentials.pathToPrivateSshKey)
             val sshSessionFactory = object : JschConfigSessionFactory() {
                 override fun getJSch(hc: OpenSshConfig.Host?, fs: FS?): JSch {
-                    val jsch = super.getJSch(hc, fs)
-                    jsch.removeAllIdentity()
-                    jsch.addIdentity(credentials.pathToPrivateSshKey)
-                    return jsch
+                    return super.getJSch(hc, fs).apply {
+                        removeAllIdentity()
+                        addIdentity(credentials.pathToPrivateSshKey, credentials.passphrase)
+                    }
                 }
 
                 override fun configure(hc: OpenSshConfig.Host?, session: Session?) {

@@ -55,6 +55,11 @@ releaseSettings {
     pathToGitPrivateSshKey = null
 
     /**
+     *  Passphrase для приватного ssh ключа. По умолчанию не задана, имеет смысл совместно с pathToGitPrivateSshKey
+     */
+    sshKeyPassphrase= null
+    
+    /**
      *  Требовать наличия файла CHANGELOG.md в корне проекта
      */
     changelogRequired = true

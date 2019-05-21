@@ -22,6 +22,10 @@ open class CheckReleaseTask : DefaultTask() {
     @get:Optional
     var pathToGitPrivateSshKey: String? = null
 
+    @get:Input
+    @get:Optional
+    var sshKeyPassphrase: String? = null
+
     @TaskAction
     fun checkRelease() {
         val releaseVersion = ReleaseInfoStorage(project.buildDir).loadVersion()
@@ -32,7 +36,7 @@ open class CheckReleaseTask : DefaultTask() {
                 throw GradleException("Tag $releaseVersion already exist")
             }
 
-            if (!it.checkPush(Credentials(pathToGitPrivateSshKey))) {
+            if (!it.checkPush(Credentials(pathToGitPrivateSshKey, sshKeyPassphrase))) {
                 throw GradleException("Push unsuccessful, check your repository permission settings")
             }
         }

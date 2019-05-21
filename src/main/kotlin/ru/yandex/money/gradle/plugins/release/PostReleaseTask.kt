@@ -18,6 +18,10 @@ open class PostReleaseTask : DefaultTask() {
     @get:Optional
     var pathToGitPrivateSshKey: String? = null
 
+    @get:Input
+    @get:Optional
+    var sshKeyPassphrase: String? = null
+
     @TaskAction
     fun doAction() {
         val gradlePropertyVersionManager = GradlePropertyVersionManager(project.file(GradlePropertyVersionManager.DEFAULT_FILE_NAME))
@@ -29,7 +33,7 @@ open class PostReleaseTask : DefaultTask() {
         }
         GitReleaseManager(project.rootDir).use {
             it.newVersionCommit(nextVersion)
-            it.push(Credentials(pathToGitPrivateSshKey))
+            it.push(Credentials(pathToGitPrivateSshKey, sshKeyPassphrase))
         }
     }
 }
