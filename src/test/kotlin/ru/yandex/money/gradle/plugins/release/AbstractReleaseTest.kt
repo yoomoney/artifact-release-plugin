@@ -25,7 +25,6 @@ abstract class AbstractReleaseTest {
     @get:Rule
     var originRepoFolder = TemporaryFolder()
 
-
     @Before
     fun setup() {
         buildFile = projectDir.newFile("build.gradle")
@@ -33,7 +32,7 @@ abstract class AbstractReleaseTest {
         buildFile.writeText("""
             plugins {
                 id 'java'
-                id 'yamoney-release-plugin'
+                id 'yamoney-artifact-release-plugin'
             }
 
         """.trimIndent())
@@ -125,5 +124,4 @@ abstract class AbstractReleaseTest {
                 .withDebug(true)
                 .buildAndFail()
     }
-
 }

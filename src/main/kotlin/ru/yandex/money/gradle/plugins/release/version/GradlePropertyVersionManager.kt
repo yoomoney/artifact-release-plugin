@@ -91,5 +91,4 @@ class GradlePropertyVersionManager(val gradleProperty: File) {
         updateVersion(nextVersion)
         return nextVersion
     }
-
 }

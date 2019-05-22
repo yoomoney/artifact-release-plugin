@@ -20,9 +20,11 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
         private val log: Logger = Logging.getLogger(PreReleaseRotateVersionTask::class.java)
     }
 
-    private fun preReleaseByChangelog(changelog: File,
-                                      gradlePropertyVersionManager: GradlePropertyVersionManager,
-                                      releaseInfoStorage: ReleaseInfoStorage): String {
+    private fun preReleaseByChangelog(
+        changelog: File,
+        gradlePropertyVersionManager: GradlePropertyVersionManager,
+        releaseInfoStorage: ReleaseInfoStorage
+    ): String {
         val changelogManager = ChangelogManager(changelog)
         val nextVersion = changelogManager.updateToNextVersion()
         gradlePropertyVersionManager.updateVersion(nextVersion.releaseVersion)
@@ -50,5 +52,4 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
         log.lifecycle("Update ${projectVersionManager.gradleProperty.name}: releaseVersion={}", releaseVersion)
         releaseInfoStorage.storeVersion(releaseVersion)
     }
-
 }

@@ -8,7 +8,6 @@ import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.git.GitReleaseManager
 import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
 
-
 /**
  * Коммитит в гит изменения и добавляет тэг с новой версией
  */
@@ -25,5 +24,4 @@ open class PreReleaseCommitTask : DefaultTask() {
             it.preTagCommit(releaseVersion)
         }
     }
-
 }

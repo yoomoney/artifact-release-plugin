@@ -1,33 +1,14 @@
 buildscript {
     apply from: 'project.gradle', to: buildscript
-    copy {
-        from zipTree(buildscript.configurations.classpath.files.find { it.name.contains('gradle-project-plugin') })
-        into 'tmp'
-        include 'gradle-scripts/**'
-        exclude {
-            def target = new File("tmp/${it.relativePath}")
-            if (!target.exists()) {
-                return false
-            }
-            return target.directory || it.file.text.hashCode() == target.text.hashCode()
-        }
-    }
 }
-apply from: 'tmp/gradle-scripts/_root.gradle'
-/////////////////////////////////////////////
-
-// на данный момент KtLink хочет форматирования кода отличное от того что делает intellij idea с настройками по умолчанию 
-checkWithKtLint.onlyIf { false }
-
-repositories {
-    maven { url 'https://nexus.yamoney.ru/repository/gradle-plugins/' }
-}
+apply plugin: 'yamoney-gradle-project-plugin'
+apply plugin: 'yamoney-kotlin-module-plugin'
 
 pluginId = 'yamoney-artifact-release-plugin'
 gradlePlugin {
     plugins {
-        releasePlugin {
-            id = 'yamoney-release-plugin'
+        artifactReleasePlugin {
+            id = pluginId
             implementationClass = 'ru.yandex.money.gradle.plugins.release.ReleasePlugin'
         }
     }
@@ -40,8 +21,7 @@ dependencies {
 dependencies {
     optional 'com.google.code.findbugs:annotations:3.0.1'
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + System.getProperty('kotlinVersion'),
-            'org.eclipse.jgit:org.eclipse.jgit:5.2.0.201812061821-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.2.0.201812061821-r'
 
     testImplementation gradleTestKit(),
             'com.netflix.nebula:nebula-test:7.1.0',

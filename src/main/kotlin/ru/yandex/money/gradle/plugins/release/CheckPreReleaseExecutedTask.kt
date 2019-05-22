@@ -23,5 +23,4 @@ open class CheckPreReleaseExecutedTask : DefaultTask() {
             throw GradleException("Перед запуском release, должена быть запущена задача preRelease")
         }
     }
-
 }
