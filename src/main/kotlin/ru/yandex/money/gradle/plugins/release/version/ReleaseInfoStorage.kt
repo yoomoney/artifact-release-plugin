@@ -2,7 +2,6 @@ package ru.yandex.money.gradle.plugins.release.version
 
 import java.io.File
 
-
 /**
  * Хранит информацию о релизе в файловой системе
  * @param buildDir директория где происходит сборка проекта [org.gradle.api.Project.getBuildDir]
@@ -38,7 +37,6 @@ class ReleaseInfoStorage(private val buildDir: File) {
         changelogFile.writeText(changelog)
     }
 
-
     /**
      * Загружает Changelog описывающий текущий релиз из файловой системы
      *
@@ -52,7 +50,6 @@ class ReleaseInfoStorage(private val buildDir: File) {
             null
         }
     }
-
 
     /**
      * Загружает версию из файловой системы

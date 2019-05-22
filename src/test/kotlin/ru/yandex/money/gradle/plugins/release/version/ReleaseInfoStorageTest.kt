@@ -20,4 +20,3 @@ class ReleaseInfoStorageTest {
         assertEquals("* first line\n* second line", releaseVersionStorage.loadChangelog())
     }
 }
-

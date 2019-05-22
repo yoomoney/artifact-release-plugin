@@ -1,6 +1,5 @@
 package ru.yandex.money.gradle.plugins.release.changelog
 
-
 import org.gradle.api.GradleException
 import org.junit.Assert
 import org.junit.Before
@@ -69,7 +68,6 @@ class ChangelogManagerTest {
         println(changelog.readText())
         val manager = ChangelogManager(changelog)
         Assert.assertNull(manager.updateToNextVersion())
-
     }
 
     @Test
@@ -186,5 +184,4 @@ class ChangelogManagerTest {
         file.delete()
         file.writeText(strings.joinToString("\n"))
     }
-
 }

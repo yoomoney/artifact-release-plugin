@@ -36,7 +36,6 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
             .findGitDir()
             .build())
 
-
     private fun commit(message: String) {
         log.lifecycle("Commit: $message")
         git.commit()
@@ -78,7 +77,6 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
             command.setTransportConfigCallback {
                 val sshTransport = it as SshTransport
                 sshTransport.sshSessionFactory = sshSessionFactory
-
             }
         }
     }
@@ -95,7 +93,6 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         configureTransport(pushCommand, credentials)
         log.lifecycle("Push: refs=${pushCommand.refSpecs}")
         pushCommand.call()
-
     }
 
     /**

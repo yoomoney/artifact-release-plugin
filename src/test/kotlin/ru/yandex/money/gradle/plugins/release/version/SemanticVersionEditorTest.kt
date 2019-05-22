@@ -6,9 +6,11 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-class SemanticVersionEditorTest(private val versionBeforeRelease: String?,
-                                private val versionAfterRelease: String,
-                                private val releaseType: ReleaseType) {
+class SemanticVersionEditorTest(
+    private val versionBeforeRelease: String?,
+    private val versionAfterRelease: String,
+    private val releaseType: ReleaseType
+) {
 
     companion object {
         @JvmStatic
@@ -30,5 +32,4 @@ class SemanticVersionEditorTest(private val versionBeforeRelease: String?,
     fun `should increment version`() {
         Assert.assertEquals(versionAfterRelease, SemanticVersionEditor(versionBeforeRelease).increment(releaseType))
     }
-
 }

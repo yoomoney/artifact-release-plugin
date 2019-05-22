@@ -25,7 +25,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
         runTasksSuccessfully("checkChangelog")
     }
 
-
     @Test
     fun `should commit new file on preRelease`() {
         buildFile.appendText("""
@@ -42,7 +41,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
         """.trimIndent())
         addChangeLog(this::class.java.getResource("/changelogs/1Version_filledMarkers.md").readText())
-
 
         val preReleaseResult = runTasksSuccessfully("preRelease")
 
@@ -87,7 +85,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
         """.trimIndent())
         addChangeLog(this::class.java.getResource("/changelogs/1Version_filledMarkers.md").readText())
 
-
         val preReleaseResult = runTasksSuccessfully("preRelease")
 
         assertThat(preReleaseResult.output, containsString("nextVersion=1.1.0"))
@@ -107,13 +104,11 @@ class ReleasePluginTest : AbstractReleaseTest() {
         assertThat(getCommitMessages(gitOrigin)[0], Matchers.startsWith("[Gradle Release Plugin] - new version commit: '1.1.1-SNAPSHOT'"))
     }
 
-
     @Test
     fun `should preRelease changeLog on absent changelog if required`() {
         val preReleaseResult = runTasksFail("preRelease")
         assertThat(preReleaseResult.output, containsString("Создайте в корне проекта файл CHANGELOG.md\n"))
     }
-
 
     @Test
     fun `should release without changeLog`() {
@@ -130,7 +125,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
         assertThat(preReleaseResult.output, containsString("releaseVersion=1.0.1"))
         assertThat(gradleProperties.readText(), containsString("version=1.0.1\n"))
-
 
         runTasksSuccessfully("release")
 
@@ -156,7 +150,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
         val runTasksFail = runTasksFail("release")
         assertThat(runTasksFail.output, containsString("Перед запуском release, должена быть запущена задача preRelease"))
-
     }
 
     @Test
@@ -175,7 +168,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
         val runTasksFail = runTasksSuccessfully("publishArtifacts1")
         assertThat(runTasksFail.output, containsString("publishArtifacts1 executed"))
-
     }
 
     @Test

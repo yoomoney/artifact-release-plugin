@@ -37,5 +37,4 @@ open class CheckReleaseTask : DefaultTask() {
             }
         }
     }
-
 }

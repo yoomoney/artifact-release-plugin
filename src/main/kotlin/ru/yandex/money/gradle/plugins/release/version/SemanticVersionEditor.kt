@@ -47,7 +47,7 @@ class SemanticVersionEditor(currentVersion: String?) {
                 patch = 0
             }
             ReleaseType.PATCH -> patch++
-            else -> throw  java.lang.IllegalArgumentException("Unknown $release")
+            else -> throw java.lang.IllegalArgumentException("Unknown $release")
         }
 
         return asString()
@@ -60,8 +60,6 @@ class SemanticVersionEditor(currentVersion: String?) {
     override fun toString(): String {
         return "SemanticVersionEditor(patch=$patch, minor=$minor, major=$major)"
     }
-
-
 }
 
 /**

@@ -7,7 +7,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 
-
 class GradlePropertyVersionManagerTest {
 
     @get:Rule

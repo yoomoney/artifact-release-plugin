@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.stream.Collectors
 
-
 /**
  * Умеет работать с changelog.md
  */
@@ -155,6 +154,3 @@ class ChangelogManager(private val changeLog: File) {
      */
     data class ChangelogReleaseInfo(val releaseVersion: String, val releaseDescriptionMd: String)
 }
-
-
-

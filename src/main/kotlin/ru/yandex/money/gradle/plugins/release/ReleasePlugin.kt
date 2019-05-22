@@ -37,7 +37,6 @@ class ReleasePlugin : Plugin<Project> {
             it.description = "Commit all changes, add tag with version"
         }
 
-
         project.tasks.create("release", PostReleaseTask::class.java) {
             it.group = "release"
             it.description = "Execute user release tasks, append markers to changelog, up gradle.property patch version, append snapshot to version, git push"
@@ -76,7 +75,6 @@ class ReleasePlugin : Plugin<Project> {
         project.tasks.getByName("release").dependsOn("preReleaseCheckExecuted")
     }
 
-
     /**
      * Строим зависимость для порядка выполнения в фазе preRelease
      * checkChangelog -> preReleaseRotateVersion-> userTask1 -> userTask2 -> userTask..N -> preRelease
@@ -95,7 +93,5 @@ class ReleasePlugin : Plugin<Project> {
         project.tasks.getByName("preReleaseRotateVersion").dependsOn("checkChangelog")
 
         project.tasks.getByName("checkRelease").dependsOn("preReleaseRotateVersion")
-
     }
-
 }
