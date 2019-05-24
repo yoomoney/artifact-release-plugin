@@ -2,8 +2,6 @@ package ru.yandex.money.gradle.plugins.release
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
-import org.gradle.api.logging.Logger
-import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.git.GitReleaseManager
 import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
