@@ -12,10 +12,6 @@ import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
  */
 open class CheckPreReleaseExecutedTask : DefaultTask() {
 
-    companion object {
-        private val log: Logger = Logging.getLogger(CheckPreReleaseExecutedTask::class.java)
-    }
-
     @TaskAction
     fun checkPreRelease() {
         val releaseInfoStorage = ReleaseInfoStorage(project.buildDir)

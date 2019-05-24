@@ -59,8 +59,8 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
         return !tag.isEmpty()
     }
 
-    private fun configureTransport(command: PushCommand, credentials: Credentials) {
-        if (credentials.pathToPrivateSshKey != null) {
+    private fun PushCommand.configureTransport(credentials: Credentials) {
+        credentials.pathToPrivateSshKey?.let {
             log.lifecycle("Set private ssh key: path={}", credentials.pathToPrivateSshKey)
             val sshSessionFactory = object : JschConfigSessionFactory() {
                 override fun getJSch(hc: OpenSshConfig.Host?, fs: FS?): JSch {
@@ -74,7 +74,7 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
                     session!!.setConfig("StrictHostKeyChecking", "no")
                 }
             }
-            command.setTransportConfigCallback {
+            this.setTransportConfigCallback {
                 val sshTransport = it as SshTransport
                 sshTransport.sshSessionFactory = sshSessionFactory
             }
@@ -90,7 +90,7 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
                 .setPushTags()
                 .add(git.repository.fullBranch)
                 .setRemote("origin")
-        configureTransport(pushCommand, credentials)
+        pushCommand.configureTransport(credentials)
         log.lifecycle("Push: refs=${pushCommand.refSpecs}")
         pushCommand.call()
     }
@@ -108,7 +108,7 @@ class GitReleaseManager(private val projectDirectory: File) : Closeable {
                 val pushCommand = git.push()
                         .add(git.repository.fullBranch)
                         .setRemote("origin")
-                configureTransport(pushCommand, credentials)
+                pushCommand.configureTransport(credentials)
                 pushCommand.setOutputStream(outputStream)
                 pushCommand.call()
                 log.lifecycle("git pushed: refs={}", pushCommand.refSpecs)

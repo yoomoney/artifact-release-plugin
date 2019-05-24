@@ -13,10 +13,6 @@ import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
  */
 open class PreReleaseCommitTask : DefaultTask() {
 
-    companion object {
-        private val log: Logger = Logging.getLogger(PreReleaseRotateVersionTask::class.java)
-    }
-
     @TaskAction
     fun commitChanges() {
         val releaseVersion = ReleaseInfoStorage(project.buildDir).loadVersion() ?: throw GradleException("Next release version is absent")
