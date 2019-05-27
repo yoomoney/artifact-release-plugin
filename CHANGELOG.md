@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [1.4.4]() (27-05-2019)
+
 * Добавлена поддержка passphrase для ssh ключа
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [1.4.3]() (22-05-2019)
 
 * Сборка переведена на yamoney-gradle-project-plugin=5.+
