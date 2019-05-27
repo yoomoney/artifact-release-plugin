@@ -51,9 +51,11 @@ class ReleasePlugin : Plugin<Project> {
 
             val checkReleaseTask = it.tasks.getByName("checkRelease") as CheckReleaseTask
             checkReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
+            checkReleaseTask.passphraseToGitPrivateSshKey = releaseExtension.passphraseToGitPrivateSshKey
 
             val postReleaseTask = it.tasks.getByName("release") as PostReleaseTask
             postReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
+            postReleaseTask.passphraseToGitPrivateSshKey = releaseExtension.passphraseToGitPrivateSshKey
 
             val checkChangeLogTask = it.tasks.getByName("checkChangelog") as CheckChangeLogTask
             checkChangeLogTask.changelogRequired = releaseExtension.changelogRequired
