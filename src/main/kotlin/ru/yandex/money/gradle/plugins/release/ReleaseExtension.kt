@@ -21,9 +21,9 @@ open class ReleaseExtension {
     var pathToGitPrivateSshKey: String? = null
 
     /**
-     *  Passphrase для приватного ssh ключа. По умолчанию не задана, имеет смысл совместно с pathToGitPrivateSshKey
+     *  Passphrase для приватного ssh ключа. По умолчанию не задана
      */
-    var sshKeyPassphrase: String? = null
+    var passphraseToGitPrivateSshKey: String? = null
 
     /**
      *  Требовать наличия файла CHANGELOG.md в корне проекта

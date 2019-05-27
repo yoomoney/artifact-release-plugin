@@ -24,7 +24,7 @@ open class CheckReleaseTask : DefaultTask() {
 
     @get:Input
     @get:Optional
-    var sshKeyPassphrase: String? = null
+    var passphraseToGitPrivateSshKey: String? = null
 
     @TaskAction
     fun checkRelease() {
@@ -36,7 +36,7 @@ open class CheckReleaseTask : DefaultTask() {
                 throw GradleException("Tag $releaseVersion already exist")
             }
 
-            if (!it.checkPush(Credentials(pathToGitPrivateSshKey, sshKeyPassphrase))) {
+            if (!it.checkPush(Credentials(pathToGitPrivateSshKey, passphraseToGitPrivateSshKey))) {
                 throw GradleException("Push unsuccessful, check your repository permission settings")
             }
         }

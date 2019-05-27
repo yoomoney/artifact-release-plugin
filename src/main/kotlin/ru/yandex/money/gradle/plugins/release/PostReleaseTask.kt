@@ -20,7 +20,7 @@ open class PostReleaseTask : DefaultTask() {
 
     @get:Input
     @get:Optional
-    var sshKeyPassphrase: String? = null
+    var passphraseToGitPrivateSshKey: String? = null
 
     @TaskAction
     fun doAction() {
@@ -33,7 +33,7 @@ open class PostReleaseTask : DefaultTask() {
         }
         GitReleaseManager(project.rootDir).use {
             it.newVersionCommit(nextVersion)
-            it.push(Credentials(pathToGitPrivateSshKey, sshKeyPassphrase))
+            it.push(Credentials(pathToGitPrivateSshKey, passphraseToGitPrivateSshKey))
         }
     }
 }
