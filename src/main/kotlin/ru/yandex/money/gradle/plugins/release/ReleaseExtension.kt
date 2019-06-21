@@ -26,6 +26,16 @@ open class ReleaseExtension {
     var passphraseToGitPrivateSshKey: String? = null
 
     /**
+     *  Имя юзера, от которого будет производиться коммит в git
+     */
+    var gitUsername: String? = null
+
+    /**
+     *  Email юзера, от которого будет производиться коммит в git
+     */
+    var gitEmail: String? = null
+
+    /**
      *  Требовать наличия файла CHANGELOG.md в корне проекта
      */
     var changelogRequired: Boolean = true

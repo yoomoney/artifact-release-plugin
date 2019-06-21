@@ -1,5 +1,14 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MAJOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Работа с гитом переведена на библиотеку git-client
+* **breaking changes** Для git появились обязательные настройки - email и username, 
+от имени которых будет производиться коммит. Пример настроек, которые необходимо добавить:
+    ```
+    releaseSettings {
+         gitEmail = 'user@mail.ru'
+         gitUsername = 'user'
+    }
+    ```
 ### NEXT_VERSION_DESCRIPTION_END
 ## [1.4.4]() (27-05-2019)
 

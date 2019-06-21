@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.yandex.money.gradle.plugins.release.AbstractReleaseTest
+import ru.yandex.money.tools.git.GitSettings
 import java.io.File
 import java.io.FileOutputStream
 
@@ -30,7 +31,7 @@ private const val TEST_USER_NAME = "git"
 
 class GitReleaseManagerTest : AbstractReleaseTest() {
 
-    lateinit var gitReleaseManager: GitReleaseManager
+    lateinit var gitReleaseManager: GitManager
     lateinit var sshGitServer: SshTestGitServer
     lateinit var gitSshOrigin: Git
     lateinit var userKey: File
@@ -43,7 +44,10 @@ class GitReleaseManagerTest : AbstractReleaseTest() {
 
     @Before
     fun before() {
-        gitReleaseManager = GitReleaseManager(File(projectDir.root.absolutePath))
+        gitReleaseManager = GitManager(File(projectDir.root.absolutePath), GitSettings.builder()
+                .withEmail("")
+                .withUsername("")
+                .build())
 
         gitSshOrigin = Git.init().setDirectory(sshOriginRepoFolder.root)
                 .setBare(true)
@@ -84,8 +88,13 @@ class GitReleaseManagerTest : AbstractReleaseTest() {
 
     @Test
     fun `should push to repo with ssh `() {
+        val gitManager = GitManager(File(projectDir.root.absolutePath), GitSettings.builder()
+                .withEmail("")
+                .withUsername("")
+                .withSshKeyPath(userKey.path)
+                .build())
 
-        assertTrue(gitReleaseManager.checkPush(Credentials(userKey.path, null)))
+        assertTrue(gitManager.checkPush())
 
         assertThat("commit is available in local repo",
                 getCommitMessages(git).first(), startsWith("[Gradle Release Plugin] Check push"))
@@ -96,7 +105,7 @@ class GitReleaseManagerTest : AbstractReleaseTest() {
     @Test
     fun `should have indication if no ssh key defined for ssh repo `() {
 
-        assertFalse(gitReleaseManager.checkPush(Credentials(null, null)))
+        assertFalse(gitReleaseManager.checkPush())
     }
 
     private fun createKeyPair(privateKeyFile: File): File {

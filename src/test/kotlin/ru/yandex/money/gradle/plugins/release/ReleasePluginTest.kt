@@ -11,6 +11,12 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
     @Test
     fun `should fail checkChangelog on absent changelog if required`() {
+        buildFile.appendText("""
+        releaseSettings {
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
+        }
+        """)
         val result = runTasksFail("checkChangelog")
         assertThat(result.output, containsString("Создайте в корне проекта файл CHANGELOG.md\n"))
     }
@@ -20,6 +26,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
         runTasksSuccessfully("checkChangelog")
@@ -37,6 +45,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         releaseSettings {
             preReleaseTasks=['preReleaseTask1']
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
 
         """.trimIndent())
@@ -48,7 +58,6 @@ class ReleasePluginTest : AbstractReleaseTest() {
         assertThat(gradleProperties.readText(), containsString("version=1.1.0\n"))
         assertThat(getChangelogContent(), allOf(containsString("## [1.1.0]()")))
         assertThat(preReleaseResult.output, containsString("preReleaseTask1 executed"))
-        assertThat(preReleaseResult.output, containsString("Add new files for preTagCommit: files=[new-file.txt]"))
         assertThat(preReleaseResult.output.indexOf("Task :preRelease\n"), greaterThan(preReleaseResult.output.indexOf("Task :preReleaseTask1\n")))
         assertThat(preReleaseResult.output.indexOf("Task :preReleaseTask1\n"), greaterThan(preReleaseResult.output.indexOf("Task :preReleaseRotateVersion\n")))
 
@@ -80,6 +89,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
             releaseTasks=['build','publishArtifacts1','publishArtifacts2']
             preReleaseTasks=['preReleaseTask1']
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
        
         """.trimIndent())
@@ -106,6 +117,12 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
     @Test
     fun `should preRelease changeLog on absent changelog if required`() {
+        buildFile.appendText("""
+        releaseSettings {
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
+        }
+        """)
         val preReleaseResult = runTasksFail("preRelease")
         assertThat(preReleaseResult.output, containsString("Создайте в корне проекта файл CHANGELOG.md\n"))
     }
@@ -115,6 +132,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
 
@@ -145,6 +164,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
 
@@ -163,6 +184,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         releaseSettings {
             changelogRequired = false
             releaseTasks=['publishArtifacts1']
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
 
@@ -175,6 +198,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
 
@@ -187,6 +212,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
         git.add().addFilepattern("build.gradle").call()
@@ -200,6 +227,12 @@ class ReleasePluginTest : AbstractReleaseTest() {
 
     @Test
     fun `should fail checkChangelog on unfilled changelog`() {
+        buildFile.appendText("""
+        releaseSettings {
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
+        }
+        """)
         addChangeLog(this::class.java.getResource("/changelogs/1Version_markers.md").readText())
         val result = runTasksFail("checkChangelog")
         assertThat(result.output, containsString("Execution failed for task ':checkChangelog'"))
@@ -210,6 +243,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         buildFile.appendText("""
         releaseSettings {
             changelogRequired = false
+            gitUsername = 'user'
+            gitEmail = 'user@mail.ru'
         }
         """)
         git.add().addFilepattern("build.gradle").call()
