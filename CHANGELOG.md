@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [1.4.5]() (27-06-2019)
+
 * Исправлен метод проверки существования тега в git
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [1.4.4]() (27-05-2019)
 
 * Добавлена поддержка passphrase для ssh ключа
