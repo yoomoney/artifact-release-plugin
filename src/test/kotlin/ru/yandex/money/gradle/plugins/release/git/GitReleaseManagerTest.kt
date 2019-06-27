@@ -75,10 +75,12 @@ class GitReleaseManagerTest : AbstractReleaseTest() {
 
     @Test
     fun `should correctly check tag exists `() {
-        git.tag().setName("2.0.0").call()
+        git.tag().setName("22.0.0").call()
         git.branchRename().setNewName("3.0.0").call()
 
-        assertTrue(gitReleaseManager.isTagExists("2.0.0"))
+        assertTrue(gitReleaseManager.isTagExists("22.0.0"))
+        assertFalse(gitReleaseManager.isTagExists("2.0.0"))
+        assertFalse(gitReleaseManager.isTagExists("shiro-22.0.0"))
         assertFalse(gitReleaseManager.isTagExists("3.0.0"))
     }
 

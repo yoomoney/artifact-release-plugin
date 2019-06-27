@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Исправлен метод проверки существования тега в git
 ### NEXT_VERSION_DESCRIPTION_END
 ## [1.4.4]() (27-05-2019)
 
