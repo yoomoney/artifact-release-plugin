@@ -21,7 +21,7 @@ dependencies {
 dependencies {
     optional 'com.google.code.findbugs:annotations:3.0.1'
 
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.2.0.201812061821-r'
+    implementation 'ru.yandex.money.tools:yamoney-git-client:2.0.0'
 
     testImplementation gradleTestKit(),
             'com.netflix.nebula:nebula-test:7.1.0',

@@ -3,11 +3,10 @@ package ru.yandex.money.gradle.plugins.release
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-import ru.yandex.money.gradle.plugins.release.git.Credentials
-import ru.yandex.money.gradle.plugins.release.git.GitReleaseManager
+import ru.yandex.money.gradle.plugins.release.git.GitManager
 import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
+import ru.yandex.money.tools.git.GitSettings
 
 /**
  * Задача на проверку возможности релиза
@@ -19,24 +18,19 @@ import ru.yandex.money.gradle.plugins.release.version.ReleaseInfoStorage
  */
 open class CheckReleaseTask : DefaultTask() {
     @get:Input
-    @get:Optional
-    var pathToGitPrivateSshKey: String? = null
-
-    @get:Input
-    @get:Optional
-    var passphraseToGitPrivateSshKey: String? = null
+    lateinit var gitSettings: GitSettings
 
     @TaskAction
     fun checkRelease() {
         val releaseVersion = ReleaseInfoStorage(project.buildDir).loadVersion()
                 ?: throw GradleException("Next release version is absent")
 
-        GitReleaseManager(project.rootDir).use {
+        GitManager(project.rootDir, gitSettings).use {
             if (it.isTagExists(releaseVersion)) {
                 throw GradleException("Tag $releaseVersion already exist")
             }
 
-            if (!it.checkPush(Credentials(pathToGitPrivateSshKey, passphraseToGitPrivateSshKey))) {
+            if (!it.checkPush()) {
                 throw GradleException("Push unsuccessful, check your repository permission settings")
             }
         }

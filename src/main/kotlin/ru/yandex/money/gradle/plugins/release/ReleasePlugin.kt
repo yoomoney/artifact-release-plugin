@@ -3,6 +3,7 @@ package ru.yandex.money.gradle.plugins.release
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import ru.yandex.money.gradle.plugins.release.changelog.CheckChangeLogTask
+import ru.yandex.money.tools.git.GitSettings
 
 /**
  * Плагин для релиза артефактов
@@ -49,13 +50,25 @@ class ReleasePlugin : Plugin<Project> {
 
             val releaseExtension = project.extensions.getByType(ReleaseExtension::class.java)
 
+            val gitSettings = GitSettings.builder()
+                    .withEmail(releaseExtension.gitEmail)
+                    .withUsername(releaseExtension.gitUsername)
+                    .withSshKeyPath(releaseExtension.pathToGitPrivateSshKey)
+                    .withPassphraseSshKey(releaseExtension.passphraseToGitPrivateSshKey)
+                    .build()
+
             val checkReleaseTask = it.tasks.getByName("checkRelease") as CheckReleaseTask
-            checkReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
-            checkReleaseTask.passphraseToGitPrivateSshKey = releaseExtension.passphraseToGitPrivateSshKey
+            checkReleaseTask.gitSettings = gitSettings
 
             val postReleaseTask = it.tasks.getByName("release") as PostReleaseTask
-            postReleaseTask.pathToGitPrivateSshKey = releaseExtension.pathToGitPrivateSshKey
-            postReleaseTask.passphraseToGitPrivateSshKey = releaseExtension.passphraseToGitPrivateSshKey
+            postReleaseTask.gitSettings = gitSettings
+
+            val preReleaseRotateVersionTask = it.tasks.getByName("preReleaseRotateVersion")
+                    as PreReleaseRotateVersionTask
+            preReleaseRotateVersionTask.gitSettings = gitSettings
+
+            val preReleaseCommitTask = it.tasks.getByName("preRelease") as PreReleaseCommitTask
+            preReleaseCommitTask.gitSettings = gitSettings
 
             val checkChangeLogTask = it.tasks.getByName("checkChangelog") as CheckChangeLogTask
             checkChangeLogTask.changelogRequired = releaseExtension.changelogRequired

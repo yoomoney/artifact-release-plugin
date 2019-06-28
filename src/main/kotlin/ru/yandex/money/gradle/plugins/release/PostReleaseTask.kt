@@ -2,12 +2,11 @@ package ru.yandex.money.gradle.plugins.release
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import ru.yandex.money.gradle.plugins.release.changelog.ChangelogManager
-import ru.yandex.money.gradle.plugins.release.git.Credentials
-import ru.yandex.money.gradle.plugins.release.git.GitReleaseManager
+import ru.yandex.money.gradle.plugins.release.git.GitManager
 import ru.yandex.money.gradle.plugins.release.version.GradlePropertyVersionManager
+import ru.yandex.money.tools.git.GitSettings
 
 /**
  * Поднимает patch версию у gradle.properties, добавляет -SNAPSHOT, добавляет маркеры в CHANGELOG.md, делает git push
@@ -15,12 +14,7 @@ import ru.yandex.money.gradle.plugins.release.version.GradlePropertyVersionManag
 open class PostReleaseTask : DefaultTask() {
 
     @get:Input
-    @get:Optional
-    var pathToGitPrivateSshKey: String? = null
-
-    @get:Input
-    @get:Optional
-    var passphraseToGitPrivateSshKey: String? = null
+    lateinit var gitSettings: GitSettings
 
     @TaskAction
     fun doAction() {
@@ -31,9 +25,10 @@ open class PostReleaseTask : DefaultTask() {
         if (changelogFile.exists()) {
             ChangelogManager(changelogFile).appendNextVersionDescriptionMarkers()
         }
-        GitReleaseManager(project.rootDir).use {
+
+        GitManager(project.rootDir, gitSettings).use {
             it.newVersionCommit(nextVersion)
-            it.push(Credentials(pathToGitPrivateSshKey, passphraseToGitPrivateSshKey))
+            it.push()
         }
     }
 }

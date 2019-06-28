@@ -57,8 +57,18 @@ releaseSettings {
     /**
      *  Passphrase для приватного ssh ключа. По умолчанию не задана, имеет смысл совместно с pathToGitPrivateSshKey
      */
-    sshKeyPassphrase= null
+    sshKeyPassphrase = null
     
+    /**
+     *  Имя юзера, от которого будет производиться коммит в git. Обязательная настройка.
+     */
+    gitUsername = 'user'
+    
+    /**
+    *  Email юзера, от которого будет производиться коммит в git. Обязательная настройка.
+    */
+    gitEmail = 'user@mail.ru'
+        
     /**
      *  Требовать наличия файла CHANGELOG.md в корне проекта
      */
