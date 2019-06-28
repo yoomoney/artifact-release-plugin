@@ -1,15 +1,15 @@
-### NEXT_VERSION_TYPE=MAJOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [2.0.0]() (28-06-2019)
+
 * Работа с гитом переведена на библиотеку git-client
-* **breaking changes** Для git появились обязательные настройки - email и username, 
+* **breaking changes** Для git появились обязательные настройки - email и username,
 от имени которых будет производиться коммит. Пример настроек, которые необходимо добавить:
-    ```
-    releaseSettings {
-         gitEmail = 'user@mail.ru'
-         gitUsername = 'user'
-    }
-    ```
-### NEXT_VERSION_DESCRIPTION_END
+```
+releaseSettings {
+gitEmail = 'user@mail.ru'
+gitUsername = 'user'
+}
+```
+
 ## [1.4.5]() (27-06-2019)
 
 * Исправлен метод проверки существования тега в git
