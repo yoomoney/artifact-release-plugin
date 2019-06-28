@@ -42,8 +42,9 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
      * Проверяет есть ли такой tag
      */
     fun isTagExists(version: String): Boolean {
-        val tag = git.repository.getRefDatabase().getRefsByPrefix(Constants.R_TAGS)
-                .filter { it.name.contains(version) }
+        val tag = git.repository.refDatabase.getRefsByPrefix(Constants.R_TAGS).filter {
+            it.name == Constants.R_TAGS + version
+        }
         return !tag.isEmpty()
     }
 
