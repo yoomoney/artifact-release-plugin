@@ -1,5 +1,7 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Обновлена версия yamoney-git-client=2.0.0 -> 2.1.0, 
+для исправления автора коммита при локальной сборке
 ### NEXT_VERSION_DESCRIPTION_END
 ## [2.0.0]() (28-06-2019)
 
