@@ -76,7 +76,7 @@ releaseSettings {
 }
 ```
 
-Задачи описанные в `preReleaseTasks` будут выполнени после обновления версии в ```gradle.properties``` и ротации ```CHANGELOG.md``` но до коммита всех изменений в git c сообщением `[Gradle Release Plugin] - pre tag commit` версию и changelog текущего артефакта можно получить через `ReleaseInfoStorage(project.buildDir)`
+Задачи описанные в `preReleaseTasks` будут выполнени после обновления версии в ```gradle.properties``` и ротации ```CHANGELOG.md``` но до коммита всех изменений в git c сообщением `[Gradle Release Plugin] - pre tag commit` версию и changelog текущего артефакта можно получить через `ArtifactVersionProvider(project)`
 
 Некоторые артифакты требуют правок в момент поднятии версии, например спецификация в формате OpenAPI v3. Версии такой спецификации хранится в секции info:version внутри yml файла. 
 Для того что бы поддержать возможность правки артифакдо в момент поднятия версии но до первого комита добавлена секция `preReleaseTasks`  

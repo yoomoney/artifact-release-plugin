@@ -67,6 +67,15 @@ class ChangelogManager(private val changeLog: File) {
     }
 
     /**
+     * Определяем будущую версию артифакта исходя из последней версии в changelog и NEXT_VERSION_TYPE
+     */
+    fun getNextVersion(): String? {
+        val nextVersionType = getNextVersionType() ?: return null
+        val lastVersion = getLastVersion()
+        return SemanticVersionEditor(lastVersion).increment(nextVersionType)
+    }
+
+    /**
      * Убирает маркеры, добавляет описание версии и текущую дату
      * @return новая версия
      */
