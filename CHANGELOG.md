@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [2.1.0]() (29-11-2019)
+
 * Добавлен утилитарный класс ArtifactVersionProvider умеющий определять версию текущего артефакта
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [2.0.1]() (05-07-2019)
 
 * Обновлена версия yamoney-git-client=2.0.0 -> 2.1.0,
