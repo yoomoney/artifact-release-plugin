@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [2.1.0]() (29-11-2019)
 
 * Добавлен утилитарный класс ArtifactVersionProvider умеющий определять версию текущего артефакта
