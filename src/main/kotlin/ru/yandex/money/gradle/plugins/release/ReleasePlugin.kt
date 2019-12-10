@@ -40,9 +40,14 @@ class ReleasePlugin : Plugin<Project> {
 
         project.tasks.create("release", PostReleaseTask::class.java) {
             it.group = "release"
-            it.description = "Execute user release tasks, append markers to changelog, up gradle.property patch version, append snapshot to version, git push"
+            it.description = "Execute user release tasks, append markers to changelog," +
+                    " up gradle.property patch version, append snapshot to version, git push"
         }
 
+        afterEvaluate(project)
+    }
+
+    private fun afterEvaluate(project: Project) {
         project.afterEvaluate {
 
             configReleaseTaskOrder(it)

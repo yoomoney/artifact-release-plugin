@@ -7,7 +7,7 @@ package ru.yandex.money.gradle.plugins.release.version
 class SemanticVersionEditor(currentVersion: String?) {
 
     companion object {
-        private val VERSION_PATTERN = Regex("\\d+\\.\\d+\\.\\d+")
+        private val versionPattern = Regex("\\d+\\.\\d+\\.\\d+")
     }
 
     private var patch: Int
@@ -18,7 +18,7 @@ class SemanticVersionEditor(currentVersion: String?) {
         val version = if (currentVersion == null) {
             "0.0.0"
         } else {
-            if (!currentVersion.matches(VERSION_PATTERN)) {
+            if (!currentVersion.matches(versionPattern)) {
                 throw IllegalArgumentException("Version should be like '\\d+\\.\\d+\\.\\d+', but it is $currentVersion")
             } else {
                 currentVersion

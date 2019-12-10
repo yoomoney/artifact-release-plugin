@@ -35,20 +35,20 @@ class ChangelogManager(private val changeLog: File) {
          * Имя файла с изменениями
          */
         const val DEFAULT_FILE_NAME: String = "CHANGELOG.md"
-        private val PREVIOUS_VERSION_REGEXP: Regex = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
-        private val NEXT_VERSION_TYPE_REGEXP: Regex = Regex("^### NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
+        private val previousVersionRegexp = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
+        private val nextVersionTypeRegexp = Regex("^### NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
     }
 
     /**
      * Есть ли в changelog описание следующей версии
      */
     fun hasNextVersionInfo(): Boolean {
-        return !getNexVersionDescription().isEmpty() && getNextVersionType() != null
+        return getNexVersionDescription().isNotEmpty() && getNextVersionType() != null
     }
 
     private fun getNextVersionType(): ReleaseType? {
         for (line in changeLog.readLines()) {
-            val matchResult = NEXT_VERSION_TYPE_REGEXP.matchEntire(line)
+            val matchResult = nextVersionTypeRegexp.matchEntire(line)
             if (matchResult != null) {
                 return ReleaseType.valueOf(matchResult.groupValues[1])
             }
@@ -58,7 +58,7 @@ class ChangelogManager(private val changeLog: File) {
 
     private fun getLastVersion(): String? {
         for (line in changeLog.readLines()) {
-            val matchEntire = PREVIOUS_VERSION_REGEXP.matchEntire(line)
+            val matchEntire = previousVersionRegexp.matchEntire(line)
             if (matchEntire != null) {
                 return matchEntire.groupValues[1]
             }
@@ -95,7 +95,7 @@ class ChangelogManager(private val changeLog: File) {
                 lastVersion, nextVersion, nextVersionType, nextVersionDescription)
 
         val fullChangeLog = changeLog.readLines().stream()
-                .filter { !NEXT_VERSION_TYPE_REGEXP.matches(it.trim()) }
+                .filter { !nextVersionTypeRegexp.matches(it.trim()) }
                 .collect(Collectors.joining("\n"))
         val indexOfBeginMarker = fullChangeLog.indexOf(DESCRIPTION_BEGIN_MARKER)
         val indexOfEndMarker = fullChangeLog.indexOf(DESCRIPTION_END_MARKER)
@@ -103,7 +103,7 @@ class ChangelogManager(private val changeLog: File) {
         val footer = fullChangeLog.substring(indexOfEndMarker + DESCRIPTION_END_MARKER.length)
 
         val writer = PrintWriter(changeLog)
-        if (!header.isEmpty()) {
+        if (header.isNotEmpty()) {
             writer.println(header)
         }
         writer.println("## [$nextVersion]() (${getCurrentDate()})")

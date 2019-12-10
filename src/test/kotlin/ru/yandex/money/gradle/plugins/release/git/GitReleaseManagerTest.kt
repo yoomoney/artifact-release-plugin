@@ -2,15 +2,15 @@ package ru.yandex.money.gradle.plugins.release.git
 
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.KeyPair
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.junit.ssh.SshTestGitServer
 import org.eclipse.jgit.transport.URIish
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.startsWith
 import org.junit.After
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThat
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -67,8 +67,8 @@ class GitReleaseManagerTest : AbstractReleaseTest() {
         assertThat("Ssh Git Server is up and running", gitServerPort, greaterThan(0))
 
         val remoteSetSsh = git.remoteSetUrl()
-        remoteSetSsh.setUri(URIish("ssh://$TEST_USER_NAME@localhost:$gitServerPort/anyrepo"))
-        remoteSetSsh.setName("origin")
+        remoteSetSsh.setRemoteUri(URIish("ssh://$TEST_USER_NAME@localhost:$gitServerPort/anyrepo"))
+        remoteSetSsh.setRemoteName("origin")
         remoteSetSsh.call()
     }
 
