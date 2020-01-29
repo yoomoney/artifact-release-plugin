@@ -1,9 +1,9 @@
-### NEXT_VERSION_TYPE=MAJOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.0.0]() (29-01-2020)
+
 * Обновлена версия gradle `4.10.2` -> `6.0.1`
 * Обновлены версии зависимостей
 * Исправлены warnings и checkstyle проблемы
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [2.1.0]() (29-11-2019)
 
 * Добавлен утилитарный класс ArtifactVersionProvider умеющий определять версию текущего артефакта
