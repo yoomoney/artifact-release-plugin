@@ -13,15 +13,15 @@ class GradlePropertyVersionManager(val gradleProperty: File) {
          */
         const val DEFAULT_FILE_NAME: String = "gradle.properties"
         private const val SNAPSHOT: String = "-SNAPSHOT"
-        private val VERSION_REGEX: Regex = Regex("^\\s*version\\s*=\\s*(.+)$")
+        private val versionRegex: Regex = Regex("^\\s*version\\s*=\\s*(.+)$")
     }
 
     /**
      * @return текущая версия в [gradleProperty]
      */
     fun getCurrentVersion(): String {
-        val versionLine = gradleProperty.readLines().first { it.matches(VERSION_REGEX) }
-        return VERSION_REGEX.matchEntire(versionLine)!!.groupValues[1].trim()
+        val versionLine = gradleProperty.readLines().first { it.matches(versionRegex) }
+        return versionRegex.matchEntire(versionLine)!!.groupValues[1].trim()
     }
 
     /**
@@ -62,7 +62,7 @@ class GradlePropertyVersionManager(val gradleProperty: File) {
         val lines = gradleProperty.readLines()
         gradleProperty.printWriter().use { out ->
             lines.forEach {
-                if (it.matches(VERSION_REGEX)) {
+                if (it.matches(versionRegex)) {
                     out.println("version=$newVersion")
                 } else {
                     out.println(it)

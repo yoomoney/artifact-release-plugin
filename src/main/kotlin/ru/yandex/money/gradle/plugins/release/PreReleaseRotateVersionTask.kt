@@ -45,7 +45,8 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
         }
 
         log.lifecycle("Start pre release: currentVersion = {}", project.version)
-        val projectVersionManager = GradlePropertyVersionManager(project.file(GradlePropertyVersionManager.DEFAULT_FILE_NAME))
+        val projectVersionManager =
+                GradlePropertyVersionManager(project.file(GradlePropertyVersionManager.DEFAULT_FILE_NAME))
         val changelogFile = project.file(ChangelogManager.DEFAULT_FILE_NAME)
         val releaseInfoStorage = ReleaseInfoStorage(project.buildDir)
         val releaseVersion = if (changelogFile.exists()) {

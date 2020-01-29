@@ -69,7 +69,8 @@ class ArtifactVersionProvider(
     private fun getVersionFromChangeLog(): String? {
         val changelogFile = File(project.rootDir, ChangelogManager.DEFAULT_FILE_NAME)
         if (changelogFile.exists()) {
-            // тут версия может отсутствовать например при сборке в мастере когда уже произошла ротация и не заполнен NextVersionType в changelog.md
+            // тут версия может отсутствовать например при сборке в мастере когда уже произошла ротация
+            // и не заполнен NextVersionType в changelog.md
             return appendBranchNameAndSnapshot(ChangelogManager(changelogFile).getNextVersion())
         }
         // Репозиторий без changelog.md
