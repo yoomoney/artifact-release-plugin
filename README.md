@@ -157,3 +157,20 @@ releaseSettings {
    * 38bcac4 - (HEAD) [Gradle Release Plugin] - new version commit: '1.1.1-SNAPSHOT'. 
    * 1de1fa5 - (tag: refs/tags/1.1.0) [Gradle Release Plugin] - pre tag commit: '1.1.0'. 
    ```   
+   
+### Ссылки на bitbucket pull request в CHANGELOG.md
+Если в проекте есть файл *CHANGELOG.md* и настройка расширения плагина `addPullRequestLinkToChangelog=true` 
+(по-умолчанию `true`), то при релизе рядом с вычесленной версией артефакта в файле *CHANGELOG.md* 
+будет добавлена ссылка на pull request в bitbucket инициировавший релиз. Ссылка выглядит следующим образом:
+   ```
+   CHANGELOG.md
+   ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+   ### NEXT_VERSION_DESCRIPTION_BEGIN
+   ### NEXT_VERSION_DESCRIPTION_END   
+   ## [1.0.0](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/1) (30-05-1992)
+    
+   some description
+   ```      
+Ссылка добавляется на последний вмердженный pull request. Если в процессе получения ссылки возникла 
+какая-либо ошибка, то это не повлияет на релизный процесс, просто ссылка будет отсуствовать.
+Данную функциональность можно выключить задав в расширении плагина `addPullRequestLinkToChangelog=false`.

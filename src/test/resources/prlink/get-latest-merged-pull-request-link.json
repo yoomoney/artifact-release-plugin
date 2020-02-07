@@ -1,0 +1,20 @@
+{
+  "size": 1,
+  "limit": 1,
+  "isLastPage": true,
+  "values": [
+    {
+      "id": 1,
+      "version": 2,
+      "state": "MERGED",
+      "links": {
+        "self": [
+          {
+            "href": "PULL_REQUEST_LINK_PLACEHOLDER"
+          }
+        ]
+      }
+    }
+  ]
+}
+

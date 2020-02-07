@@ -35,7 +35,7 @@ class ChangelogManager(private val changeLog: File) {
          * Имя файла с изменениями
          */
         const val DEFAULT_FILE_NAME: String = "CHANGELOG.md"
-        private val previousVersionRegexp = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
+        private val previousVersionRegexp = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(.*\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
         private val nextVersionTypeRegexp = Regex("^### NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
     }
 
@@ -77,9 +77,11 @@ class ChangelogManager(private val changeLog: File) {
 
     /**
      * Убирает маркеры, добавляет описание версии и текущую дату
+     * @param bitbucketPullRequestLink ссылка на ПР в битбакет, которая будет вставлена при ротации changelog-а
+     *        (пример: https://bitbucket.yamoney.ru/projects/BACKEND/repos/kassa/pull-requests/777)
      * @return новая версия
      */
-    fun updateToNextVersion(): ChangelogReleaseInfo {
+    fun updateToNextVersion(bitbucketPullRequestLink: String?): ChangelogReleaseInfo {
         val nextVersionDescription = getNexVersionDescription()
         val nextVersionType = getNextVersionType()
         if (nextVersionDescription.isEmpty()) {
@@ -106,7 +108,7 @@ class ChangelogManager(private val changeLog: File) {
         if (header.isNotEmpty()) {
             writer.println(header)
         }
-        writer.println("## [$nextVersion]() (${getCurrentDate()})")
+        writer.println("## [$nextVersion](${bitbucketPullRequestLink ?: ""}) (${getCurrentDate()})")
         writer.println()
         writer.println(nextVersionDescription)
         writer.print(footer)

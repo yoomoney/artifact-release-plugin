@@ -6,6 +6,7 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import ru.yandex.money.gradle.plugins.release.changelog.PullRequestLinkProvider
 import ru.yandex.money.gradle.plugins.release.changelog.ChangelogManager
 import ru.yandex.money.gradle.plugins.release.git.GitManager
 import ru.yandex.money.gradle.plugins.release.version.GradlePropertyVersionManager
@@ -24,14 +25,23 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
 
     @get:Input
     lateinit var gitSettings: GitSettings
+    @get:Input
+    lateinit var pullRequestLinkSettings: PullRequestLinkSettings
 
     private fun preReleaseByChangelog(
         changelog: File,
         gradlePropertyVersionManager: GradlePropertyVersionManager,
-        releaseInfoStorage: ReleaseInfoStorage
+        releaseInfoStorage: ReleaseInfoStorage,
+        gitManager: GitManager
     ): String {
         val changelogManager = ChangelogManager(changelog)
-        val nextVersion = changelogManager.updateToNextVersion()
+
+        val bitbucketPullRequestLink: String? =
+                if (pullRequestLinkSettings.pullRequestLinkInChangelogEnabled)
+                    PullRequestLinkProvider(gitManager, pullRequestLinkSettings).getReleasePullRequestLink()
+                else null
+        val nextVersion = changelogManager.updateToNextVersion(bitbucketPullRequestLink)
+
         gradlePropertyVersionManager.updateVersion(nextVersion.releaseVersion)
         releaseInfoStorage.storeChangelog(nextVersion.releaseDescriptionMd)
         return nextVersion.releaseVersion
@@ -39,7 +49,9 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
 
     @TaskAction
     fun rotateVersion() {
-        val uncommittedChanges = GitManager(project.rootDir, gitSettings).getUncommittedChanges()
+        val gitManager = GitManager(project.rootDir, gitSettings)
+
+        val uncommittedChanges = gitManager.getUncommittedChanges()
         if (!uncommittedChanges.isEmpty()) {
             throw GradleException("There are uncommitted changes \n" + uncommittedChanges.joinToString("\n"))
         }
@@ -50,7 +62,7 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
         val changelogFile = project.file(ChangelogManager.DEFAULT_FILE_NAME)
         val releaseInfoStorage = ReleaseInfoStorage(project.buildDir)
         val releaseVersion = if (changelogFile.exists()) {
-            preReleaseByChangelog(changelogFile, projectVersionManager, releaseInfoStorage)
+            preReleaseByChangelog(changelogFile, projectVersionManager, releaseInfoStorage, gitManager)
         } else {
             log.lifecycle("Changelog rotate skip, ${changelogFile.name} not found")
             projectVersionManager.removeSnapshotFromVersion()

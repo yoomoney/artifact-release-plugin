@@ -67,7 +67,7 @@ class ChangelogManagerTest {
         changelog.writeText(readTextFromClassPath("/changelogs/emptyDescription_filledReleaseType.md"))
         println(changelog.readText())
         val manager = ChangelogManager(changelog)
-        Assert.assertNull(manager.updateToNextVersion())
+        Assert.assertNull(manager.updateToNextVersion(null))
     }
 
     @Test
@@ -83,7 +83,7 @@ class ChangelogManagerTest {
         changelog.writeText(readTextFromClassPath("/changelogs/filledDescription_emptyReleaseType.md"))
         println(changelog.readText())
         val manager = ChangelogManager(changelog)
-        Assert.assertNull(manager.updateToNextVersion())
+        Assert.assertNull(manager.updateToNextVersion(null))
     }
 
     @Test
@@ -91,7 +91,7 @@ class ChangelogManagerTest {
         changelog.writeText(readTextFromClassPath("/changelogs/filledMarkerDescription_filledMarkerMinor.md"))
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        val changelogReleaseInfo = manager.updateToNextVersion()
+        val changelogReleaseInfo = manager.updateToNextVersion(null)
         Assert.assertEquals("0.1.0", changelogReleaseInfo.releaseVersion)
         Assert.assertEquals("some description", changelogReleaseInfo.releaseDescriptionMd)
 
@@ -108,7 +108,7 @@ class ChangelogManagerTest {
         writeNextVersionDescription(changelog, "some patch description")
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        val changelogReleaseInfo = manager.updateToNextVersion()
+        val changelogReleaseInfo = manager.updateToNextVersion(null)
         Assert.assertEquals("1.0.1", changelogReleaseInfo.releaseVersion)
         Assert.assertEquals("some patch description", changelogReleaseInfo.releaseDescriptionMd)
 
@@ -125,7 +125,7 @@ class ChangelogManagerTest {
         writeNextVersionDescription(changelog, "some major description")
         println("init changelog:\n" + changelog.readText())
         val manager = ChangelogManager(changelog)
-        val changelogReleaseInfo = manager.updateToNextVersion()
+        val changelogReleaseInfo = manager.updateToNextVersion(null)
         Assert.assertEquals("2.0.0", changelogReleaseInfo.releaseVersion)
         Assert.assertEquals("some major description", changelogReleaseInfo.releaseDescriptionMd)
         println("after edit:\n" + changelog.readText())
@@ -143,22 +143,22 @@ class ChangelogManagerTest {
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description major")
         writeReleaseType(changelog, "MAJOR")
-        Assert.assertEquals("2.0.0", manager.updateToNextVersion().releaseVersion)
+        Assert.assertEquals("2.0.0", manager.updateToNextVersion(null).releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description minor")
         writeReleaseType(changelog, "MINOR")
-        Assert.assertEquals("2.1.0", manager.updateToNextVersion().releaseVersion)
+        Assert.assertEquals("2.1.0", manager.updateToNextVersion(null).releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeNextVersionDescription(changelog, "some new description patch")
         writeReleaseType(changelog, "PATCH")
-        Assert.assertEquals("2.1.1", manager.updateToNextVersion().releaseVersion)
+        Assert.assertEquals("2.1.1", manager.updateToNextVersion("https://localhost/pr/link/1").releaseVersion)
 
         manager.appendNextVersionDescriptionMarkers()
         writeReleaseType(changelog, "MAJOR")
         writeNextVersionDescription(changelog, "some new description major 2")
-        Assert.assertEquals("3.0.0", manager.updateToNextVersion().releaseVersion)
+        Assert.assertEquals("3.0.0", manager.updateToNextVersion("https://localhost/pr/link/2").releaseVersion)
 
         println("after edit:\n" + changelog.readText())
         val expected = readTextFromClassPath("/changelogs/5NextVersion_template.md")
