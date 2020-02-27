@@ -68,9 +68,13 @@ class ReleasePlugin : Plugin<Project> {
             val postReleaseTask = it.tasks.getByName("release") as PostReleaseTask
             postReleaseTask.gitSettings = gitSettings
 
-            val preReleaseRotateVersionTask = it.tasks.getByName("preReleaseRotateVersion")
-                    as PreReleaseRotateVersionTask
+            val preReleaseRotateVersionTask = it.tasks.getByName("preReleaseRotateVersion") as PreReleaseRotateVersionTask
             preReleaseRotateVersionTask.gitSettings = gitSettings
+            preReleaseRotateVersionTask.pullRequestLinkSettings = PullRequestLinkSettings(
+                    pullRequestLinkInChangelogEnabled = releaseExtension.addPullRequestLinkToChangelog,
+                    bitbucketUser = releaseExtension.bitbucketUser,
+                    bitbucketPassword = releaseExtension.bitbucketPassword
+            )
 
             val preReleaseCommitTask = it.tasks.getByName("preRelease") as PreReleaseCommitTask
             preReleaseCommitTask.gitSettings = gitSettings

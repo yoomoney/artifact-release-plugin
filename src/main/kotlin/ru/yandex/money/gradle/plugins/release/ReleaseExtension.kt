@@ -39,4 +39,17 @@ open class ReleaseExtension {
      *  Требовать наличия файла CHANGELOG.md в корне проекта
      */
     var changelogRequired: Boolean = true
+
+    /**
+     *  Добавлять ссылку на bitbucket pull request в CHANGELOG.md при релизе
+     */
+    var addPullRequestLinkToChangelog: Boolean = true
+    /**
+     *  Логин пользователя bitbucket
+     */
+    var bitbucketUser: String? = null
+    /**
+     *  Пароль пользователя bitbucket
+     */
+    var bitbucketPassword: String? = null
 }

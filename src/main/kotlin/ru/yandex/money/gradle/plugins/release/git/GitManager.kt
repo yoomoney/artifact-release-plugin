@@ -1,6 +1,7 @@
 package ru.yandex.money.gradle.plugins.release.git
 
 import org.eclipse.jgit.lib.Constants
+import org.eclipse.jgit.revwalk.RevCommit
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import ru.yandex.money.tools.git.GitRepo
@@ -108,6 +109,24 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
      */
     fun newVersionCommit(nextVersion: String) {
         commit("$NEW_VERSION_RELEASE_PREFIX: '$nextVersion'.")
+    }
+
+    /**
+     * Возвращает remoteOriginUrl
+     */
+    fun getRemoteOriginUrl(): String = git.remoteOriginUrl
+
+    /**
+     * Возвращает коммиты с последнего тэга до head
+     */
+    fun getCommitsFromLastTagToHead(): Iterable<RevCommit> {
+        val tags = git.listTags()
+        return if (tags.isEmpty()) {
+            git.log().add(git.headCommit).call()
+        } else {
+            val lastTaggedCommit = git.repository.parseCommit(tags.last().objectId)
+            git.log().addRange(lastTaggedCommit, git.headCommit).call()
+        }
     }
 
     override fun close() {

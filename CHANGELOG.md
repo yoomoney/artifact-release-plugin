@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Добавление ссылки на bitbucket pull request при ротации changelog.md
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.1.0]() (05-02-2020)
 
