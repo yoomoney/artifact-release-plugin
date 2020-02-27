@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.2.0]() (27-02-2020)
+
 * Добавление ссылки на bitbucket pull request при ротации changelog.md
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.1.0]() (05-02-2020)
 
 * Сборка на java 11
