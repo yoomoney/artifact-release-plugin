@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Замена доменов email @yamoney.ru -> @yoomoney.ru
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.3.0](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/2) (20-11-2020)
 
