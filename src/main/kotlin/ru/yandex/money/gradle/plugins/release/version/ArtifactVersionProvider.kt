@@ -56,7 +56,7 @@ class ArtifactVersionProvider(
         }
         val dummyGitSettings = GitSettings.builder()
                 .withUsername("user")
-                .withEmail("user@yamoney.ru")
+                .withEmail("user@yoomoney.ru")
                 .build()
         val git = GitRepoFactory(dummyGitSettings).createFromExistingDirectory(project.rootDir)
         val currentBranchName = git.currentBranchName
