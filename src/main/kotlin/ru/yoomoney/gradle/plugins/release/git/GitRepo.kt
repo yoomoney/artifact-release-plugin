@@ -47,9 +47,9 @@ class GitRepo internal constructor(private val git: Git, private val settings: G
                 }
             }
         } catch (exc: GitAPIException) {
-            return exc.message!!
+            return exc.message
         } catch (exc: IOException) {
-            return exc.message!!
+            return exc.message
         }
     }
 

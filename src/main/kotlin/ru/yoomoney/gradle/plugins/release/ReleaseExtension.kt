@@ -44,10 +44,28 @@ open class ReleaseExtension {
      *  Добавлять ссылку на gitHub pull request в CHANGELOG.md при релизе
      */
     var addPullRequestLinkToChangelog: Boolean = true
+
     /**
-     *  Токен пользователя github.
+     *  Сервис предоставляющий информацию о пулл-реквестах. Может быть BITBUCKET или GIT_HUB.
+     *  По умолчанию BITBUCKET.
+     */
+    var pullRequestInfoProvider: String = PullRequestInfoProvider.BITBUCKET.name
+
+    /**
+     *  Токен пользователя github. Обязательный, если pullRequestInfoProvider = GIT_HUB
      *  Генерируется в настройках gh "Developer settings -> Personal access tokens."
      *  Токен должен иметь доступ к разделу "repo"
      */
     var githubAccessToken: String? = null
+
+    /**
+     *  Логин пользователя bitbucket. Обязательный, если pullRequestInfoProvider = BITBUCKET
+     */
+    var bitbucketUser: String? = null
+
+    /**
+     *  Пароль пользователя bitbucket. Обязательный, если pullRequestInfoProvider = BITBUCKET
+     */
+    var bitbucketPassword: String? = null
+
 }

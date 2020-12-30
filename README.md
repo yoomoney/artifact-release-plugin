@@ -161,10 +161,10 @@ releaseSettings {
    * 1de1fa5 - (tag: refs/tags/1.1.0) [Gradle Release Plugin] - pre tag commit: '1.1.0'. 
    ```   
    
-### Ссылки на github pull request в CHANGELOG.md
+### Ссылки на pull request в CHANGELOG.md
 Если в проекте есть файл *CHANGELOG.md* и настройка расширения плагина `addPullRequestLinkToChangelog=true` 
 (по-умолчанию `true`), то при релизе рядом с вычесленной версией артефакта в файле *CHANGELOG.md* 
-будет добавлена ссылка на pull request в github инициировавший релиз. Ссылка выглядит следующим образом:
+будет добавлена ссылка на pull request, инициировавший релиз. Ссылка выглядит следующим образом:
    ```
    CHANGELOG.md
    ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
@@ -176,4 +176,23 @@ releaseSettings {
    ```      
 Ссылка добавляется на последний вмердженный pull request. Если в процессе получения ссылки возникла 
 какая-либо ошибка, то это не повлияет на релизный процесс, просто ссылка будет отсуствовать.
-Данную функциональность можно выключить задав в расширении плагина `addPullRequestLinkToChangelog=false`.
+
+Пулл-реквесты могут искаться в GitHub или в Bitbucket, что задается настройкой pullRequestInfoProvider
+Пример конфигурации для github:
+```groovy
+releaseSettings {
+     addPullRequestLinkToChangelog = true
+     pullRequestInfoProvider = "GIT_HUB"
+     githubAccessToken = 'token'               //обязательный параметр для pullRequestInfoProvider = "GIT_HUB"
+}
+```
+
+Пример конфигурации для bitbucket:
+```groovy
+releaseSettings {
+    addPullRequestLinkToChangelog = true
+    pullRequestInfoProvider = "BITBUCKET"
+    bitbucketUser = 'user'                   //обязательный параметр для pullRequestInfoProvider = "BITBUCKET"
+    bitbucketPassword = 'password'           //обязательный параметр для pullRequestInfoProvider = "BITBUCKET"
+}
+```

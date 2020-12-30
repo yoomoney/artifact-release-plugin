@@ -93,6 +93,9 @@ class ReleasePluginTest : AbstractReleaseTest() {
             changelogRequired = false
             gitUsername = 'user'
             gitEmail = 'user@mail.ru'
+            addPullRequestLinkToChangelog = false
+            pullRequestInfoProvider = "GIT_HUB"
+            githubAccessToken = 'token'
         }
        
         """.trimIndent())
@@ -192,6 +195,10 @@ class ReleasePluginTest : AbstractReleaseTest() {
             releaseTasks=['publishArtifacts1']
             gitUsername = 'user'
             gitEmail = 'user@mail.ru'
+            addPullRequestLinkToChangelog = true
+            pullRequestInfoProvider = "BITBUCKET"
+            bitbucketUser = 'user'
+            bitbucketPassword = 'password'
         }
         """)
 

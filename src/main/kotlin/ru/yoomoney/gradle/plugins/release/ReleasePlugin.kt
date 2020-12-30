@@ -72,6 +72,9 @@ class ReleasePlugin : Plugin<Project> {
             preReleaseRotateVersionTask.gitSettings = gitSettings
             preReleaseRotateVersionTask.pullRequestLinkSettings = PullRequestLinkSettings(
                     pullRequestLinkInChangelogEnabled = releaseExtension.addPullRequestLinkToChangelog,
+                    pullRequestInfoProvider = PullRequestInfoProvider.valueOf(releaseExtension.pullRequestInfoProvider),
+                    bitbucketUser = releaseExtension.bitbucketUser,
+                    bitbucketPassword = releaseExtension.bitbucketPassword,
                     githubAccessToken = releaseExtension.githubAccessToken
             )
 

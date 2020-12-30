@@ -5,8 +5,11 @@
   "values": [
     {
       "id": 1,
-      "version": 2,
+      "version": 1,
+      "title": "title",
+      "description": "description",
       "state": "MERGED",
+      "updatedDate":1605274173639,
       "links": {
         "self": [
           {

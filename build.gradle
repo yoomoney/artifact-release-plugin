@@ -18,12 +18,6 @@ repositories {
     jcenter()
 }
 
-
-dependencies {
-    compile group: 'org.kohsuke', name: 'github-api', version: '1.117'
-    compile 'org.eclipse.jgit:org.eclipse.jgit:5.4.0.201906121030-r'
-}
-
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
@@ -41,6 +35,10 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+compileJava {
+    options.compilerArgs.addAll(['--release', '8'])
 }
 
 jar {

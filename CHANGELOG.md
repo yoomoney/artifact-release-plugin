@@ -1,7 +1,7 @@
 ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
 ### NEXT_VERSION_DESCRIPTION_END
-## [3.4.0](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/4) (29-12-2020)
+## [3.4.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/1) (29-12-2020)
   
 * Внесены изменения в связи с переходом в GitHub.
 
