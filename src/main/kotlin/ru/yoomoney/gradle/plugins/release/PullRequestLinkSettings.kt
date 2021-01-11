@@ -5,7 +5,7 @@ package ru.yoomoney.gradle.plugins.release
  */
 data class PullRequestLinkSettings(
         /**
-         *  Добавлять ссылку на github pull request в CHANGELOG.md при релизе
+         *  Добавлять ссылку на pull request в CHANGELOG.md при релизе
          */
         var pullRequestLinkInChangelogEnabled: Boolean,
 
@@ -32,6 +32,11 @@ data class PullRequestLinkSettings(
 /**
  * Провайдер информации о pull-request
  */
-enum class PullRequestInfoProvider {
-    GIT_HUB, BITBUCKET
+enum class PullRequestInfoProvider(val value: String) {
+    GIT_HUB("GitHub"), BITBUCKET("Bitbucket");
+
+    companion object {
+        private val map = values().associateBy(PullRequestInfoProvider::value)
+        fun fromName(value: String) = map[value]
+    }
 }

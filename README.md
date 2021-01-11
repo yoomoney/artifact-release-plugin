@@ -182,8 +182,8 @@ releaseSettings {
 ```groovy
 releaseSettings {
      addPullRequestLinkToChangelog = true
-     pullRequestInfoProvider = "GIT_HUB"
-     githubAccessToken = 'token'               //обязательный параметр для pullRequestInfoProvider = "GIT_HUB"
+     pullRequestInfoProvider = "GitHub"
+     githubAccessToken = 'token'               //обязательный параметр для pullRequestInfoProvider = "GitHub"
 }
 ```
 
@@ -191,8 +191,8 @@ releaseSettings {
 ```groovy
 releaseSettings {
     addPullRequestLinkToChangelog = true
-    pullRequestInfoProvider = "BITBUCKET"
-    bitbucketUser = 'user'                   //обязательный параметр для pullRequestInfoProvider = "BITBUCKET"
-    bitbucketPassword = 'password'           //обязательный параметр для pullRequestInfoProvider = "BITBUCKET"
+    pullRequestInfoProvider = "Bitbucket"
+    bitbucketUser = 'user'                   //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
+    bitbucketPassword = 'password'           //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
 }
 ```

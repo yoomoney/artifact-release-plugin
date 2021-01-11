@@ -41,30 +41,30 @@ open class ReleaseExtension {
     var changelogRequired: Boolean = true
 
     /**
-     *  Добавлять ссылку на gitHub pull request в CHANGELOG.md при релизе
+     *  Добавлять ссылку на pull request в CHANGELOG.md при релизе
      */
     var addPullRequestLinkToChangelog: Boolean = true
 
     /**
-     *  Сервис предоставляющий информацию о пулл-реквестах. Может быть BITBUCKET или GIT_HUB.
-     *  По умолчанию BITBUCKET.
+     *  Сервис предоставляющий информацию о пулл-реквестах. Может быть Bitbucket или GitHub.
+     *  По умолчанию Bitbucket.
      */
-    var pullRequestInfoProvider: String = PullRequestInfoProvider.BITBUCKET.name
+    var pullRequestInfoProvider: String = PullRequestInfoProvider.BITBUCKET.value
 
     /**
-     *  Токен пользователя github. Обязательный, если pullRequestInfoProvider = GIT_HUB
+     *  Токен пользователя github. Обязательный, если pullRequestInfoProvider = GitHub
      *  Генерируется в настройках gh "Developer settings -> Personal access tokens."
      *  Токен должен иметь доступ к разделу "repo"
      */
     var githubAccessToken: String? = null
 
     /**
-     *  Логин пользователя bitbucket. Обязательный, если pullRequestInfoProvider = BITBUCKET
+     *  Логин пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
      */
     var bitbucketUser: String? = null
 
     /**
-     *  Пароль пользователя bitbucket. Обязательный, если pullRequestInfoProvider = BITBUCKET
+     *  Пароль пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
      */
     var bitbucketPassword: String? = null
 

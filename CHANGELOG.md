@@ -3,7 +3,11 @@
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.4.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/1) (29-12-2020)
   
-* Внесены изменения в связи с переходом в GitHub.
+* Внесены изменения в связи с переходом в GitHub:
+    * Переименованы пакеты
+    * Плагин собирается без использования project-plugin, сборка полностью описывается в build.gradle
+    * Сборка переведена на travis (ранее использовался jenkins)
+    * Добавлена настройка pullRequestInfoProvider для выбора провайдера ссылок на PR (gitHub/bitbucket)
 
 ## [3.3.2](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/4) (30-11-2020)
 

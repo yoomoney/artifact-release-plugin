@@ -48,7 +48,7 @@ jar {
                 'Implementation-Title': "$project.name",
                 'Built-By': java.lang.System.getProperty('user.name'),
                 'Built-Date': new Date().format('yyyy-MM-dd'),
-                'Copyright': '2020 NBCO YooMoney LLC',
+                'Copyright': '2021 NBCO YooMoney LLC',
                 'License': 'MIT'
         )
     }
