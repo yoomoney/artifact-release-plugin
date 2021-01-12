@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/yoomoney-gradle-plugins/artifact-release-plugin.svg?branch=master)](https://travis-ci.com/yoomoney-gradle-plugins/artifact-release-plugin)
+[![codecov](https://codecov.io/gh/yoomoney-gradle-plugins/artifact-release-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/yoomoney-gradle-plugins/artifact-release-plugin)
+
 # artifact-release-plugin
 
 Плагин создан для релиза библиотек и артефактов (не обязательно jar) не привязан к конкретному языку программирована/платформе, может быть использован как инструмент для релиза java библиотек, так и спецификаций в формате OpenApi.
@@ -158,19 +161,38 @@ releaseSettings {
    * 1de1fa5 - (tag: refs/tags/1.1.0) [Gradle Release Plugin] - pre tag commit: '1.1.0'. 
    ```   
    
-### Ссылки на bitbucket pull request в CHANGELOG.md
+### Ссылки на pull request в CHANGELOG.md
 Если в проекте есть файл *CHANGELOG.md* и настройка расширения плагина `addPullRequestLinkToChangelog=true` 
 (по-умолчанию `true`), то при релизе рядом с вычесленной версией артефакта в файле *CHANGELOG.md* 
-будет добавлена ссылка на pull request в bitbucket инициировавший релиз. Ссылка выглядит следующим образом:
+будет добавлена ссылка на pull request, инициировавший релиз. Ссылка выглядит следующим образом:
    ```
    CHANGELOG.md
    ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
    ### NEXT_VERSION_DESCRIPTION_BEGIN
    ### NEXT_VERSION_DESCRIPTION_END   
-   ## [1.0.0](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/1) (30-05-1992)
+   ## [1.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/3) (30-05-1992)
     
    some description
    ```      
 Ссылка добавляется на последний вмердженный pull request. Если в процессе получения ссылки возникла 
 какая-либо ошибка, то это не повлияет на релизный процесс, просто ссылка будет отсуствовать.
-Данную функциональность можно выключить задав в расширении плагина `addPullRequestLinkToChangelog=false`.
+
+Пулл-реквесты могут искаться в GitHub или в Bitbucket, что задается настройкой pullRequestInfoProvider
+Пример конфигурации для github:
+```groovy
+releaseSettings {
+     addPullRequestLinkToChangelog = true
+     pullRequestInfoProvider = "GitHub"
+     githubAccessToken = 'token'               //обязательный параметр для pullRequestInfoProvider = "GitHub"
+}
+```
+
+Пример конфигурации для bitbucket:
+```groovy
+releaseSettings {
+    addPullRequestLinkToChangelog = true
+    pullRequestInfoProvider = "Bitbucket"
+    bitbucketUser = 'user'                   //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
+    bitbucketPassword = 'password'           //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
+}
+```
