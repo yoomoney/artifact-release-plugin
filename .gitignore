@@ -16,3 +16,4 @@ tmp/
 out/
 *.log
 .attach_pid*
+git_key
