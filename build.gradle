@@ -15,8 +15,6 @@ plugins {
     id "ru.yoomoney.gradle.plugins.artifact-release-plugin" version "3.4.0"
 }
 
-buildDir = file("target")
-
 releaseSettings {
         releaseTasks = ["build", "bintrayUpload", "publishPlugins"]
         pathToGitPrivateSshKey = System.getenv("GIT_PRIVATE_SSH_KEY_PATH")
