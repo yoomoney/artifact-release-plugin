@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Удалено условие выполнение таски bintrayUpload только для неснапшотных версий, т.к. теперь таска запускается только на мастер ветке.
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.5.0]() (15-01-2021)
 
