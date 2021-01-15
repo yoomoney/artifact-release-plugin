@@ -45,7 +45,7 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
      */
     fun getReleasePullRequestLinkFromBitbucket(): String? {
         return try {
-            val artifactLocation = parseArtifactLocation(URI(gitManager.getRemoteOriginUrl()))
+            val artifactLocation = parseArtifactLocation(gitManager.getRemoteOriginUrl())
 
             val bitbucketClient = BitbucketClient(BitbucketConnectionSettings.builder()
                     .withUri(URI.create(artifactLocation.host))
@@ -76,7 +76,7 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
      */
     fun getReleasePullRequestLinkFromGitHub(): String? {
         return try {
-            val location = parseArtifactLocation(URI(gitManager.getRemoteOriginUrl()))
+            val location = parseArtifactLocation(gitManager.getRemoteOriginUrl())
 
             val latestPullRequest = gitHubClient
                     .getLatestPullRequest(location.project, location.repository, GHIssueState.CLOSED)
@@ -98,13 +98,31 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
         }
     }
 
-    private fun parseArtifactLocation(url: URI): ArtifactLocation {
+    private fun parseArtifactLocation(path: String): ArtifactLocation {
+        if (path.startsWith("http")) {
+            return parseHttpArtifactLocation(URI(path))
+        }
+
+        return parseSshArtifactLocation(path)
+    }
+
+    private fun parseHttpArtifactLocation(url: URI): ArtifactLocation {
         val pathFragments = url.path.split("/")
         val scheme = if (url.scheme.startsWith("http")) url.scheme + "://" else ""
         return ArtifactLocation(
                 host = "$scheme${url.host}:${url.port}",
                 project = pathFragments[1],
                 repository = pathFragments[2].removeSuffix(".git")
+        )
+    }
+
+    private fun parseSshArtifactLocation(path: String): ArtifactLocation {
+        val pathFragments = path.split("@", ":", "/")
+
+        return ArtifactLocation(
+                host = pathFragments[1],
+                project = pathFragments[2],
+                repository = pathFragments[3].removeSuffix(".git")
         )
     }
 
