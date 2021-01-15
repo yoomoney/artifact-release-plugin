@@ -1,9 +1,9 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.5.0]() (15-01-2021)
+
 * Подключен artifact-release-plugin для автоматического выпуска релиза.
 * В travis.yml добавлена стадия выпуска релиза, которая запускается только на master ветке.
 * Добавлен зашифрованный shh-key для git.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.4.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/1) (29-12-2020)
   
 * Внесены изменения в связи с переходом в GitHub:
