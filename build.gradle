@@ -19,7 +19,7 @@ releaseSettings {
         releaseTasks = ["build", "bintrayUpload", "publishPlugins"]
         pathToGitPrivateSshKey = System.getenv("GIT_PRIVATE_SSH_KEY_PATH")
         passphraseToGitPrivateSshKey = System.getenv("GIT_KEY_PASSPHRASE")
-        gitUsername = "YoomoneyRobot"
+        gitUsername = "yoomoney-robot"
         gitEmail = "SvcReleaserBackend@yoomoney.ru"
         changelogRequired = true
         addPullRequestLinkToChangelog = true
