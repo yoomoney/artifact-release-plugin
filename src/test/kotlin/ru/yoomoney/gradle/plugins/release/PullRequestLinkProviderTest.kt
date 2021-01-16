@@ -138,6 +138,41 @@ class PullRequestLinkProviderTest {
     }
 
     @Test
+    fun `should successfully get pull request link github with ssh`() {
+        // given
+        git = Git.init().setDirectory(File(projectDir.root.absolutePath)).setBare(false).call()
+        git.remoteSetUrl()
+                .setRemoteUri(URIish("git@localhost/yoomoney-tech/db-queue.git"))
+                .setRemoteName("origin")
+                .call()
+
+        git.add().addFilepattern("1.txt").call()
+        git.commit().setMessage("1.txt commit").call()
+        git.tag().setName("1.0.0").call()
+
+        git.add().addFilepattern("3.txt").call()
+        val commit = git.commit().setMessage("JavaDoc translation for public packages.").call().toObjectId().name()
+
+        val expectedPullRequestLink = "https://api.github.com/repos/yoomoney-tech/db-queue/pulls/5"
+
+        addGitHubStubs(commit)
+
+        val build = GitHubBuilder()
+                .withOAuthToken(githubSettings.githubAccessToken)
+                .withEndpoint("http://localhost:${wireMockRule.port()}")
+                .build()
+
+        val pullRequestLinkProvider = PullRequestLinkProvider(GitManager(File(projectDir.root.absolutePath), gitSettings),
+                GitHubClient(build), githubSettings)
+
+        // when
+        val pullRequestLink = pullRequestLinkProvider.getReleasePullRequestLink()
+
+        // then
+        assertThat(pullRequestLink, Matchers.equalTo(expectedPullRequestLink))
+    }
+
+    @Test
     fun `should fail get pull request link cause can't call bitbucket`() {
         // given
         git = Git.init().setDirectory(File(projectDir.root.absolutePath)).setBare(false).call()
