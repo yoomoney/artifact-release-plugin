@@ -149,9 +149,6 @@ pluginBundle {
     tags = ['release', 'gradle', 'plugin']
 }
 
-publishPlugins.onlyIf { !project.version.endsWith("-SNAPSHOT") }
-
-
 publishing {
     publications {
         MyPublication(MavenPublication) {
