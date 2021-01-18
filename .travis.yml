@@ -27,15 +27,12 @@ jobs:
     - stage: build
       script:
         - ./gradlew -b build.gradle clean build test --info
-    - stage: preRrelease
-      if: branch = master
-      script:
-        - ./gradlew -b build.gradle preRelease --info -D"gradle.publish.key"=$GRADLE_PUBLISH_KEY -D"gradle.publish.secret"=$GRADLE_PUBLISH_SECRET
     - stage: release
       if: branch = master
       script:
-        - ./gradlew -b build.gradle release --info -D"gradle.publish.key"=$GRADLE_PUBLISH_KEY -D"gradle.publish.secret"=$GRADLE_PUBLISH_SECRET
-
+        - |
+          ./gradlew -b build.gradle preRelease --info -D"gradle.publish.key"=$GRADLE_PUBLISH_KEY -D"gradle.publish.secret"=$GRADLE_PUBLISH_SECRET
+          ./gradlew -b build.gradle release --info -D"gradle.publish.key"=$GRADLE_PUBLISH_KEY -D"gradle.publish.secret"=$GRADLE_PUBLISH_SECRET
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
