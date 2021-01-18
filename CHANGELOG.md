@@ -1,8 +1,8 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.5.1]() (18-01-2021)
+
 * Удалено условие выполнение таски bintrayUpload только для неснапшотных версий, т.к. теперь таска запускается только на мастер ветке.
 * Исправлен парсинг строки с репозиторием в PullRequestLinkProvider. Теперь корректно работает и с http и c ssh урлами.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.5.0]() (15-01-2021)
 
 * Подключен artifact-release-plugin для автоматического выпуска релиза.
