@@ -149,9 +149,6 @@ pluginBundle {
     tags = ['release', 'gradle', 'plugin']
 }
 
-publishPlugins.onlyIf { !project.version.endsWith("-SNAPSHOT") }
-
-
 publishing {
     publications {
         MyPublication(MavenPublication) {
@@ -164,8 +161,6 @@ publishing {
         }
     }
 }
-
-bintrayUpload.onlyIf { !project.version.endsWith("-SNAPSHOT") }
 
 bintray {
     user = System.getenv('BINTRAY_USER')
