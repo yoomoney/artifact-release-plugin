@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney-gradle-plugins/travis-shared-configuration.
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.5.1]() (18-01-2021)
 
