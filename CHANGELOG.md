@@ -1,7 +1,8 @@
 ### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
 * Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney-gradle-plugins/travis-shared-configuration.
-* Поднята версия подключаемого artifact-release-plugin 3.4.0 -> 3.5.1
+* Поднята версия подключаемого artifact-release-plugin 3.4.0 -> 3.5.1 
+* Поправлен парсинг пути к репозиторию для получения ссылки на pull-request
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.5.1]() (18-01-2021)
 
