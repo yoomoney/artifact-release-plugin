@@ -18,9 +18,11 @@ import java.net.URI
  * @author Alexander Esipov
  * @since 13.02.2020
  */
-class PullRequestLinkProvider(private val gitManager: GitManager,
-                              private val gitHubClient: GitHubClient,
-                              private val settings: PullRequestLinkSettings) {
+class PullRequestLinkProvider(
+    private val gitManager: GitManager,
+    private val gitHubClient: GitHubClient,
+    private val settings: PullRequestLinkSettings
+) {
 
     constructor(gitManager: GitManager, pullRequestLinkSettings: PullRequestLinkSettings) :
             this(gitManager, GitHubClient(pullRequestLinkSettings), pullRequestLinkSettings)
@@ -47,24 +49,30 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
         return try {
             val artifactLocation = parseArtifactLocation(gitManager.getRemoteOriginUrl())
 
-            val bitbucketClient = BitbucketClient(BitbucketConnectionSettings.builder()
+            val bitbucketClient = BitbucketClient(
+                BitbucketConnectionSettings.builder()
                     .withUri(URI.create(artifactLocation.host))
-                    .withUser(settings.bitbucketUser
-                            ?: throw IllegalArgumentException("bitbucketUser is absent"))
-                    .withPassword(settings.bitbucketPassword
-                            ?: throw IllegalArgumentException("bitbucketPassword is absent"))
-                    .build())
+                    .withUser(
+                        settings.bitbucketUser
+                            ?: throw IllegalArgumentException("bitbucketUser is absent")
+                    )
+                    .withPassword(
+                        settings.bitbucketPassword
+                            ?: throw IllegalArgumentException("bitbucketPassword is absent")
+                    )
+                    .build()
+            )
 
             return bitbucketClient
-                    .getLatestPullRequestLink(artifactLocation.project, artifactLocation.repository, PullRequestState.MERGED)
-                    .filter {
-                        val bitbucketPullRequestCommitMessages: List<String> = bitbucketClient
-                                .getPullRequestCommits(artifactLocation.project, artifactLocation.repository, it.pullRequestId!!)
-                                .map { it.id!! }
-                        isPullRequestValid(bitbucketPullRequestCommitMessages)
-                    }
-                    .map { it.link }
-                    .orElse(null)
+                .getLatestPullRequestLink(artifactLocation.project, artifactLocation.repository, PullRequestState.MERGED)
+                .filter {
+                    val bitbucketPullRequestCommitMessages: List<String> = bitbucketClient
+                        .getPullRequestCommits(artifactLocation.project, artifactLocation.repository, it.pullRequestId!!)
+                        .map { it.id!! }
+                    isPullRequestValid(bitbucketPullRequestCommitMessages)
+                }
+                .map { it.link }
+                .orElse(null)
         } catch (e: Exception) {
             log.warn("can't getPullRequestLink", e)
             null
@@ -79,12 +87,12 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
             val location = parseArtifactLocation(gitManager.getRemoteOriginUrl())
 
             val latestPullRequest = gitHubClient
-                    .getLatestPullRequest(location.project, location.repository, GHIssueState.CLOSED)
-                    ?: return null
+                .getLatestPullRequest(location.project, location.repository, GHIssueState.CLOSED)
+                ?: return null
 
             val githubPullRequestCommitMessages = latestPullRequest
-                    .listCommits().toList()
-                    .map { it.sha }
+                .listCommits().toList()
+                .map { it.sha }
 
             if (!isPullRequestValid(githubPullRequestCommitMessages)) {
                 return null;
@@ -99,30 +107,37 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
     }
 
     private fun parseArtifactLocation(path: String): ArtifactLocation {
+        val artifactLocation: ArtifactLocation;
+
         if (path.startsWith("http")) {
-            return parseHttpArtifactLocation(URI(path))
+            artifactLocation = parseHttpArtifactLocation(URI(path))
+        } else {
+            artifactLocation = parseSshArtifactLocation(path);
         }
 
-        return parseSshArtifactLocation(path)
+        log.info("Got artifact location for pull-request's link: artifactLocation{}", artifactLocation)
+        return artifactLocation
     }
 
     private fun parseHttpArtifactLocation(url: URI): ArtifactLocation {
         val pathFragments = url.path.split("/")
         val scheme = if (url.scheme.startsWith("http")) url.scheme + "://" else ""
         return ArtifactLocation(
-                host = "$scheme${url.host}:${url.port}",
-                project = pathFragments[1],
-                repository = pathFragments[2].removeSuffix(".git")
+            host = "$scheme${url.host}:${url.port}",
+            project = pathFragments[1],
+            repository = pathFragments[2].removeSuffix(".git")
         )
     }
 
     private fun parseSshArtifactLocation(path: String): ArtifactLocation {
-        val pathFragments = path.split("@", ":", "/")
+        //парсит строку вида ssh://git@host/project/repository.git или git@host:project/repository.git
+        val pathWithousScheme = path.split("git@")[1]
+        val pathFragments = pathWithousScheme.split("/", ":")
 
         return ArtifactLocation(
-                host = pathFragments[1],
-                project = pathFragments[2],
-                repository = pathFragments[3].removeSuffix(".git")
+            host = "https://${pathFragments[0]}",
+            project = pathFragments[1],
+            repository = pathFragments[2].removeSuffix(".git")
         )
     }
 
@@ -131,14 +146,14 @@ class PullRequestLinkProvider(private val gitManager: GitManager,
      */
     private fun isPullRequestValid(commitsId: List<String>): Boolean {
         val gitCommitMessagesFromLastTag = gitManager
-                .getCommitsFromLastTagToHead()
-                .map { it.toObjectId().name() }
+            .getCommitsFromLastTagToHead()
+            .map { it.toObjectId().name() }
 
         return if (gitCommitMessagesFromLastTag.containsAll(commitsId)) {
             true
         } else {
             log.warn("unknown pull request commits: messages={}",
-                    commitsId.filter { !gitCommitMessagesFromLastTag.contains(it) })
+                commitsId.filter { !gitCommitMessagesFromLastTag.contains(it) })
             false
         }
     }
