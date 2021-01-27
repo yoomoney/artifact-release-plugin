@@ -118,7 +118,7 @@ class PullRequestLinkProviderTest {
         git.add().addFilepattern("3.txt").call()
         val commit = git.commit().setMessage("JavaDoc translation for public packages.").call().toObjectId().name()
 
-        val expectedPullRequestLink = "https://api.github.com/repos/yoomoney-tech/db-queue/pulls/5"
+        val expectedPullRequestLink = "https://github.com/yoomoney-tech/db-queue/pull/5"
 
         addGitHubStubs(commit)
 
@@ -153,7 +153,7 @@ class PullRequestLinkProviderTest {
         git.add().addFilepattern("3.txt").call()
         val commit = git.commit().setMessage("JavaDoc translation for public packages.").call().toObjectId().name()
 
-        val expectedPullRequestLink = "https://api.github.com/repos/yoomoney-tech/db-queue/pulls/5"
+        val expectedPullRequestLink = "https://github.com/yoomoney-tech/db-queue/pull/5"
 
         addGitHubStubs(commit)
 
