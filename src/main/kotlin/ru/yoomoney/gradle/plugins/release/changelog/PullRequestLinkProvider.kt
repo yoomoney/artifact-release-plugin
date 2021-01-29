@@ -98,7 +98,7 @@ class PullRequestLinkProvider(
                 return null;
             }
 
-            return latestPullRequest.url.toString()
+            return latestPullRequest.htmlUrl.toString()
 
         } catch (e: Exception) {
             log.warn("can't getPullRequestLink", e)

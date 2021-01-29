@@ -1,7 +1,8 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Поднята версия artifact-release-plugin
 ### NEXT_VERSION_DESCRIPTION_END
-## [3.6.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/7) (22-01-2021)
+## [3.6.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/7) (22-01-2021)
 
 * Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney-gradle-plugins/travis-shared-configuration.
 * Поднята версия подключаемого artifact-release-plugin 3.4.0 -> 3.5.1
@@ -26,15 +27,15 @@
     * Сборка переведена на travis (ранее использовался jenkins)
     * Добавлена настройка pullRequestInfoProvider для выбора провайдера ссылок на PR (gitHub/bitbucket)
 
-## [3.3.2](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/4) (30-11-2020)
+## [3.3.2]() (30-11-2020)
 
 * Обновлена версия kotlin 1.3.71 -> 1.3.50
 
-## [3.3.1](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/3) (23-11-2020)
+## [3.3.1]() (23-11-2020)
 
 * Замена доменов email @yamoney.ru -> @yoomoney.ru
 
-## [3.3.0](https://bitbucket.yamoney.ru/projects/BACKEND-GRADLE-PLUGINS/repos/artifact-release-plugin/pull-requests/2) (20-11-2020)
+## [3.3.0]() (20-11-2020)
 
 * Поднята версия gradle: 6.0.1 -> 6.4.1.
 
