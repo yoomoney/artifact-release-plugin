@@ -1,6 +1,6 @@
 ### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
-* Поднята версия artifact-release-plugin
+* Поднята версия artifact-release-plugin 
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.6.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/7) (22-01-2021)
 
