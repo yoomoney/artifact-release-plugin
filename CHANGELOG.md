@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
-* Поднята версия artifact-release-plugin 
-### NEXT_VERSION_DESCRIPTION_END
+## [3.7.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/9) (03-02-2021)
+
+* Поднята версия artifact-release-plugin
+
 ## [3.6.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/7) (22-01-2021)
 
 * Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney-gradle-plugins/travis-shared-configuration.
