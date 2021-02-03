@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [3.7.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/9) (03-02-2021)
 
 * Поднята версия artifact-release-plugin
