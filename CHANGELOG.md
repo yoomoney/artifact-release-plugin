@@ -1,9 +1,9 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.8.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/11) (04-02-2021)
+
 * Удален ключ git_key.enc в связи с изменением логики работы с git_key.
-  Подробности см. https://github.com/yoomoney-gradle-plugins/travis-shared-configuration/pull/8
+Подробности см. https://github.com/yoomoney-gradle-plugins/travis-shared-configuration/pull/8
 * Поднята версия artifact-release-plugin
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.7.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/9) (03-02-2021)
 
 * Поднята версия artifact-release-plugin
