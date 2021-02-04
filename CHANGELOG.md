@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Понижена версия зависимостей kotlin по причине проблем при сборке на windows: https://youtrack.jetbrains.com/issue/KT-26513
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.7.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/9) (03-02-2021)
 
