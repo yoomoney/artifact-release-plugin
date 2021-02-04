@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.8.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/12) (04-02-2021)
+
 * Понижена версия зависимостей kotlin по причине проблем при сборке на windows: https://youtrack.jetbrains.com/issue/KT-26513
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.8.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/11) (04-02-2021)
 
 * Удален ключ git_key.enc в связи с изменением логики работы с git_key.
