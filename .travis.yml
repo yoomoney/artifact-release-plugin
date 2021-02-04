@@ -1,4 +1,4 @@
-if: commit_message !~ "[Gradle Release Plugin]"
+if: commit_message !~ /(Gradle)/
 
 language: java
 jdk:
