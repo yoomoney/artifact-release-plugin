@@ -1,5 +1,3 @@
-if: commit_message !~ /(\[Gradle Release Plugin\])/
-
 language: java
 jdk:
   - openjdk11
@@ -31,6 +29,7 @@ before_script:
   - git checkout -f $TRAVIS_BRANCH
   - export GIT_PRIVATE_SSH_KEY_PATH=~/.ssh/git_key
 
+if: commit_message !~ /(\[Gradle Release Plugin\])/
 
 jobs:
   include:
