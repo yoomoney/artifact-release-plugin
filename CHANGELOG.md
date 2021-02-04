@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [3.8.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/12) (04-02-2021)
 
 * Понижена версия зависимостей kotlin по причине проблем при сборке на windows: https://youtrack.jetbrains.com/issue/KT-26513
