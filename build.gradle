@@ -56,7 +56,7 @@ javaArtifactPublishSettings {
             developer {
                 name = 'Oleg Kandaurov'
                 email = 'kandaurov@yoomoney.ru'
-                organization = 'Yoomoney'
+                organization = 'YooMoney'
                 organizationUrl = 'https://yoomoney.ru'
             }
         }
