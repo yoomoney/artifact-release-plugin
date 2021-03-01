@@ -45,6 +45,23 @@ javaArtifactPublishSettings {
     snapshotRepository = "https://oss.sonatype.org/content/repositories/snapshots/"
     releaseRepository = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
     signing = true
+    publicationAdditionalInfo {
+        addInfo = true
+        organizationUrl = "https://github.com/yoomoney-gradle-plugins"
+        license {
+            name = "MIT License"
+            url = "http://www.opensource.org/licenses/mit-license.php"
+        }
+        developers {
+            developer {
+                name = 'Oleg Kandaurov'
+                email = 'kandaurov@yoomoney.ru'
+                organization = 'Yoomoney'
+                organizationUrl = 'https://yoomoney.ru'
+            }
+        }
+        description = "Gradle artifact release plugin"
+    }
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -137,6 +154,4 @@ pluginBundle {
 // отключаем таску публикации плагина в мавен репозиторий,
 // которая появляется из-за объявления publication в plugin-publish.
 // публиковать этот артефакт нам не нужно, но публикация запуститься при вызове агрегирующей таски `publish`
-afterEvaluate {
-    tasks.getByName("publishPluginMavenPublicationToMavenRepository").enabled(false)
-}
+project.getExtensions().getByType(GradlePluginDevelopmentExtension.class).setAutomatedPublishing(false)
