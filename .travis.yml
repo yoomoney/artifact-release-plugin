@@ -36,7 +36,7 @@ jobs:
   include:
     - stage: build
       script:
-        - ./gradlew -b build.gradle clean build test --info
+        - ./gradlew -b build.gradle clean build test publish --info
     - stage: release
       if: branch = master
       script:
