@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [3.9.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/13) (02-03-2021)
 
 * Подключен java-artifact-publish-plugin. Теперь публикация осуществляется в MavenCentral.
