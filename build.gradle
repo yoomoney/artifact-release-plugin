@@ -1,157 +1,18 @@
 buildscript {
-    repositories {
-        jcenter()
-        dependencies {
-            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50'
-            classpath 'ru.yoomoney.gradle.plugins:artifact-release-plugin:3.7.0'
-            classpath 'ru.yoomoney.gradle.plugins:java-artifact-publish-plugin:3.0.0'
-        }
-    }
+    apply from: 'project.gradle', to: buildscript
 }
 
-plugins {
-    id "com.gradle.plugin-publish" version "0.12.0"
-    id "java-gradle-plugin"
-    id "ru.yoomoney.gradle.plugins.artifact-release-plugin" version "3.7.0"
-}
+apply plugin: "ru.yoomoney.gradle.plugins.gradle-project-plugin"
 
-releaseSettings {
-        releaseTasks = ["build", "publish", "publishPlugins"]
-        pathToGitPrivateSshKey = System.getenv("GIT_PRIVATE_SSH_KEY_PATH")
-        passphraseToGitPrivateSshKey = System.getenv("GIT_KEY_PASSPHRASE")
-        gitUsername = "yoomoney-robot"
-        gitEmail = "SvcReleaserBackend@yoomoney.ru"
-        changelogRequired = true
-        addPullRequestLinkToChangelog = true
-        pullRequestInfoProvider = "GitHub"
-        githubAccessToken = System.getenv("GITHUB_TOKEN")
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'ru.yoomoney.gradle.plugins.java-artifact-publish-plugin'
 apply from: 'dependencies.gradle'
 
-javaArtifactPublishSettings {
-    nexusUser = System.getenv("NEXUS_USER")
-    nexusPassword = System.getenv("NEXUS_PASSWORD")
-    artifactId = 'artifact-release-plugin'
-    groupId = 'ru.yoomoney.gradle.plugins'
-    snapshotRepository = "https://oss.sonatype.org/content/repositories/snapshots/"
-    releaseRepository = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    signing = true
-    publicationAdditionalInfo {
-        addInfo = true
-        organizationUrl = "https://github.com/yoomoney-gradle-plugins"
-        license {
-            name = "MIT License"
-            url = "http://www.opensource.org/licenses/mit-license.php"
-        }
-        developers {
-            developer {
-                name = 'Oleg Kandaurov'
-                email = 'kandaurov@yoomoney.ru'
-                organization = 'YooMoney'
-                organizationUrl = 'https://yoomoney.ru'
-            }
-        }
-        description = "Gradle artifact release plugin"
-    }
-}
-
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-compileJava {
-    options.compilerArgs.addAll(['--release', '8'])
-}
-
-jar {
-    manifest {
-        attributes(
-                'Implementation-Version': "$project.version",
-                'Implementation-Title': "$project.name",
-                'Built-By': java.lang.System.getProperty('user.name'),
-                'Built-Date': new Date().format('yyyy-MM-dd'),
-                'Copyright': '2021 NBCO YooMoney LLC',
-                'License': 'MIT'
-        )
-    }
-
-    from(projectDir.absolutePath) {
-        include "CHANGELOG.md", "README.md"
-        into "META-INF"
-    }
-}
-
-apply plugin: 'idea'
-idea {
-    project {
-        jdkName = '1.8'
-        languageLevel = '1.8'
-        vcs = 'Git'
-    }
-    module {
-        downloadJavadoc = true
-        downloadSources = true
-    }
-}
-test {
-    systemProperty "file.encoding", "UTF-8"
-    testLogging {
-        events "skipped", "failed"
-        exceptionFormat "full"
-        showExceptions true
-        showCauses true
-        showStackTraces true
-    }
-}
-
-apply plugin: "jacoco"
-jacocoTestReport {
-    reports {
-        html.enabled = true
-        xml.enabled = true
-    }
-}
-check.dependsOn jacocoTestReport
-
-group = 'ru.yoomoney.gradle.plugins'
-
-
+artifactId = 'artifact-release-plugin'
 gradlePlugin {
     plugins {
         artifactReleasePlugin {
-            id = 'ru.yoomoney.gradle.plugins.artifact-release-plugin'
+            id = "ru.yoomoney.gradle.plugins.artifact-release-plugin"
             implementationClass = 'ru.yoomoney.gradle.plugins.release.ReleasePlugin'
             displayName = 'Artifact Release Plugin'
         }
     }
 }
-
-pluginBundle {
-    website = 'https://github.com/yoomoney-gradle-plugins/artifact-release-plugin'
-    vcsUrl = 'https://github.com/yoomoney-gradle-plugins/artifact-release-plugin.git'
-    description = 'Gradle artifact release plugin'
-    tags = ['release', 'gradle', 'plugin']
-}
-
-// отключаем таску публикации плагина в мавен репозиторий,
-// которая появляется из-за объявления publication в plugin-publish.
-// публиковать этот артефакт нам не нужно, но публикация запуститься при вызове агрегирующей таски `publish`
-project.getExtensions().getByType(GradlePluginDevelopmentExtension.class).setAutomatedPublishing(false)
