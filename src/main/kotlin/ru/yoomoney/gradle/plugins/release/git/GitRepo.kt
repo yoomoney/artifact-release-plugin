@@ -2,9 +2,20 @@ package ru.yoomoney.gradle.plugins.release.git
 
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
-import org.eclipse.jgit.api.*
+import org.eclipse.jgit.api.CommitCommand
+import org.eclipse.jgit.api.Git
+import org.eclipse.jgit.api.PushCommand
+import org.eclipse.jgit.api.TagCommand
+import org.eclipse.jgit.api.StatusCommand
+import org.eclipse.jgit.api.AddCommand
+import org.eclipse.jgit.api.TransportCommand
+import org.eclipse.jgit.api.LogCommand
 import org.eclipse.jgit.api.errors.GitAPIException
-import org.eclipse.jgit.lib.*
+import org.eclipse.jgit.lib.ObjectId
+import org.eclipse.jgit.lib.Ref
+import org.eclipse.jgit.lib.Constants
+import org.eclipse.jgit.lib.Repository
+import org.eclipse.jgit.lib.PersonIdent
 import org.eclipse.jgit.transport.JschConfigSessionFactory
 import org.eclipse.jgit.transport.OpenSshConfig
 import org.eclipse.jgit.transport.SshTransport
@@ -13,7 +24,7 @@ import org.eclipse.jgit.util.FS
 import org.eclipse.jgit.util.StringUtils
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.util.*
+import java.util.Objects
 
 /**
  * Класс для работы с git
@@ -140,7 +151,7 @@ class GitRepo internal constructor(private val git: Git, private val settings: G
         /**
          * Конфигурирование взаимодействия с гитом
          *
-         * @param command  команда, для которой нужна конфигурация
+         * @param command команда, для которой нужна конфигурация
          * @param settings настройки для конфигурации
          */
         fun configureTransport(command: TransportCommand<*, *>, settings: GitSettings) {
@@ -166,5 +177,4 @@ class GitRepo internal constructor(private val git: Git, private val settings: G
             }
         }
     }
-
 }

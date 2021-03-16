@@ -3,13 +3,12 @@ package ru.yoomoney.gradle.plugins.release.bitbucket
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashape.unirest.http.HttpResponse
-import com.mashape.unirest.http.JsonNode
 import com.mashape.unirest.http.Unirest
 import com.mashape.unirest.http.exceptions.UnirestException
 import org.apache.http.HttpStatus
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.util.*
+import java.util.Optional
 import javax.annotation.Nonnull
 
 /**
@@ -26,20 +25,22 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
     /**
      * Возвращает ссылку на последний вмердженный ПР указанного репозитория
      *
-     * @param project    проект
+     * @param project проект
      * @param repository репозиторий
-     * @param state      состояние. Возможные значения: OPEN, DECLINED or MERGED.
+     * @param state состояние. Возможные значения: OPEN, DECLINED or MERGED.
      */
     @Nonnull
-    fun getLatestPullRequestLink(@Nonnull project: String?,
-                                 @Nonnull repository: String?,
-                                 @Nonnull state: PullRequestState): Optional<BitbucketPullRequestLink> {
+    fun getLatestPullRequestLink(
+        @Nonnull project: String?,
+        @Nonnull repository: String?,
+        @Nonnull state: PullRequestState
+    ): Optional<BitbucketPullRequestLink> {
         log.info("getLatestMergedPullRequestLink: project={}, repository={}", project, repository)
         val response: HttpResponse<String>
         response = try {
             val urlPattern = "%s%s/rest/api/1.0/projects/%s/repos/%s/pull-requests?state=%s&order=NEWEST"
             val host = settings.uri!!.toASCIIString()
-            val schema = if (host.startsWith("http")) "" else "https://" //если host содержит схему
+            val schema = if (host.startsWith("http")) "" else "https://" // если host содержит схему
             Unirest
                     .get(String.format(urlPattern, schema, host, project, repository, state.code))
                     .basicAuth(settings.user, settings.password)
@@ -75,15 +76,17 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
      * Возвращает список коммитов пул риквеста
      */
     @Nonnull
-    fun getPullRequestCommits(@Nonnull project: String?,
-                              @Nonnull repository: String?,
-                              pullRequestId: Long): List<BitbucketPullRequestCommit> {
+    fun getPullRequestCommits(
+        @Nonnull project: String?,
+        @Nonnull repository: String?,
+        pullRequestId: Long
+    ): List<BitbucketPullRequestCommit> {
         log.info("getPullRequestCommits: project={}, repository={}", project, repository)
         val response: HttpResponse<String>
         response = try {
             val urlPattern = "%s%s/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/commits"
             val host = settings.uri!!.toASCIIString()
-            val schema = if (host.startsWith("http")) "" else "https://" //если host содержит схему
+            val schema = if (host.startsWith("http")) "" else "https://" // если host содержит схему
             Unirest
                     .get(String.format(urlPattern, schema, host, project, repository, pullRequestId))
                     .basicAuth(settings.user, settings.password)

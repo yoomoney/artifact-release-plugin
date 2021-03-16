@@ -3,6 +3,7 @@ buildscript {
 }
 
 apply plugin: "ru.yoomoney.gradle.plugins.gradle-project-plugin"
+apply plugin: "ru.yoomoney.gradle.plugins.kotlin-plugin"
 
 apply from: 'dependencies.gradle'
 

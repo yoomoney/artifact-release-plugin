@@ -1,6 +1,6 @@
 package ru.yoomoney.gradle.plugins.release.bitbucket
 
-import java.util.*
+import java.util.Objects
 import javax.annotation.Nonnull
 
 /**
@@ -9,8 +9,10 @@ import javax.annotation.Nonnull
  * @author Alexander Esipov (asesipov@yamoney.ru)
  * @since 06.02.2020
  */
-class BitbucketPullRequestLink private constructor(@Nonnull pullRequestId: Long?,
-                                                   @Nonnull link: String?) {
+class BitbucketPullRequestLink private constructor(
+    @Nonnull pullRequestId: Long?,
+    @Nonnull link: String?
+) {
     @get:Nonnull
     @Nonnull
     val pullRequestId: Long?

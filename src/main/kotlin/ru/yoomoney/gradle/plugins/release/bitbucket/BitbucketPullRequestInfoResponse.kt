@@ -2,7 +2,7 @@ package ru.yoomoney.gradle.plugins.release.bitbucket
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
+import java.util.Objects
 import javax.annotation.Nonnull
 
 /**

@@ -95,11 +95,10 @@ class PullRequestLinkProvider(
                 .map { it.sha }
 
             if (!isPullRequestValid(githubPullRequestCommitMessages)) {
-                return null;
+                return null
             }
 
             return latestPullRequest.htmlUrl.toString()
-
         } catch (e: Exception) {
             log.warn("can't getPullRequestLink", e)
             null
@@ -107,12 +106,12 @@ class PullRequestLinkProvider(
     }
 
     private fun parseArtifactLocation(path: String): ArtifactLocation {
-        val artifactLocation: ArtifactLocation;
+        val artifactLocation: ArtifactLocation
 
         if (path.startsWith("http")) {
             artifactLocation = parseHttpArtifactLocation(URI(path))
         } else {
-            artifactLocation = parseSshArtifactLocation(path);
+            artifactLocation = parseSshArtifactLocation(path)
         }
 
         log.info("Got artifact location for pull-request's link: artifactLocation{}", artifactLocation)
@@ -130,7 +129,7 @@ class PullRequestLinkProvider(
     }
 
     private fun parseSshArtifactLocation(path: String): ArtifactLocation {
-        //парсит строку вида ssh://git@host/project/repository.git или git@host:project/repository.git
+        // парсит строку вида ssh://git@host/project/repository.git или git@host:project/repository.git
         val pathWithousScheme = path.split("git@")[1]
         val pathFragments = pathWithousScheme.split("/", ":")
 
