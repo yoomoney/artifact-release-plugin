@@ -10,12 +10,14 @@ import javax.annotation.Nonnull
  * @author Alexander Esipov (asesipov@yamoney.ru)
  * @since 06.02.2020
  */
-class BitbucketPullRequestCommit @JsonCreator private constructor(@field:Nonnull @get:Nonnull
-                                                                  @get:JsonProperty("id")
-                                                                  @param:Nonnull @param:JsonProperty("id") val id: String?,
-                                                                  @field:Nonnull @get:Nonnull
-                                                                  @get:JsonProperty("message")
-                                                                  @param:Nonnull @param:JsonProperty("message") val message: String?) {
+class BitbucketPullRequestCommit @JsonCreator private constructor(
+    @field:Nonnull @get:Nonnull
+    @get:JsonProperty("id")
+    @param:Nonnull @param:JsonProperty("id") val id: String?,
+    @field:Nonnull @get:Nonnull
+    @get:JsonProperty("message")
+    @param:Nonnull @param:JsonProperty("message") val message: String?
+) {
 
     override fun toString(): String {
         return "BitbucketPullRequestCommit{" +
@@ -58,5 +60,4 @@ class BitbucketPullRequestCommit @JsonCreator private constructor(@field:Nonnull
             return Builder()
         }
     }
-
 }

@@ -29,10 +29,10 @@ open class PreReleaseRotateVersionTask : DefaultTask() {
     lateinit var pullRequestLinkSettings: PullRequestLinkSettings
 
     private fun preReleaseByChangelog(
-            changelog: File,
-            gradlePropertyVersionManager: GradlePropertyVersionManager,
-            releaseInfoStorage: ReleaseInfoStorage,
-            gitManager: GitManager
+        changelog: File,
+        gradlePropertyVersionManager: GradlePropertyVersionManager,
+        releaseInfoStorage: ReleaseInfoStorage,
+        gitManager: GitManager
     ): String {
         val changelogManager = ChangelogManager(changelog)
 

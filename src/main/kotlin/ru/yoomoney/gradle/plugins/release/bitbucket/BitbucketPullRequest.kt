@@ -2,19 +2,20 @@ package ru.yoomoney.gradle.plugins.release.bitbucket
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
+import java.util.Objects
 import javax.annotation.Nonnull
 
 /**
  * Информация о пулреквесте, полученная из bitbucket
  */
 class BitbucketPullRequest @JsonCreator private constructor(
-        @Nonnull @JsonProperty("id") pullRequestId: Long,
-        @Nonnull @JsonProperty("version") version: Long,
-        @Nonnull @JsonProperty("state") state: String,
-        @Nonnull @JsonProperty("title") title: String,
-        @Nonnull @JsonProperty("updatedDate") updatedDate: Long,
-        @Nonnull @JsonProperty("links") link: Link) {
+    @Nonnull @JsonProperty("id") pullRequestId: Long,
+    @Nonnull @JsonProperty("version") version: Long,
+    @Nonnull @JsonProperty("state") state: String,
+    @Nonnull @JsonProperty("title") title: String,
+    @Nonnull @JsonProperty("updatedDate") updatedDate: Long,
+    @Nonnull @JsonProperty("links") link: Link
+) {
     @get:Nonnull
     @Nonnull
     val pullRequestId: Long
@@ -39,14 +40,14 @@ class BitbucketPullRequest @JsonCreator private constructor(
     }
 
     override fun toString(): String {
-        return ("BitbucketPullRequest{"
-                + "pullRequestId=" + pullRequestId
-                + ", version=" + version
-                + ", state=" + state
-                + ", title=" + title
-                + ", updatedDate=" + updatedDate
-                + ", link=" + link
-                + "}")
+        return ("BitbucketPullRequest{" +
+                "pullRequestId=" + pullRequestId +
+                ", version=" + version +
+                ", state=" + state +
+                ", title=" + title +
+                ", updatedDate=" + updatedDate +
+                ", link=" + link +
+                "}")
     }
 
     /**

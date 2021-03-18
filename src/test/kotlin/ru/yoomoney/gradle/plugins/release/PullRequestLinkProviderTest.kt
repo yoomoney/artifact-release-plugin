@@ -18,7 +18,6 @@ import ru.yoomoney.gradle.plugins.release.git.GitSettings
 import ru.yoomoney.gradle.plugins.release.github.GitHubClient
 import java.io.File
 
-
 class PullRequestLinkProviderTest {
 
     @get:Rule
@@ -49,7 +48,6 @@ class PullRequestLinkProviderTest {
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/user.json"))))
-
 
         WireMock.stubFor(WireMock.get("/repos/yoomoney-tech/db-queue")
                 .willReturn(WireMock.aResponse()
@@ -297,6 +295,5 @@ class PullRequestLinkProviderTest {
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/user.json"))))
-
     }
 }

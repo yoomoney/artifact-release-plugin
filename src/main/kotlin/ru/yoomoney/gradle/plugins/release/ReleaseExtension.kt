@@ -67,5 +67,4 @@ open class ReleaseExtension {
      *  Пароль пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
      */
     var bitbucketPassword: String? = null
-
 }

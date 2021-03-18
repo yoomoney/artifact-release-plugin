@@ -96,7 +96,7 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
             newFiles.forEach { add.addFilepattern(it) }
             add.call()
         }
-        commit("${PRE_TAG_COMMIT_PREFIX}: '$version'.")
+        commit("$PRE_TAG_COMMIT_PREFIX: '$version'.")
         addTag(version)
     }
 
@@ -105,7 +105,7 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
      * @param nextVersion версия следующего релиза
      */
     fun newVersionCommit(nextVersion: String) {
-        commit("${NEW_VERSION_RELEASE_PREFIX}: '$nextVersion'.")
+        commit("$NEW_VERSION_RELEASE_PREFIX: '$nextVersion'.")
     }
 
     /**

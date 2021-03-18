@@ -9,9 +9,11 @@ import javax.annotation.Nonnull
  * @author Oleg Kandaurov
  * @since 28.01.2019
  */
-class BitbucketConnectionSettings private constructor(@param:Nonnull val uri: URI?,
-                                                      @param:Nonnull val user: String?,
-                                                      @param:Nonnull val password: String?) {
+class BitbucketConnectionSettings private constructor(
+    @param:Nonnull val uri: URI?,
+    @param:Nonnull val user: String?,
+    @param:Nonnull val password: String?
+) {
     /**
      * Базовый урл
      */
@@ -67,5 +69,4 @@ class BitbucketConnectionSettings private constructor(@param:Nonnull val uri: UR
             return Builder()
         }
     }
-
 }

@@ -13,8 +13,8 @@ import java.util.function.Predicate
  * Предоставляет информацию о версии артифакта который сейчас собирается
  */
 class ArtifactVersionProvider(
-        private val project: Project,
-        private val isCurrentBranchForRelease: Predicate<String> =
+    private val project: Project,
+    private val isCurrentBranchForRelease: Predicate<String> =
                 Predicate { branchName: String -> branchName == "master" || branchName.startsWith("release/") }
 ) {
 

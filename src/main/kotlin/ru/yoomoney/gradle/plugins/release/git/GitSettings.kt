@@ -6,7 +6,9 @@ package ru.yoomoney.gradle.plugins.release.git
  * @author horyukova
  * @since 19.12.2020
  */
-data class GitSettings(val username: String,
-                       val email: String,
-                       val sshKeyPath: String?,
-                       val passphraseSshKey: String?)
+data class GitSettings(
+    val username: String,
+    val email: String,
+    val sshKeyPath: String?,
+    val passphraseSshKey: String?
+)

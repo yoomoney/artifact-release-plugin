@@ -3,7 +3,6 @@ package ru.yoomoney.gradle.plugins.release.git
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
-import javax.annotation.Nonnull
 
 /**
  * Класс для создания GitRepo
