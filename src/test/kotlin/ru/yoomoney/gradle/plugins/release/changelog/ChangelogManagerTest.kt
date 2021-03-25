@@ -169,6 +169,21 @@ class ChangelogManagerTest {
         Assert.assertEquals(expected, changelog.readText().replace("\r", ""))
     }
 
+    @Test
+    fun `should hasBreakingChangesWhenMajor when major changes`() {
+        // breaking changes section is present
+        changelog.writeText(readTextFromClassPath("/changelogs/major_breakingChanges_filled.md"))
+        var manager = ChangelogManager(changelog)
+        Assert.assertTrue("Не найдена секция **breaking changes** при мажорном обновлении",
+                manager.hasBreakingChangesWhenMajor())
+
+        // breaking changes section is absent
+        changelog.writeText(readTextFromClassPath("/changelogs/major_breakingChanges_notFilled.md"))
+        manager = ChangelogManager(changelog)
+        Assert.assertFalse("Не найдена секция **breaking changes** при мажорном обновлении",
+                manager.hasBreakingChangesWhenMajor())
+    }
+
     private fun writeReleaseType(file: File, type: String) {
         val currentLines = file.readLines()
         val newLines = mutableListOf<String>()

@@ -35,8 +35,24 @@ class ChangelogManager(private val changeLog: File) {
          * Имя файла с изменениями
          */
         const val DEFAULT_FILE_NAME: String = "CHANGELOG.md"
+        /**
+         * Маркер секции **breaking changes** при мажорном обновлении
+         */
+        const val BREAKING_CHANGES_MARKER = "breaking changes"
         private val previousVersionRegexp = Regex("^## \\[(\\d+\\.\\d+\\.\\d+)\\]\\(.*\\)\\s+\\(\\d+-\\d+-\\d+\\)$")
         private val nextVersionTypeRegexp = Regex("^### NEXT_VERSION_TYPE=(MAJOR|MINOR|PATCH)$")
+    }
+
+    /**
+     * Присутствует ли в CHANGELOG.MD секция **breaking changes** при мажорном изменении
+     */
+    fun hasBreakingChangesWhenMajor(): Boolean {
+        if (getNextVersionType() == ReleaseType.MAJOR) {
+            val description = getNexVersionDescription()
+            return description.isNotEmpty() && description.contains(BREAKING_CHANGES_MARKER)
+        }
+
+        return true
     }
 
     /**

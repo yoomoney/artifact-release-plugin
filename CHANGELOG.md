@@ -1,5 +1,18 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MAJOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* **breaking changes** `В CheckChangeLogTask` добавлена проверка на то, что присутствует секция **breaking changes** при мажорном обновлении плагина.
+Теперь, если NEXT_VERSION_TYPE == MAJOR, то в CHANGELOG.MD, между NEXT_VERSION_DESCRIPTION_BEGIN и NEXT_VERSION_DESCRIPTION_END обязательно требуется помечать изменения как **breaking changes**.
+Пример:
+    ```
+          CHANGELOG.md
+          ### NEXT_VERSION_TYPE=MAJOR
+          ### NEXT_VERSION_DESCRIPTION_BEGIN
+          * **breaking changes** Добавлен функционал Y. Метод Foo#doSomething стал принимать новый параметр типа Boolean.
+          ### NEXT_VERSION_DESCRIPTION_END
+          ## [1.0.0]() (30-05-1992)
+          
+          some description
+          ```
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.10.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/14) (18-03-2021)
 
