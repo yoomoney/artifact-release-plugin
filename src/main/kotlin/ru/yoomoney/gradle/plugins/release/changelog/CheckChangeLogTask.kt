@@ -45,7 +45,10 @@ open class CheckChangeLogTask : DefaultTask() {
     }
 
     private fun checkBreakingChangesSection(changelogManager: ChangelogManager) {
-        if (changelogManager.isMajorVersion() && !changelogManager.hasBreakingChangesMarker()) {
+        if (changelogManager.isMajorVersion() &&
+                !changelogManager.hasBreakingChangesMarker() &&
+                !changelogManager.isNextVersionFirst()) {
+
             throw GradleException("При мажорном обновлении, в ${ChangelogManager.DEFAULT_FILE_NAME}, между секциями " +
                     "${ChangelogManager.DESCRIPTION_BEGIN_MARKER} и ${ChangelogManager.DESCRIPTION_END_MARKER} " +
                     "необходимо добавить описание в формате: \"**breaking changes** Проделанные изменения\". " +
