@@ -114,13 +114,26 @@ releaseSettings {
    CHANGELOG.md
    ### NEXT_VERSION_TYPE=MINOR
    ### NEXT_VERSION_DESCRIPTION_BEGIN
-   Добавлен функционал Х
+   * Добавлен функционал Х
    ### NEXT_VERSION_DESCRIPTION_END
    ## [1.0.0]() (30-05-1992)
    
    some description
    ```
-   в ```NEXT_VERSION_TYPE``` указал ```MINOR``` т.к. был добавлен новый функционал, описал сделанные изменения в  ```NEXT_VERSION_DESCRIPTION``` 
+   в ```NEXT_VERSION_TYPE``` указал ```MINOR``` т.к. был добавлен новый функционал, описал сделанные изменения в  ```NEXT_VERSION_DESCRIPTION```
+   
+   Внимание! Если в ```NEXT_VERSION_TYPE``` указано ```MAJOR```, то в ```NEXT_VERSION_DESCRIPTION``` изменения необходимо описывать в формате **breaking changes**. Желательно также указывать, что требуется сделать, чтобы перейти на мажорную версию. Пример:
+   
+   ```
+      CHANGELOG.md
+      ### NEXT_VERSION_TYPE=MAJOR
+      ### NEXT_VERSION_DESCRIPTION_BEGIN
+      * **breaking changes** Добавлен функционал Y. Метод Foo#doSomething стал принимать новый параметр типа Boolean.
+      ### NEXT_VERSION_DESCRIPTION_END
+      ## [1.0.0]() (30-05-1992)
+      
+      some description
+      ```
 1. Пулл реквест замержен в master начинается сборка релиза, после ```preRelese``` состояние такое
    ```
    gradle.properties
