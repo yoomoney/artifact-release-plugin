@@ -1,8 +1,8 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.11.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/15) (26-03-2021)
+
 * `В CheckChangeLogTask` добавлена проверка на то, что присутствует секция **breaking changes** при мажорном обновлении плагина.
 То есть, если изменения мажорные (MAJOR), то в CHANGELOG.MD, в описании изменений, обязательно требуется секция **breaking changes**.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.10.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/14) (18-03-2021)
 
 * Сборка проекта переведена на gradle-project-plugin.
