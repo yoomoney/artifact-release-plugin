@@ -1,8 +1,9 @@
 repositories {
     mavenCentral()
     maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 
     dependencies {
-        classpath 'ru.yoomoney.gradle.plugins:gradle-project-plugin:7.+'
+        classpath 'ru.yoomoney.gradle.plugins:gradle-project-plugin:7.0.1-SNAPSHOT'
     }
 }
