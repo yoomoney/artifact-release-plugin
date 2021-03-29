@@ -51,6 +51,13 @@ class ChangelogManager(private val changeLog: File) {
     }
 
     /**
+     * Является ли следующая версия первой
+     */
+    fun isNextVersionFirst(): Boolean {
+        return getNextVersion().equals("1.0.0")
+    }
+
+    /**
      * Присутствует ли в CHANGELOG.MD секция **breaking changes**
      */
     fun hasBreakingChangesMarker(): Boolean {

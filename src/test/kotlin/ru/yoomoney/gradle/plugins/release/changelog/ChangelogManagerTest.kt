@@ -170,7 +170,7 @@ class ChangelogManagerTest {
     }
 
     @Test
-    fun `should hasBreakingChangesWhenMajor when major changes`() {
+    fun `should hasBreakingChanges when major changes`() {
         // breaking changes section is present
         changelog.writeText(readTextFromClassPath("/changelogs/major_breakingChanges_filled.md"))
         var manager = ChangelogManager(changelog)
