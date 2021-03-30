@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.11.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/16) (30-03-2021)
+
 * `В CheckChangeLogTask` добавлено условие, что наличие **breaking changes** при мажорном обновлении может отсутствовать для версии 1.0.0
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.11.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/15) (26-03-2021)
 
 * `В CheckChangeLogTask` добавлена проверка на то, что присутствует секция **breaking changes** при мажорном обновлении плагина.
