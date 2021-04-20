@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.11.2](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/17) (20-04-2021)
+
 * Снижено количество detekt нарушений 41 -> 18.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.11.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/16) (30-03-2021)
 
 * `В CheckChangeLogTask` добавлено условие, что наличие **breaking changes** при мажорном обновлении может отсутствовать для версии 1.0.0
