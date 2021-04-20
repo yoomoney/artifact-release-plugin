@@ -33,6 +33,7 @@ import java.util.Objects
  * @since 28.01.2019
  */
 class GitRepo internal constructor(private val git: Git, private val settings: GitSettings) : AutoCloseable {
+
     /**
      * Прокси для вызова [PushCommand]
      *

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull
  */
 class BitbucketClient(private val settings: BitbucketConnectionSettings) {
     private val objectMapper: ObjectMapper
+
     /**
      * Возвращает ссылку на последний вмердженный ПР указанного репозитория
      *
@@ -50,12 +51,13 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
         }
         log.debug("getLatestMergedPullRequestLink: response={}", response)
         if (response.getStatus() !== HttpStatus.SC_OK || response.getBody() == null) {
-            throw RuntimeException(
-                    java.lang.String.format("can't getLatestMergedPullRequestLink: code=%s, body=%s", response.getStatus(), response.getBody()))
+            throw RuntimeException("can't getLatestMergedPullRequestLink: " +
+                    "code=${response.getStatus()}, body=${response.getBody()}")
         }
         val pullRequestInfoResponse: BitbucketPullRequestInfoResponse
         try {
-            pullRequestInfoResponse = objectMapper.readValue(response.getBody(), BitbucketPullRequestInfoResponse::class.java)
+            pullRequestInfoResponse = objectMapper
+                    .readValue(response.getBody(), BitbucketPullRequestInfoResponse::class.java)
         } catch (e: IOException) {
             log.info("can't parse response: response={}", response.getBody(), e)
             return Optional.empty()
@@ -96,12 +98,13 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
         }
         log.debug("getPullRequestCommits: response={}", response)
         if (response.getStatus() !== HttpStatus.SC_OK || response.getBody() == null) {
-            throw RuntimeException(
-                    java.lang.String.format("can't getPullRequestCommits: code=%s, body=%s", response.getStatus(), response.getBody()))
+            throw RuntimeException("can't getPullRequestCommits: " +
+                    "code=${response.getStatus()}, body=${response.getBody()}")
         }
         val pullRequestCommitsResponse: BitbucketPullRequestCommitsResponse
         try {
-            pullRequestCommitsResponse = objectMapper.readValue(response.getBody(), BitbucketPullRequestCommitsResponse::class.java)
+            pullRequestCommitsResponse = objectMapper
+                    .readValue(response.getBody(), BitbucketPullRequestCommitsResponse::class.java)
         } catch (e: IOException) {
             throw RuntimeException(java.lang.String.format("can't getPullRequestCommits: code=%s, body=%s",
                     response.getStatus(), response.getBody()), e)

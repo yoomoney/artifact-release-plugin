@@ -2,6 +2,7 @@ package ru.yoomoney.gradle.plugins.release
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import ru.yoomoney.gradle.plugins.release.PullRequestInfoProvider.Companion.fromName
 import ru.yoomoney.gradle.plugins.release.changelog.CheckChangeLogTask
 import ru.yoomoney.gradle.plugins.release.git.GitSettings
 
@@ -68,11 +69,13 @@ class ReleasePlugin : Plugin<Project> {
             val postReleaseTask = it.tasks.getByName("release") as PostReleaseTask
             postReleaseTask.gitSettings = gitSettings
 
-            val preReleaseRotateVersionTask = it.tasks.getByName("preReleaseRotateVersion") as PreReleaseRotateVersionTask
+            val preReleaseRotateVersionTask =
+                    it.tasks.getByName("preReleaseRotateVersion") as PreReleaseRotateVersionTask
+
             preReleaseRotateVersionTask.gitSettings = gitSettings
             preReleaseRotateVersionTask.pullRequestLinkSettings = PullRequestLinkSettings(
                     pullRequestLinkInChangelogEnabled = releaseExtension.addPullRequestLinkToChangelog,
-                    pullRequestInfoProvider = PullRequestInfoProvider.fromName(releaseExtension.pullRequestInfoProvider)!!,
+                    pullRequestInfoProvider = fromName(releaseExtension.pullRequestInfoProvider)!!,
                     bitbucketUser = releaseExtension.bitbucketUser,
                     bitbucketPassword = releaseExtension.bitbucketPassword,
                     githubAccessToken = releaseExtension.githubAccessToken

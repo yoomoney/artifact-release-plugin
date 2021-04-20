@@ -12,7 +12,9 @@ import javax.annotation.Nonnull
  * @author lokshin (lokshin@yamoney.ru)
  * @since 01.02.2019
  */
-class BitbucketPullRequestInfoResponse @JsonCreator private constructor(@Nonnull @JsonProperty("values") pullRequests: List<BitbucketPullRequest?>) {
+class BitbucketPullRequestInfoResponse @JsonCreator private constructor(
+    @Nonnull @JsonProperty("values") pullRequests: List<BitbucketPullRequest?>
+) {
     @Nonnull
     private val pullRequests: List<BitbucketPullRequest?>
 

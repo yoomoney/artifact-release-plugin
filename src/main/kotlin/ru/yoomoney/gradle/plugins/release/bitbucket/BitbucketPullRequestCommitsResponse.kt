@@ -11,7 +11,9 @@ import javax.annotation.Nonnull
  * @author Alexander Esipov (asesipov@yamoney.ru)
  * @since 11.02.2020
  */
-internal class BitbucketPullRequestCommitsResponse @JsonCreator private constructor(@Nonnull @JsonProperty("values") pullRequestsCommits: List<BitbucketPullRequestCommit>) {
+internal class BitbucketPullRequestCommitsResponse @JsonCreator private constructor(
+    @Nonnull @JsonProperty("values") pullRequestsCommits: List<BitbucketPullRequestCommit>
+) {
     @get:Nonnull
     @Nonnull
     val pullRequestsCommits: List<BitbucketPullRequestCommit>

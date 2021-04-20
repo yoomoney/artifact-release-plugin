@@ -40,7 +40,8 @@ class ArtifactVersionProvider(
             log.lifecycle("Artifact version from changelog: version={}", versionFromChangeLog)
             return versionFromChangeLog
         }
-        // во всех остальных случаях считаем что вирсию устанавливают через gradle.properties возможно с постфиксом -SNAPSHOT
+        // во всех остальных случаях считаем что вирсию устанавливают через gradle.properties
+        // возможно с постфиксом -SNAPSHOT
         val gradleProjectVersion = getGradleProjectVersion()
         log.lifecycle("Artifact version from gradle project: version={}", gradleProjectVersion)
         return gradleProjectVersion
@@ -64,7 +65,8 @@ class ArtifactVersionProvider(
         if (isCurrentBranchForRelease.test(currentBranchName)) {
             return currentVersion
         }
-        return currentVersion + "-" + currentBranchName.replace(Regex("[^a-zA-Z0-9\\-\\.]+"), "-") + "-SNAPSHOT"
+        val formatedBranchName = currentBranchName.replace(Regex("[^a-zA-Z0-9\\-\\.]+"), "-")
+        return "$currentVersion-$formatedBranchName-SNAPSHOT"
     }
 
     private fun getVersionFromChangeLog(): String? {
