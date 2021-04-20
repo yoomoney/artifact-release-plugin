@@ -64,10 +64,12 @@ class PullRequestLinkProvider(
             )
 
             return bitbucketClient
-                .getLatestPullRequestLink(artifactLocation.project, artifactLocation.repository, PullRequestState.MERGED)
+                .getLatestPullRequestLink(artifactLocation.project, artifactLocation.repository,
+                        PullRequestState.MERGED)
                 .filter {
                     val bitbucketPullRequestCommitMessages: List<String> = bitbucketClient
-                        .getPullRequestCommits(artifactLocation.project, artifactLocation.repository, it.pullRequestId!!)
+                        .getPullRequestCommits(artifactLocation.project, artifactLocation.repository,
+                            it.pullRequestId!!)
                         .map { it.id!! }
                     isPullRequestValid(bitbucketPullRequestCommitMessages)
                 }
