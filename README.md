@@ -205,7 +205,6 @@ releaseSettings {
 releaseSettings {
     addPullRequestLinkToChangelog = true
     pullRequestInfoProvider = "Bitbucket"
-    bitbucketUser = 'user'                   //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
-    bitbucketPassword = 'password'           //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
+    bitbucketApiToken = 'apiToken'           //обязательный параметр для pullRequestInfoProvider = "Bitbucket"
 }
 ```

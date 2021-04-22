@@ -11,8 +11,7 @@ import javax.annotation.Nonnull
  */
 class BitbucketConnectionSettings private constructor(
     @param:Nonnull val uri: URI?,
-    @param:Nonnull val user: String?,
-    @param:Nonnull val password: String?
+    @param:Nonnull val apiToken: String?
 ) {
     /**
      * Базовый урл
@@ -27,8 +26,7 @@ class BitbucketConnectionSettings private constructor(
     override fun toString(): String {
         return "BitbucketConnectionSettings{" +
                 "uri=" + uri +
-                ", user='" + user + '\'' +
-                ", password='***'" +
+                ", apiToken='***'" +
                 '}'
     }
 
@@ -37,25 +35,19 @@ class BitbucketConnectionSettings private constructor(
      */
     class Builder {
         private var uri: URI? = null
-        private var user: String? = null
-        private var password: String? = null
+        private var apiToken: String? = null
         fun withUri(@Nonnull uri: URI?): Builder {
             this.uri = uri
             return this
         }
 
-        fun withUser(@Nonnull user: String?): Builder {
-            this.user = user
-            return this
-        }
-
-        fun withPassword(@Nonnull password: String?): Builder {
-            this.password = password
+        fun withApiToken(@Nonnull apiToken: String?): Builder {
+            this.apiToken = apiToken
             return this
         }
 
         fun build(): BitbucketConnectionSettings {
-            return BitbucketConnectionSettings(uri, user, password)
+            return BitbucketConnectionSettings(uri, apiToken)
         }
     }
 

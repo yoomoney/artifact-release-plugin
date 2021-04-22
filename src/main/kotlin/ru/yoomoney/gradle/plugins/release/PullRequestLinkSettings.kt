@@ -20,13 +20,9 @@ data class PullRequestLinkSettings(
     var githubAccessToken: String? = null,
 
     /**
-     *  Логин пользователя bitbucket
+     *  Токен пользователя bitbucket
      */
-     var bitbucketUser: String? = null,
-    /**
-     *  Пароль пользователя bitbucket
-     */
-     var bitbucketPassword: String? = null
+     var bitbucketApiToken: String? = null
 )
 
 /**

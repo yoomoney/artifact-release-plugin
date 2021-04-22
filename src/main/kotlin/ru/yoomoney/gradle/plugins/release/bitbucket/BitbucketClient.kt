@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.Unirest
 import com.mashape.unirest.http.exceptions.UnirestException
+import org.apache.http.HttpHeaders
 import org.apache.http.HttpStatus
 import org.slf4j.LoggerFactory
 import java.io.IOException
@@ -44,7 +45,7 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
             val schema = if (host.startsWith("http")) "" else "https://" // если host содержит схему
             Unirest
                     .get(String.format(urlPattern, schema, host, project, repository, state.code))
-                    .basicAuth(settings.user, settings.password)
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer ${settings.apiToken}")
                     .asString()
         } catch (e: UnirestException) {
             throw RuntimeException("can't getLatestMergedPullRequestLink", e)
@@ -91,7 +92,7 @@ class BitbucketClient(private val settings: BitbucketConnectionSettings) {
             val schema = if (host.startsWith("http")) "" else "https://" // если host содержит схему
             Unirest
                     .get(String.format(urlPattern, schema, host, project, repository, pullRequestId))
-                    .basicAuth(settings.user, settings.password)
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer ${settings.apiToken}")
                     .asString()
         } catch (e: UnirestException) {
             throw RuntimeException("can't getLatestMergedPullRequestLink", e)

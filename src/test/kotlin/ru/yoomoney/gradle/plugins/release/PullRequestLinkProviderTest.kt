@@ -1,7 +1,9 @@
 package ru.yoomoney.gradle.plugins.release
 
 import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.junit.WireMockRule
+import org.apache.http.HttpHeaders.AUTHORIZATION
 import org.apache.http.HttpStatus
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.transport.URIish
@@ -31,7 +33,7 @@ class PullRequestLinkProviderTest {
             "token")
 
     val bitbucketSettings = PullRequestLinkSettings(true, PullRequestInfoProvider.BITBUCKET,
-            null, "user", "password")
+            null, "apiToken")
 
     lateinit var git: Git
 
@@ -205,13 +207,13 @@ class PullRequestLinkProviderTest {
         git.commit().setMessage("3.txt commit").call()
 
         WireMock.stubFor(WireMock.get("/rest/api/1.0/projects/BACKEND/repos/kassa/pull-requests?state=MERGED&order=NEWEST")
-                .withBasicAuth("user", "password")
+                .withHeader(AUTHORIZATION, equalTo("Bearer apiToken"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/get-latest-merged-pull-request-link.json"))))
 
         WireMock.stubFor(WireMock.get("/rest/api/1.0/projects/BACKEND/repos/kassa/pull-requests/1/commits")
-                .withBasicAuth("user", "password")
+                .withHeader(AUTHORIZATION, equalTo("Bearer apiToken"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/get-commit-bitbucket.json"))))
@@ -248,14 +250,14 @@ class PullRequestLinkProviderTest {
         val expectedPullRequestLink = "https://bitbucket.yamoney.ru/projects/BACKEND/repos/kassa/pull-requests/777"
 
         WireMock.stubFor(WireMock.get("/rest/api/1.0/projects/BACKEND/repos/kassa/pull-requests?state=MERGED&order=NEWEST")
-                .withBasicAuth("user", "password")
+                .withHeader(AUTHORIZATION, equalTo("Bearer apiToken"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/get-latest-merged-pull-request-link.json")
                                 .replace("PULL_REQUEST_LINK_PLACEHOLDER", expectedPullRequestLink))))
 
         WireMock.stubFor(WireMock.get("/rest/api/1.0/projects/BACKEND/repos/kassa/pull-requests/1/commits")
-                .withBasicAuth("user", "password")
+                .withHeader(AUTHORIZATION, equalTo("Bearer apiToken"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.SC_OK)
                         .withBody(readTextFromClassPath("/prlink/get-commit-bitbucket.json")
