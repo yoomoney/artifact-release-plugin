@@ -1,5 +1,8 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MAJOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* **breaking changes** Взаимодействие с bitbucket переведено на apiToken. Для перехода на версию необходимо: 
+  1. выпустить apiToken и прописать его в настройку releaseSettings.bitbucketApiToken;
+  1. удалить настройки releaseSettings.bitbucketUser и releaseSettings.bitbucketPassword.
 ### NEXT_VERSION_DESCRIPTION_END
 ## [3.11.2](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/17) (20-04-2021)
 

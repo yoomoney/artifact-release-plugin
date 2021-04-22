@@ -52,14 +52,8 @@ class PullRequestLinkProvider(
             val bitbucketClient = BitbucketClient(
                 BitbucketConnectionSettings.builder()
                     .withUri(URI.create(artifactLocation.host))
-                    .withUser(
-                        settings.bitbucketUser
-                            ?: throw IllegalArgumentException("bitbucketUser is absent")
-                    )
-                    .withPassword(
-                        settings.bitbucketPassword
-                            ?: throw IllegalArgumentException("bitbucketPassword is absent")
-                    )
+                    .withApiToken(settings.bitbucketApiToken
+                        ?: throw IllegalArgumentException("bitbucketApiToken is absent"))
                     .build()
             )
 

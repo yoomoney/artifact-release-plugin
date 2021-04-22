@@ -59,12 +59,7 @@ open class ReleaseExtension {
     var githubAccessToken: String? = null
 
     /**
-     *  Логин пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
+     *  Токен пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
      */
-    var bitbucketUser: String? = null
-
-    /**
-     *  Пароль пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
-     */
-    var bitbucketPassword: String? = null
+    var bitbucketApiToken: String? = null
 }

@@ -197,8 +197,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
             gitEmail = 'user@mail.ru'
             addPullRequestLinkToChangelog = true
             pullRequestInfoProvider = 'Bitbucket'
-            bitbucketUser = 'user'
-            bitbucketPassword = 'password'
+            bitbucketApiToken = 'token'
         }
         """)
 
