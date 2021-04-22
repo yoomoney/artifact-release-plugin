@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [4.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/18) (22-04-2021)
 
 * **breaking changes** Взаимодействие с bitbucket переведено на apiToken. Для перехода на версию необходимо:
