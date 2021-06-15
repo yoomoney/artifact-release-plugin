@@ -26,9 +26,9 @@ open class PostReleaseTask : DefaultTask() {
         if (changelogFile.exists()) {
             ChangelogManager(changelogFile).appendNextVersionDescriptionMarkers()
         }
-
+        val releaseExtension = project.extensions.getByType(ReleaseExtension::class.java)
         GitManager(project.rootDir, gitSettings).use {
-            it.newVersionCommit(nextVersion)
+            it.newVersionCommit(nextVersion, releaseExtension.allowedFilesForCommitRegex)
             it.push()
         }
     }

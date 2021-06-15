@@ -17,12 +17,37 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
         private val log: Logger = Logging.getLogger(GitManager::class.java)
         private const val NEW_VERSION_RELEASE_PREFIX = "[Gradle Release Plugin] - new version commit"
         private const val PRE_TAG_COMMIT_PREFIX = "[Gradle Release Plugin] - pre tag commit"
+        private val defaultAllowedFilesToCommit = listOf("CHANGELOG.md", "gradle.properties")
     }
 
     private val git: GitRepo = GitRepoFactory(gitSettings).createFromExistingDirectory(projectDirectory)
 
-    private fun commit(message: String) {
+    private fun commit(message: String, allowedFilesForCommitRegexStr: List<String>) {
         log.lifecycle("Commit: $message")
+
+        val newFiles = git.status().call().untracked
+        val allowedFilesForCommitRegex = allowedFilesForCommitRegexStr.map { it.toRegex() }
+
+        val gitAddCmd = git.add()
+
+        if (newFiles.isNotEmpty()) {
+            newFiles.forEach { fileName ->
+                allowedFilesForCommitRegex.forEach {
+                    if (it.matches(fileName)) {
+                        log.lifecycle("Add file for commit: file={}", fileName)
+                        gitAddCmd.addFilepattern(fileName)
+                    }
+                }
+            }
+        }
+
+        defaultAllowedFilesToCommit.forEach {
+            log.lifecycle("Add file for commit: file={}", it)
+            gitAddCmd.addFilepattern(it)
+        }
+
+        gitAddCmd.call()
+
         git.commit()
                 .setAll(true)
                 .setMessage(message)
@@ -86,26 +111,20 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
     /**
      * Делает коммит и добавляет тег в фазе preRelease
      * @param version версия для тега и коммита
+     * @param allowedFilesForCommitRegexStr кастомный список regex паттернов для файлов, которые попадут в коммит
      */
-    fun preTagCommit(version: String) {
-        val newFiles = git.status().call().untracked
-
-        if (!newFiles.isEmpty()) {
-            val add = git.add()
-            log.lifecycle("Add new files for preTagCommit: files={}", newFiles)
-            newFiles.forEach { add.addFilepattern(it) }
-            add.call()
-        }
-        commit("$PRE_TAG_COMMIT_PREFIX: '$version'.")
+    fun preTagCommit(version: String, allowedFilesForCommitRegexStr: List<String>) {
+        commit("$PRE_TAG_COMMIT_PREFIX: '$version'.", allowedFilesForCommitRegexStr)
         addTag(version)
     }
 
     /**
      * Делает коммит в фазе release
      * @param nextVersion версия следующего релиза
+     * @param allowedFilesForCommitRegexStr кастомный список regex паттернов для файлов, которые попадут в коммит
      */
-    fun newVersionCommit(nextVersion: String) {
-        commit("$NEW_VERSION_RELEASE_PREFIX: '$nextVersion'.")
+    fun newVersionCommit(nextVersion: String, allowedFilesForCommitRegexStr: List<String>) {
+        commit("$NEW_VERSION_RELEASE_PREFIX: '$nextVersion'.", allowedFilesForCommitRegexStr)
     }
 
     /**
