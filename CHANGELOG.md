@@ -1,20 +1,18 @@
-### NEXT_VERSION_TYPE=MAJOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [5.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/20) (21-06-2021)
 
-* **breaking changes** artifact-release-plugin теперь коммитит только файлы 
-  `CHANGELOG.md`, `gradle.properties` и файлы обозначенные в `releaseSettings.allowedFilesForCommitRegex`.
-  Пример `releaseSettings`
-  ```
-  releaseSettings {
-              preReleaseTasks=['preReleaseTask1']
-              changelogRequired = false
-              gitUsername = 'user'
-              gitEmail = 'user@mail.ru'
-              allowedFilesForCommitRegex=['.+txt']
-          }
-  ```
+* **breaking changes** artifact-release-plugin теперь коммитит только файлы
+`CHANGELOG.md`, `gradle.properties` и файлы обозначенные в `releaseSettings.allowedFilesForCommitRegex`.
+Пример `releaseSettings`
+```
+releaseSettings {
+preReleaseTasks=['preReleaseTask1']
+changelogRequired = false
+gitUsername = 'user'
+gitEmail = 'user@mail.ru'
+allowedFilesForCommitRegex=['.+txt']
+}
+```
 
-### NEXT_VERSION_DESCRIPTION_END
 ## [4.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/18) (22-04-2021)
 
 * **breaking changes** Взаимодействие с bitbucket переведено на apiToken. Для перехода на версию необходимо:
