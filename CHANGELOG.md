@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [5.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/20) (21-06-2021)
 
 * **breaking changes** artifact-release-plugin теперь коммитит только файлы
