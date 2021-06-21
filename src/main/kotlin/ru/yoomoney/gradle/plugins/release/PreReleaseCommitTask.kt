@@ -19,8 +19,9 @@ open class PreReleaseCommitTask : DefaultTask() {
     fun commitChanges() {
         val releaseVersion = ReleaseInfoStorage(project.buildDir).loadVersion()
                 ?: throw GradleException("Next release version is absent")
+        val releaseExtension = project.extensions.getByType(ReleaseExtension::class.java)
         GitManager(project.rootDir, gitSettings).use {
-            it.preTagCommit(releaseVersion)
+            it.preTagCommit(releaseVersion, releaseExtension.allowedFilesForCommitRegex)
         }
     }
 }

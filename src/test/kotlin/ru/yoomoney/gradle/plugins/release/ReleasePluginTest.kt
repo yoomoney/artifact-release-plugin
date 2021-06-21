@@ -5,6 +5,7 @@ import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.greaterThan
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ReleasePluginTest : AbstractReleaseTest() {
@@ -39,7 +40,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
         task preReleaseTask1 {
             doLast {
                 println 'preReleaseTask1 executed'
-                new File("${'$'}projectDir/new-file.txt").text = "new file text"
+                new File("${'$'}projectDir/new-file.yaml").text = "new file text"
             }
         }
         releaseSettings {
@@ -47,6 +48,7 @@ class ReleasePluginTest : AbstractReleaseTest() {
             changelogRequired = false
             gitUsername = 'user'
             gitEmail = 'user@mail.ru'
+            allowedFilesForCommitRegex=['.+yaml']
         }
 
         """.trimIndent())
@@ -101,6 +103,8 @@ class ReleasePluginTest : AbstractReleaseTest() {
         """.trimIndent())
         addChangeLog(this::class.java.getResource("/changelogs/1Version_filledMarkers.md").readText())
 
+        val notInIndexFile = projectDir.newFile("test_file.txt")
+
         val preReleaseResult = runTasksSuccessfully("preRelease")
 
         assertThat(preReleaseResult.output, containsString("nextVersion=1.1.0"))
@@ -122,6 +126,9 @@ class ReleasePluginTest : AbstractReleaseTest() {
         assertThat(getChangelogContent(), allOf(containsString("NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH"), containsString("some desc")))
         assertThat(getCommitMessages(git)[0], Matchers.startsWith("[Gradle Release Plugin] - new version commit: '1.1.1-SNAPSHOT'"))
         assertThat(getCommitMessages(gitOrigin)[0], Matchers.startsWith("[Gradle Release Plugin] - new version commit: '1.1.1-SNAPSHOT'"))
+
+        val status = git.status().call()
+        assertTrue(status.untracked.contains(notInIndexFile.name))
     }
 
     @Test

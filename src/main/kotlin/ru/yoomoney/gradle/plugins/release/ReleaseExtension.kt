@@ -62,4 +62,9 @@ open class ReleaseExtension {
      *  Токен пользователя bitbucket. Обязательный, если pullRequestInfoProvider = Bitbucket
      */
     var bitbucketApiToken: String? = null
+
+    /**
+     * Кастомный список regex паттернов для файлов, которые попадут в коммит при вызове таски preRelease или release
+     */
+    var allowedFilesForCommitRegex: MutableList<String> = mutableListOf()
 }

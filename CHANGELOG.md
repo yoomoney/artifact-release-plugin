@@ -1,5 +1,19 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MAJOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+
+* **breaking changes** artifact-release-plugin теперь коммитит только файлы 
+  `CHANGELOG.md`, `gradle.properties` и файлы обозначенные в `releaseSettings.allowedFilesForCommitRegex`.
+  Пример `releaseSettings`
+  ```
+  releaseSettings {
+              preReleaseTasks=['preReleaseTask1']
+              changelogRequired = false
+              gitUsername = 'user'
+              gitEmail = 'user@mail.ru'
+              allowedFilesForCommitRegex=['.+txt']
+          }
+  ```
+
 ### NEXT_VERSION_DESCRIPTION_END
 ## [4.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/18) (22-04-2021)
 
