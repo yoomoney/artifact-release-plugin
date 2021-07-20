@@ -8,8 +8,8 @@ import ru.yoomoney.gradle.plugins.release.version.SemanticVersionEditor
 import java.io.File
 import java.io.PrintWriter
 import java.nio.file.Files
-import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.stream.Collectors
 
 /**
@@ -142,7 +142,7 @@ class ChangelogManager(private val changeLog: File) {
     }
 
     private fun getCurrentDate(): String {
-        return SimpleDateFormat("dd-MM-YYYY").format(Date())
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
     }
 
     /**
