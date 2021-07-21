@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [5.0.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/21) (21-07-2021)
 
 * Изменен DateTimeFormatter с dd-MM-YYYY на dd-MM-yyyy, т.к. YYYY отдает "week year", что некорректно.
