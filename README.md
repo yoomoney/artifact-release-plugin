@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/yoomoney-gradle-plugins/artifact-release-plugin.svg?branch=master)](https://travis-ci.com/yoomoney-gradle-plugins/artifact-release-plugin)
-[![codecov](https://codecov.io/gh/yoomoney-gradle-plugins/artifact-release-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/yoomoney-gradle-plugins/artifact-release-plugin)
+[![Build Status](https://travis-ci.com/yoomoney/artifact-release-plugin.svg?branch=master)](https://travis-ci.com/yoomoney/artifact-release-plugin)
+[![codecov](https://codecov.io/gh/yoomoney/artifact-release-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/yoomoney/artifact-release-plugin)
 
 # artifact-release-plugin
 
@@ -183,7 +183,7 @@ releaseSettings {
    ### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
    ### NEXT_VERSION_DESCRIPTION_BEGIN
    ### NEXT_VERSION_DESCRIPTION_END   
-   ## [1.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/3) (30-05-1992)
+   ## [1.0.0](https://github.com/yoomoney/artifact-release-plugin/pull/3) (30-05-1992)
     
    some description
    ```      

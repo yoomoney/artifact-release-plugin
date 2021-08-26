@@ -54,7 +54,7 @@ open class CheckChangeLogTask : DefaultTask() {
                     "необходимо добавить описание в формате: \"**breaking changes** Проделанные изменения\". " +
                     "Также настоятельно рекомендуется указать в описании, какие изменения требуется сделать, " +
                     "чтобы перейти на новую версию. Пример оформления см.: " +
-                    "https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/blob/master/README.md")
+                    "https://github.com/yoomoney/artifact-release-plugin/blob/master/README.md")
         }
     }
 }
