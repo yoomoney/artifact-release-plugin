@@ -85,7 +85,7 @@ class GitRepo internal constructor(private val git: Git, private val settings: G
      * см. https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
      * см. https://git-scm.com/docs/git-remote
      *
-     * @return ссылку вида ssh://git@github.com:yoomoney-gradle-plugins/artifact-release-plugin.git
+     * @return ссылку вида ssh://git@github.com:yoomoney/artifact-release-plugin.git
      */
     val remoteOriginUrl: String
         get() = git.repository.config

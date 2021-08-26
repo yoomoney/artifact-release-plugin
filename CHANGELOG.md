@@ -1,11 +1,12 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=MINOR
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Переезд организации yoomoney-gradle-plugins -> yoomoney
 ### NEXT_VERSION_DESCRIPTION_END
-## [5.0.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/21) (21-07-2021)
+## [5.0.1](https://github.com/yoomoney/artifact-release-plugin/pull/21) (21-07-2021)
 
 * Изменен DateTimeFormatter с dd-MM-YYYY на dd-MM-yyyy, т.к. YYYY отдает "week year", что некорректно.
 
-## [5.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/20) (21-06-2021)
+## [5.0.0](https://github.com/yoomoney/artifact-release-plugin/pull/20) (21-06-2021)
 
 * **breaking changes** artifact-release-plugin теперь коммитит только файлы
 `CHANGELOG.md`, `gradle.properties` и файлы обозначенные в `releaseSettings.allowedFilesForCommitRegex`.
@@ -20,50 +21,50 @@ allowedFilesForCommitRegex=['.+txt']
 }
 ```
 
-## [4.0.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/18) (22-04-2021)
+## [4.0.0](https://github.com/yoomoney/artifact-release-plugin/pull/18) (22-04-2021)
 
 * **breaking changes** Взаимодействие с bitbucket переведено на apiToken. Для перехода на версию необходимо:
 1. выпустить apiToken и прописать его в настройку releaseSettings.bitbucketApiToken;
 1. удалить настройки releaseSettings.bitbucketUser и releaseSettings.bitbucketPassword.
 
-## [3.11.2](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/17) (20-04-2021)
+## [3.11.2](https://github.com/yoomoney/artifact-release-plugin/pull/17) (20-04-2021)
 
 * Снижено количество detekt нарушений 41 -> 18.
 
-## [3.11.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/16) (30-03-2021)
+## [3.11.1](https://github.com/yoomoney/artifact-release-plugin/pull/16) (30-03-2021)
 
 * `В CheckChangeLogTask` добавлено условие, что наличие **breaking changes** при мажорном обновлении может отсутствовать для версии 1.0.0
 
-## [3.11.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/15) (26-03-2021)
+## [3.11.0](https://github.com/yoomoney/artifact-release-plugin/pull/15) (26-03-2021)
 
 * `В CheckChangeLogTask` добавлена проверка на то, что присутствует секция **breaking changes** при мажорном обновлении плагина.
 То есть, если изменения мажорные (MAJOR), то в CHANGELOG.MD, в описании изменений, обязательно требуется секция **breaking changes**.
 
-## [3.10.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/14) (18-03-2021)
+## [3.10.0](https://github.com/yoomoney/artifact-release-plugin/pull/14) (18-03-2021)
 
 * Сборка проекта переведена на gradle-project-plugin.
 
-## [3.9.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/13) (02-03-2021)
+## [3.9.0](https://github.com/yoomoney/artifact-release-plugin/pull/13) (02-03-2021)
 
 * Подключен java-artifact-publish-plugin. Теперь публикация осуществляется в MavenCentral.
 
-## [3.8.1](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/12) (04-02-2021)
+## [3.8.1](https://github.com/yoomoney/artifact-release-plugin/pull/12) (04-02-2021)
 
 * Понижена версия зависимостей kotlin по причине проблем при сборке на windows: https://youtrack.jetbrains.com/issue/KT-26513
 
-## [3.8.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/11) (04-02-2021)
+## [3.8.0](https://github.com/yoomoney/artifact-release-plugin/pull/11) (04-02-2021)
 
 * Удален ключ git_key.enc в связи с изменением логики работы с git_key.
-Подробности см. https://github.com/yoomoney-gradle-plugins/travis-shared-configuration/pull/8
+Подробности см. https://github.com/yoomoney/travis-shared-configuration/pull/8
 * Поднята версия artifact-release-plugin
 
-## [3.7.0](https://api.github.com/repos/yoomoney-gradle-plugins/artifact-release-plugin/pulls/9) (03-02-2021)
+## [3.7.0](https://api.github.com/repos/yoomoney/artifact-release-plugin/pulls/9) (03-02-2021)
 
 * Поднята версия artifact-release-plugin
 
-## [3.6.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/7) (22-01-2021)
+## [3.6.0](https://github.com/yoomoney/artifact-release-plugin/pull/7) (22-01-2021)
 
-* Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney-gradle-plugins/travis-shared-configuration.
+* Конфигурация из travis.yml вынесена в отдельный репозиторий yoomoney/travis-shared-configuration.
 * Поднята версия подключаемого artifact-release-plugin 3.4.0 -> 3.5.1
 * Поправлен парсинг пути к репозиторию для получения ссылки на pull-request
 
@@ -78,7 +79,7 @@ allowedFilesForCommitRegex=['.+txt']
 * В travis.yml добавлена стадия выпуска релиза, которая запускается только на master ветке.
 * Добавлен зашифрованный shh-key для git.
 
-## [3.4.0](https://github.com/yoomoney-gradle-plugins/artifact-release-plugin/pull/1) (29-12-2020)
+## [3.4.0](https://github.com/yoomoney/artifact-release-plugin/pull/1) (29-12-2020)
   
 * Внесены изменения в связи с переходом в GitHub:
     * Переименованы пакеты
