@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [5.1.1](https://github.com/yoomoney/artifact-release-plugin/pull/24) (04-10-2021)
+
 * Добавлено падение таски release в случае неуспешного push.
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [5.1.0](https://github.com/yoomoney/artifact-release-plugin/pull/22) (26-08-2021)
 
 * Переезд организации yoomoney-gradle-plugins -> yoomoney
