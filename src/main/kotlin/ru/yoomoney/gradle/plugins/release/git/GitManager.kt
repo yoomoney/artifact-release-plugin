@@ -75,8 +75,8 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
      * Отправляет на удалённый сервер все коммиты и теги
      * @param credentials Права для доступа к репозиторию
      */
-    fun push() {
-        git.push { pushCommand ->
+    fun push(): String? {
+        return git.push { pushCommand ->
             pushCommand
                     .setPushTags()
                     .add(git.repository.fullBranch)

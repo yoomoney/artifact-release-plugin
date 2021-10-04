@@ -1,6 +1,7 @@
 package ru.yoomoney.gradle.plugins.release
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import ru.yoomoney.gradle.plugins.release.changelog.ChangelogManager
@@ -27,9 +28,14 @@ open class PostReleaseTask : DefaultTask() {
             ChangelogManager(changelogFile).appendNextVersionDescriptionMarkers()
         }
         val releaseExtension = project.extensions.getByType(ReleaseExtension::class.java)
-        GitManager(project.rootDir, gitSettings).use {
+        val resultMessagePush = GitManager(project.rootDir, gitSettings).use {
             it.newVersionCommit(nextVersion, releaseExtension.allowedFilesForCommitRegex)
-            it.push()
+            val resultMessage = it.push()
+            resultMessage
+        }
+
+        if (resultMessagePush != null) {
+            throw GradleException("Push is unsuccessful: resultMessage=$resultMessagePush")
         }
     }
 }
