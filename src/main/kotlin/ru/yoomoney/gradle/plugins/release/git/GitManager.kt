@@ -97,6 +97,7 @@ class GitManager(private val projectDirectory: File, gitSettings: GitSettings) :
                     .add(git.repository.fullBranch)
                     .setRemote("origin")
         }
+        log.lifecycle("push resultMessage:= {}", resultMessage)
         return resultMessage == null
     }
 

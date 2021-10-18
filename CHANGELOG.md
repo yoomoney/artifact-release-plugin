@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* test
 ### NEXT_VERSION_DESCRIPTION_END
 ## [5.1.1](https://github.com/yoomoney/artifact-release-plugin/pull/24) (04-10-2021)
 
