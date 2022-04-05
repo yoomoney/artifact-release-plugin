@@ -1,8 +1,10 @@
 repositories {
     mavenCentral()
     maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 
     dependencies {
         classpath 'ru.yoomoney.gradle.plugins:gradle-project-plugin:8.+'
+        classpath 'ru.yoomoney.gradle.plugins:java-plugin:6.0.2-feature-jacoco-bumping-SNAPSHOT'
     }
 }
