@@ -6,10 +6,10 @@ import org.eclipse.jgit.revwalk.RevWalk
 import org.eclipse.jgit.transport.URIish
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import org.spockframework.util.Assert
 import java.io.File
 
 abstract class AbstractReleaseTest {
