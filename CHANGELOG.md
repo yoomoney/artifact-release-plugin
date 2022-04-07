@@ -1,5 +1,6 @@
-### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_TYPE=PATCH
 ### NEXT_VERSION_DESCRIPTION_BEGIN
+* Перевыпуск релиза из за проблем с синком maven-central
 ### NEXT_VERSION_DESCRIPTION_END
 ## [6.0.0](https://github.com/yoomoney/artifact-release-plugin/pull/25) (06-04-2022)
 
