@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [6.0.1](https://github.com/yoomoney/artifact-release-plugin/pull/26) (07-04-2022)
 
 * Перевыпуск релиза из за проблем с синком maven-central
